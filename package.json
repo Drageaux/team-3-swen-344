@@ -1,0 +1,23 @@
+{
+  "name": "team-3-swen-344",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "engines": {
+    "node": ">= 6.10.0"
+  },
+  "author": "Team 3 - MEEN Stack",
+  "main": "app.js",
+  "private": true,
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "mysql": "^2.15.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}

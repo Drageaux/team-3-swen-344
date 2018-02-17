@@ -1,0 +1,20 @@
+{
+  "verbose": false,
+  "ignore": [
+    ".git",
+    "node_modules/**/node_modules",
+    "src/",
+    "dist/"
+  ],
+  "execMap": {
+    "js": "node"
+  },
+  "watch": [
+    "controllers/",
+    "app.js"
+  ],
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "ext": "js json"
+}
