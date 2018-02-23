@@ -1,5 +1,5 @@
 {
-  "name": "team-3-swen-344",
+  "name": "swen344-facility-management",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
@@ -9,7 +9,7 @@
   "engines": {
     "node": ">= 6.10.0"
   },
-  "author": "Team 3 - MEEN Stack",
+  "author": "Team 3 - MEAN Stack",
   "main": "app.js",
   "private": true,
   "dependencies": {
