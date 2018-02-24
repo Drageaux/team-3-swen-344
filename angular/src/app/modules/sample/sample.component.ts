@@ -25,7 +25,7 @@ export class SampleComponent implements OnInit {
     // onInit, firstName is changed to "Bat"
     this.sampleModel.firstName = batString;
     this.printGetSample();
-    this.printPostSample();
+    this.printPostSample(this.sampleModel.firstName + ' ' + this.sampleModel.lastName);
   }
 
   // custom sample call
@@ -36,8 +36,8 @@ export class SampleComponent implements OnInit {
     // where variables inside () are passed to the operations inside {}
   }
 
-  private printPostSample(): void {
-    this.postSample()
+  private printPostSample(input: string): void {
+    this.postSample(input)
       .subscribe(data => console.log(data))
   }
 
@@ -54,9 +54,10 @@ export class SampleComponent implements OnInit {
       );
   }
 
-  private postSample(): Observable<any> {
-    let body = {}; // define empty body 
-    const httpOptions = { // define stub HTTP options
+  // PUT/POST requests are a bit more complicated, since they require a JSON payload body
+  private postSample(newName: string): Observable<any> {
+    let body = { name: newName }; // define JSON payload body 
+    const httpOptions = { // define stubbed HTTP options
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'my-auth-token'
