@@ -1,18 +1,29 @@
+import { NgModule } from '@angular/core'; 
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { appRoutingProviders, routing } from './app.routing';
 
 import { AppComponent } from './app.component';
+import { PageNotFoundComponent } from './not-found.component';
+
+import { SampleModule } from './modules/sample/sample.module';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PageNotFoundComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule,
+    HttpClientModule,
+    routing,
+    SampleModule
   ],
-  providers: [],
+  providers: [appRoutingProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
