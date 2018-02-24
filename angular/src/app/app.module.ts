@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './not-found.component';
 
 import { SampleModule } from './modules/sample/sample.module';
+import { SampleService } from "./modules/sample/sample.service";
 
 
 @NgModule({
@@ -23,7 +24,7 @@ import { SampleModule } from './modules/sample/sample.module';
     routing,
     SampleModule
   ],
-  providers: [appRoutingProviders],
+  providers: [appRoutingProviders, SampleService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
