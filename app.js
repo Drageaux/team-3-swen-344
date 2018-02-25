@@ -35,7 +35,7 @@ var sampleApi = require('./controllers/sampleController');
 var deviceApi = require('./controllers/deviceController');
 // register controllers for endpoints
 router.use('/sample', sampleApi);
-router.use('/device', deviceApi);//Api for devices
+router.use('/devices', deviceApi);//Api for devices
 // any route starting with '/api' will be interfacing our API
 app.use('/api', router);
 
