@@ -27,6 +27,23 @@ function findDeviceByName(name){
   return null;
 }
 
+function addNewDevice(newName){
+  data.devices.push({
+    id: data.devices.length,
+    name: newName,
+    rentStatus: true
+  });
+}
+
+function deleteDeviceByID(id){
+  for (var i = 0; i < data.devices.length; i++){
+    if (data.devices[i].id == id){
+      data.devices = data.devices.filter(item => item !== data.devices[i]);
+      break;
+    }
+  }
+}
+
 //Returns all devices
 deviceController.get('/', function (req, res){
   res.json(data.devices);
@@ -46,14 +63,22 @@ deviceController.get('/find/:id', function(req, res){
 //Add new device
 deviceController.post('/', function (req, res) {
   if(req.body && req.body.newName){
-    newData = {name: req.body.newName, rentStatus: true}
-    data.devices.push(newData);
+    addNewDevice(req,body.newName);
     res.json(data.devices);
   }
   else {
-    res.status(500).send("Missing parameters.");
+    res.status(500).send("Missing information.");
   }
 });
 
-
+//Deletes a device
+deviceController.post('/delete', function(req, res){
+  if(req.body && req.body.id){
+    deleteDeviceByID(req.params.id);
+    res.json(data.devices);
+  }
+  else{
+    res.status(500).send("Missing information.");
+  }
+});
 module.exports = deviceController;
