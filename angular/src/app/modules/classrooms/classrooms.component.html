@@ -1,7 +1,9 @@
 <div class="container">
   <h2 class="page-header">Classroom List</h2>
-  <div *ngFor="let c of classroomList">
-    {{c | json}}
+  <div *ngFor="let c of classroomList" class="panel panel-default">
+    <div class="panel-body">
+      {{c | json}}
+    </div>
   </div>
 </div>
 
