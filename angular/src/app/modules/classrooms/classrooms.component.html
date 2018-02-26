@@ -6,7 +6,7 @@
         {{c.className}}
       </div>
 
-      <div class="col-4 text-center align-middle text-capitalize" id="reservation-status">
+      <div class="col-4 text-center align-middle" id="reservation-status">
         {{c.reservationStatus}}<br />
         {{c.noOfParticipants + '/' + c.capacity}}
       </div>
@@ -14,18 +14,18 @@
       <div class="col-2 text-right align-middle">
         <button *ngIf="c.reservationStatus=='OPEN'" type="button"
                 class="btn btn-success btn-sm">
-          <i class="material-icons md-18 align-middle">assignment</i>
-          <span class="d-sm-none d-md-block">Reserve</span>
+          <i class="material-icons align-middle">assignment</i>
+          <span class="d-sm-none d-md-inline-block align-middle">Reserve</span>
         </button>
         <button *ngIf="c.reservationStatus=='RESERVED'" type="button"
                 class="btn btn-danger btn-sm">
-          <i class="material-icons md-18 align-middle">clear</i>
-          <span class="d-sm-none d-md-block">Cancel</span>
+          <i class="material-icons align-middle">clear</i>
+          <span class="d-sm-none d-md-inline-block align-middle">Cancel</span>
         </button>
         <button *ngIf="c.reservationStatus=='UNAVAILABLE'" type="button"
                 class="btn btn-secondary btn-sm" disabled>
-          <i class="material-icons md-18 align-middle">assignment</i>
-          <span class="d-sm-none d-md-block">Reserve</span>
+          <i class="material-icons align-middle">assignment</i>
+          <span class="d-sm-none d-md-inline-block align-middle">Reserve</span>
         </button>
       </div>
     </div>
