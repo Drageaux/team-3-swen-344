@@ -35,6 +35,11 @@ function addNewDevice(newName){
   });
 }
 
+function updateDevice(id, newName){
+  var dev = findDeviceByID(id);
+  dev.name = newName;
+}
+
 function deleteDeviceByID(id){
   for (var i = 0; i < data.devices.length; i++){
     if (data.devices[i].id == id){
@@ -71,8 +76,19 @@ deviceController.post('/', function (req, res) {
   }
 });
 
+//Update device
+deviceController.put('/', function (req, res) {
+  if(req.body && req.body.id && req.body.newName){
+    updateDevice(req.body.id, req.body.newName);
+    res.json(data.devices);
+  }
+  else {
+    res.status(500).send("Missing information.");
+  }
+});
+
 //Deletes a device
-deviceController.post('/delete', function(req, res){
+deviceController.delete('/', function(req, res){
   if(req.body && req.body.id){
     deleteDeviceByID(req.params.id);
     res.json(data.devices);
