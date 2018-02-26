@@ -1,7 +1,8 @@
 <div class="container">
   <h2 class="page-header">Classroom List</h2>
   <div *ngFor="let c of classroomList" class="card container">
-    <div class="card-header row">
+    <!-- Card Header -->
+    <div class="card-header row" (click)="showCollapse('collapseClass' + c.id)">
       <div class="col-6 align-middle">
         {{c.className}}
       </div>
@@ -28,6 +29,11 @@
           <span class="d-none d-md-inline-block align-middle">Reserve</span>
         </button>
       </div>
+    </div>
+
+    <!-- Card Body (has to wrap .collapse div to make the animation smooth) -->
+    <div class="collapse" id="collapseClass{{c.id}}">
+      <div class="card-body">TEST</div>
     </div>
   </div>
 </div>

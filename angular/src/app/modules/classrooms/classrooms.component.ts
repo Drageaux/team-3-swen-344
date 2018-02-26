@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { Classroom } from './classroom';
 
+declare var $;
+
 @Component({
   selector: 'app-classrooms',
   templateUrl: './classrooms.component.html',
@@ -22,6 +24,11 @@ export class ClassroomsComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+
+  showCollapse(id: string): void {
+    $('#' + id).collapse('toggle');
   }
 
 }
