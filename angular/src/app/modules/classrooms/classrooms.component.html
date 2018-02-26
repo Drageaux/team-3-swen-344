@@ -15,17 +15,17 @@
         <button *ngIf="c.reservationStatus=='OPEN'" type="button"
                 class="btn btn-success btn-sm">
           <i class="material-icons align-middle">assignment</i>
-          <span class="d-sm-none d-md-inline-block align-middle">Reserve</span>
+          <span class="d-none d-md-inline-block align-middle">Reserve</span>
         </button>
         <button *ngIf="c.reservationStatus=='RESERVED'" type="button"
                 class="btn btn-danger btn-sm">
           <i class="material-icons align-middle">clear</i>
-          <span class="d-sm-none d-md-inline-block align-middle">Cancel</span>
+          <span class="d-none d-md-inline-block align-middle">Cancel</span>
         </button>
         <button *ngIf="c.reservationStatus=='UNAVAILABLE'" type="button"
                 class="btn btn-secondary btn-sm" disabled>
           <i class="material-icons align-middle">assignment</i>
-          <span class="d-sm-none d-md-inline-block align-middle">Reserve</span>
+          <span class="d-none d-md-inline-block align-middle">Reserve</span>
         </button>
       </div>
     </div>
