@@ -32,10 +32,10 @@ app.use('/', express.static(__dirname + '/dist'));
 /** API ENDPOINTS */
 // import the API controllers
 var sampleApi = require('./controllers/sampleController');
-var deviceApi = require('./controllers/deviceController');
+var devicesApi = require('./controllers/devicesController');
 // register controllers for endpoints
 router.use('/sample', sampleApi);
-router.use('/devices', deviceApi);//Api for devices
+router.use('/devices', devicesApi);//Api for devices
 // any route starting with '/api' will be interfacing our API
 app.use('/api', router);
 
