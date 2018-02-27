@@ -11,8 +11,8 @@
            [ngClass]="{'text-success': c.reservationStatus=='OPEN',
                        'text-primary': c.reservationStatus=='RESERVED',
                        'text-danger': c.reservationStatus=='UNAVAILABLE'}">
-          <i class="material-icons" style="margin-right: 0.2rem">lens</i> {{c.reservationStatus}}<br />
-          {{c.noOfParticipants + '/' + c.capacity}}
+        <i class="material-icons" style="margin-right: 0.2rem">lens</i> {{c.reservationStatus}}<br />
+        {{c.noOfParticipants + '/' + c.capacity}}
       </div>
     </div>
 
@@ -33,9 +33,10 @@
               <span class="align-middle">Reserve</span>
             </button>
             <button *ngIf="c.reservationStatus=='RESERVED'" type="button"
-                    class="btn btn-danger btn-sm">
-              <i class="material-icons align-middle">clear</i>
-              <span class="align-middle">Cancel</span>
+                    class="btn btn-primary btn-sm"
+                    style="padding-right: 5px;">
+              <span class="align-middle">Your Reservation Info</span>
+              <i class="material-icons align-middle" style="width: 15px; position: relative; left: -5px;">keyboard_arrow_right</i>
             </button>
             <button *ngIf="c.reservationStatus=='UNAVAILABLE'" type="button"
                     class="btn btn-secondary btn-sm" disabled>
