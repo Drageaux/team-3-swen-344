@@ -4,8 +4,10 @@
 .card-header {
   padding: 0.3rem;
   align-items: center;
+  cursor: pointer;
 }
 
 #reservation-status{
   font-size: 0.8rem;
+  align-items: center;
 }

@@ -3,37 +3,48 @@
   <div *ngFor="let c of classroomList" class="card container">
     <!-- Card Header -->
     <div class="card-header row" (click)="showCollapse('collapseClass' + c.id)">
-      <div class="col-6 align-middle">
+      <div class="col-2 col-sm-3 align-middle">
         {{c.className}}
       </div>
-
-      <div class="col-4 text-center align-middle" id="reservation-status">
-        {{c.reservationStatus}}<br />
-        {{c.noOfParticipants + '/' + c.capacity}}
-      </div>
-
-      <div class="col-2 text-right align-middle">
-        <button *ngIf="c.reservationStatus=='OPEN'" type="button"
-                class="btn btn-success btn-sm">
-          <i class="material-icons align-middle">assignment</i>
-          <span class="d-none d-md-inline-block align-middle">Reserve</span>
-        </button>
-        <button *ngIf="c.reservationStatus=='RESERVED'" type="button"
-                class="btn btn-danger btn-sm">
-          <i class="material-icons align-middle">clear</i>
-          <span class="d-none d-md-inline-block align-middle">Cancel</span>
-        </button>
-        <button *ngIf="c.reservationStatus=='UNAVAILABLE'" type="button"
-                class="btn btn-secondary btn-sm" disabled>
-          <i class="material-icons align-middle">assignment</i>
-          <span class="d-none d-md-inline-block align-middle">Reserve</span>
-        </button>
+      <div class="col-6 col-sm-6"></div>
+      <div class="col-4 col-sm-3 no-gutters text-center align-middle row justify-content-center" id="reservation-status"
+           [ngClass]="{'text-success': c.reservationStatus=='OPEN',
+                       'text-primary': c.reservationStatus=='RESERVED',
+                       'text-danger': c.reservationStatus=='UNAVAILABLE'}">
+          <i class="material-icons" style="margin-right: 0.2rem">lens</i> {{c.reservationStatus}}<br />
+          {{c.noOfParticipants + '/' + c.capacity}}
       </div>
     </div>
 
     <!-- Card Body (has to wrap .collapse div to make the animation smooth) -->
     <div class="collapse" id="collapseClass{{c.id}}">
-      <div class="card-body">TEST</div>
+      <div class="card-body row" style="padding-left: 0.25rem;">
+        <div class="col-8">
+          <strong>Location</strong>: Building 123<br />
+          <strong>Time</strong>: February 19, 2018 5:00pm<br />
+          <strong>Reserved By</strong>: abc1234@rit.edu
+        </div>
+        <div class="col-4 text-right">
+          <!-- Action Button -->
+          <div class="align-middle">
+            <button *ngIf="c.reservationStatus=='OPEN'" type="button"
+                    class="btn btn-success btn-sm">
+              <i class="material-icons align-middle">assignment</i>
+              <span class="align-middle">Reserve</span>
+            </button>
+            <button *ngIf="c.reservationStatus=='RESERVED'" type="button"
+                    class="btn btn-danger btn-sm">
+              <i class="material-icons align-middle">clear</i>
+              <span class="align-middle">Cancel</span>
+            </button>
+            <button *ngIf="c.reservationStatus=='UNAVAILABLE'" type="button"
+                    class="btn btn-secondary btn-sm" disabled>
+              <i class="material-icons align-middle">assignment</i>
+              <span class="align-middle">Reserve</span>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
