@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node app.js",
-    "dev": "concurrently \"nodemon app.js\" \"cd angular && npm run start\"",
+    "dev": "concurrently \"nodemon --exec \"\"node -r dotenv\\config\"\" app.js\" \"cd angular && npm run start\"",
     "preinstall": "cd angular && npm install",
     "prestart": "cd angular && npm run build"
   },
@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "concurrently": "^3.5.1",
+    "dotenv": "^5.0.1",
     "nodemon": "^1.11.0"
   }
 }
