@@ -3,28 +3,31 @@
   <div *ngFor="let c of classroomList" class="card container">
     <!-- Card Header -->
     <div class="card-header row" (click)="showCollapse('collapseClass' + c.id)">
-      <div class="col-2 col-sm-3 align-middle">
+      <div class="col-5 col-sm-4 align-middle">
         {{c.className}}
       </div>
-      <div class="col-6 col-sm-6"></div>
-      <div class="col-4 col-sm-3 no-gutters text-center align-middle row justify-content-center" id="reservation-status"
+      <div class="col-2 col-sm-4"></div>
+      <div class="col-5 col-sm-4 no-gutters text-center align-middle row justify-content-end" id="reservation-status"
            [ngClass]="{'text-success': c.reservationStatus=='OPEN',
                        'text-primary': c.reservationStatus=='RESERVED',
                        'text-danger': c.reservationStatus=='UNAVAILABLE'}">
-        <i class="material-icons" style="margin-right: 0.2rem">lens</i> {{c.reservationStatus}}<br />
-        {{c.noOfParticipants + '/' + c.capacity}}
+        <div>
+          {{c.reservationStatus}}<br />
+          {{c.noOfParticipants + '/' + c.capacity}}
+        </div>
+        <i class="material-icons align-middle" style="margin-left: 0.3rem">lens</i>
       </div>
     </div>
 
     <!-- Card Body (has to wrap .collapse div to make the animation smooth) -->
     <div class="collapse" id="collapseClass{{c.id}}">
       <div class="card-body row" style="padding-left: 0.25rem;">
-        <div class="col-8">
+        <div class="col-6">
           <strong>Location</strong>: Building 123<br />
           <strong>Time</strong>: February 19, 2018 5:00pm<br />
           <strong>Reserved By</strong>: abc1234@rit.edu
         </div>
-        <div class="col-4 text-right">
+        <div class="col-6 text-right" style="padding-right: 0;">
           <!-- Action Button -->
           <div class="align-middle">
             <button *ngIf="c.reservationStatus=='OPEN'" type="button"
@@ -35,7 +38,7 @@
             <button *ngIf="c.reservationStatus=='RESERVED'" type="button"
                     class="btn btn-primary btn-sm"
                     style="padding-right: 5px;">
-              <span class="align-middle">Your Reservation Info</span>
+              <span class="align-middle">Your Reservation</span>
               <i class="material-icons align-middle" style="width: 15px; position: relative; left: -5px;">keyboard_arrow_right</i>
             </button>
             <button *ngIf="c.reservationStatus=='UNAVAILABLE'" type="button"
