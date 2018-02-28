@@ -4,7 +4,9 @@
   "license": "MIT",
   "scripts": {
     "start": "node app.js",
-    "dev": "concurrently \"nodemon app.js\" \"cd angular && npm run start\""
+    "dev": "concurrently \"nodemon app.js\" \"cd angular && npm run start\"",
+    "preinstall": "cd angular && npm install",
+    "prestart": "cd angular && npm run build"
   },
   "engines": {
     "node": ">= 6.10.0"
