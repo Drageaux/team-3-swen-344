@@ -3,12 +3,11 @@
 2. run `npm install` to automatically install packages for both Angular and Express
 3. run `npm install -g concurrently @angular/cli nodemon` to install globally the packages for development
 
-## RUN/BUILD ANGULAR APP
-- **development**: `cd` to `angular` folder and run `npm run start`
-  - this will start serving to http://localhost:4200 with live-reload
-- **production**: `cd` to `angular` folder and run `npm run build`
-  - this will compile the entire project (with Ahead-of-Time and Tree-Shaking) to the `dist` folder in root, where Express will directly access
+## RUN APP
+- **development**: run `npm run dev`. Angular test server will start serving on http://localhost:4200, proxying to the Express server in port `3000` with live-reload for both client- and server-side code
+- **production**: run `npm run start`. Node will build Angular for production into the `/dist` folder, and Express will serve it directly on http://localhost:3000
 
-## RUN EXPRESS APP
-- **development**: run `npm run dev` and it will start serving to http://localhost:3000 with live-reload
-- **production**: run `npm run start`
+## DEPLOYMENT 
+### The app is currently deployed on Heroku
+- Staging: https://swen344-team3-staging.herokuapp.com/
+- Production: https://swen344-team3.herokuapp.com/
