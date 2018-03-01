@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core'; 
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -22,7 +22,8 @@ import { SampleService } from "./modules/sample/sample.service";
     FormsModule,
     HttpClientModule,
     routing,
-    SampleModule
+    SampleModule,
+    DevicesModule
   ],
   providers: [appRoutingProviders, SampleService],
   bootstrap: [AppComponent]
