@@ -9,8 +9,8 @@ import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './not-found.component';
 
 import { SampleModule } from './modules/sample/sample.module';
-import { SampleService } from "./modules/sample/sample.service";
 import { ClassroomsModule } from './modules/classrooms/classrooms.module';
+import { HomeModule } from './modules/home/home.module';
 
 
 @NgModule({
@@ -24,9 +24,10 @@ import { ClassroomsModule } from './modules/classrooms/classrooms.module';
     HttpClientModule,
     routing,
     SampleModule,
+    HomeModule,
     ClassroomsModule
   ],
-  providers: [appRoutingProviders, SampleService],
+  providers: [appRoutingProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

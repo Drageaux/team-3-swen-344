@@ -53,12 +53,12 @@ function deleteClassroomByID(id) {
 
 
 //Returns all classrooms
-classroomController.get('/', function (req, res) {
+classroomsController.get('/', function (req, res) {
     res.json(data.classrooms);
 });
 
 //Returns the classroom with of the requested id
-classroomController.get('/:id', function (req, res) {
+classroomsController.get('/:id', function (req, res) {
     let devData = findClassroomByID(req.params.id);
     if (devData) {
         res.json(devData);
@@ -69,7 +69,7 @@ classroomController.get('/:id', function (req, res) {
 });
 
 //Add new classroom
-classroomController.post('/', function (req, res) {
+classroomsController.post('/', function (req, res) {
     if (req.body && req.body.newName) {
         addNewClassroom(req, body.newName);
         res.json(data.classrooms);
@@ -80,7 +80,7 @@ classroomController.post('/', function (req, res) {
 });
 
 //Update classroom
-classroomController.put('/', function (req, res) {
+classroomsController.put('/', function (req, res) {
     if (req.body && req.body.id && req.body.newName) {
         updateClassroom(req.body.id, req.body.newName);
         res.json(data.classrooms);
@@ -91,7 +91,7 @@ classroomController.put('/', function (req, res) {
 });
 
 //Deletes a classroom
-classroomController.delete('/', function (req, res) {
+classroomsController.delete('/', function (req, res) {
     if (req.body && req.body.id) {
         deleteClassroomByID(req.params.id);
         res.json(data.classrooms);

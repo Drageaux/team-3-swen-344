@@ -1,24 +1,31 @@
 <header class="navbar sticky-top navbar-expand-md navbar-dark bg-dark">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
-    <a class="navbar-brand" href="#">FM</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#responsive-navbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <a class="navbar-brand"
+       [routerLink]="['/home']">FM</a>
+    <button class="navbar-toggler" type="button"
+            data-toggle="collapse"
+            data-target="#responsive-navbar"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="responsive-navbar">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item"><a class="nav-link" routerLink="/classrooms" routerLinkActive="active">Classroom List</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Reservations</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Devices</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink]="['/home']" routerLinkActive="active">Home</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink]="['/classrooms']" routerLinkActive="active">Classroom List</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink]="['/reservations']" routerLinkActive="active">Reservations</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink]="['/devices']" routerLinkActive="active">Devices</a></li>
         <li class="nav-item"><a class="nav-link disabled" href="#">Settings</a></li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
-        <li class="nav-item"><a class="nav-link" href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Profile</a></li>
-        <li class="nav-item"><a class="nav-link" href="#"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Messaging</a></li>
-        <li class="nav-item"><a class="nav-link" href="#"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Log Out</a></li>
+        <li class="nav-item"><a class="nav-link" disabled href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Profile</a></li>
+        <li class="nav-item"><a class="nav-link" disabled href="#"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Messaging</a></li>
+        <li class="nav-item"><a class="nav-link" disabled href="#"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Log Out</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
