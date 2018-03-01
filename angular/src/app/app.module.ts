@@ -10,6 +10,7 @@ import { PageNotFoundComponent } from './not-found.component';
 
 import { SampleModule } from './modules/sample/sample.module';
 import { SampleService } from "./modules/sample/sample.service";
+import { ClassroomsModule } from './modules/classrooms/classrooms.module';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { SampleService } from "./modules/sample/sample.service";
     FormsModule,
     HttpClientModule,
     routing,
-    SampleModule
+    SampleModule,
+    ClassroomsModule
   ],
   providers: [appRoutingProviders, SampleService],
   bootstrap: [AppComponent]
