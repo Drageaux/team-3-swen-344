@@ -11,11 +11,16 @@ import { PageNotFoundComponent } from './not-found.component';
 import { SampleModule } from './modules/sample/sample.module';
 import { SampleService } from "./modules/sample/sample.service";
 
+import { DevicesModule } from './modules/devices/devices.module';
+import { DevicesService } from './modules/devices/devices.service';
+import { DevicesComponent } from './modules/devices/devices.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    DevicesComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +30,7 @@ import { SampleService } from "./modules/sample/sample.service";
     SampleModule,
     DevicesModule
   ],
-  providers: [appRoutingProviders, SampleService],
+  providers: [appRoutingProviders, SampleService, DevicesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

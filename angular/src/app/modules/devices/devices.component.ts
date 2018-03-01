@@ -1,15 +1,26 @@
 import { Component, OnInit } from '@angular/core';
+import { DevicesService } from './devices.service';
+import { Device } from './device';
 
 @Component({
   selector: 'app-devices',
   templateUrl: './devices.component.html',
-  styleUrls: ['./devices.component.css']
+  styleUrls: ['./devices.component.css'],
+  providers: [DevicesService]
 })
 export class DevicesComponent implements OnInit {
 
-  constructor() { }
+  devices: Device[] = [];
+
+  constructor(private devicesService: DevicesService) {
+  }
 
   ngOnInit() {
+    this.devicesService.getAllDevices().subscribe(
+      (devices) => {
+        this.devices = devices;
+      }
+    );
   }
 
 }
