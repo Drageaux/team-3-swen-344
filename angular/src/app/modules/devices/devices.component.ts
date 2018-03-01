@@ -21,6 +21,7 @@ export class DevicesComponent implements OnInit {
         this.devices = devices;
       }
     );
+    console.log(this.devices);
   }
 
 }

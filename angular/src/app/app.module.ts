@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import {HttpModule} from '@angular/http';
 import { Router } from '@angular/router';
 import { appRoutingProviders, routing } from './app.routing';
 
@@ -13,19 +14,18 @@ import { SampleService } from "./modules/sample/sample.service";
 
 import { DevicesModule } from './modules/devices/devices.module';
 import { DevicesService } from './modules/devices/devices.service';
-import { DevicesComponent } from './modules/devices/devices.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    PageNotFoundComponent,
-    DevicesComponent
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    HttpModule,
     routing,
     SampleModule,
     DevicesModule

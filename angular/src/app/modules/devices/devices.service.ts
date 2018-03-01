@@ -7,7 +7,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
-const DEVICE_API = 'http://localhost:3000/devices';
+const DEVICE_API = 'http://localhost:3000/api/devices';
 
 @Injectable()
 export class DevicesService {
