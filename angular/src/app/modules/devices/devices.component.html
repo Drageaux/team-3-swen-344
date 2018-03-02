@@ -1,4 +1,7 @@
 <h3>Devices</h3>
 
 <!-- List out devices -->
-<app-device-list [devices]="devices">
+<app-device-list
+  [devices]="devices"
+  (delete)="onDeleteDevice($event)">
+</app-device-list>

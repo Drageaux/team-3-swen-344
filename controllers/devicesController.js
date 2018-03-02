@@ -68,7 +68,7 @@ deviceController.get('/find/:id', function(req, res){
 //Add new device
 deviceController.post('/', function (req, res) {
   if(req.body && req.body.newName){
-    addNewDevice(req,body.newName);
+    addNewDevice(req.body.newName);
     res.json(data.devices);
   }
   else {
@@ -88,13 +88,13 @@ deviceController.put('/', function (req, res) {
 });
 
 //Deletes a device
-deviceController.delete('/', function(req, res){
-  if(req.body && req.body.id){
+deviceController.delete('/:id', function(req, res){
+  let devData = findDeviceByID(req.params.id);
+  if(devData){
     deleteDeviceByID(req.params.id);
-    res.json(data.devices);
   }
-  else{
-    res.status(500).send("Missing information.");
+  else {
   }
 });
+
 module.exports = deviceController;

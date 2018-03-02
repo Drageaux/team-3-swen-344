@@ -10,6 +10,13 @@ export class DeviceListComponent {
   @Input()
   devices: Device[];
 
+  @Output()
+  delete: EventEmitter<Device> = new EventEmitter();
+
   constructor() { }
+
+  onDeleteDevice(device: Device){
+    this.delete.emit(device);
+  }
 
 }
