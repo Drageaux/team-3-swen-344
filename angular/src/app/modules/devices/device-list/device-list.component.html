@@ -1,7 +1,7 @@
 <section class="main">
   <ul class="device-list">
     <li *ngFor="let device of devices">
-      {{device.name}}
+      <app-device-list-item [device]="device"></app-device-list-item>
     </li>
   </ul>
 </section>
