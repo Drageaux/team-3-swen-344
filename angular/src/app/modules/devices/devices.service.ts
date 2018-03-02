@@ -18,9 +18,23 @@ export class DevicesService {
   constructor(private http: HttpClient) {
   }
 
-  //Retrives all the devices from the API
   public getAllDevices(): Observable<any> {
     return this.http.get(DEVICE_API).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  public createDevice(devName: string): Observable<Device> {
+    let body = {
+      newName: devName,
+    };
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.post<Device>(DEVICE_API, body, httpOptions).pipe(
       catchError(this.handleError)
     );
   }
@@ -36,6 +50,9 @@ export class DevicesService {
     );
   }
 
+  ////////////////
+  //Error handler
+  ///////////////
   private handleError (error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // a client-side or network error occurred. Handle it accordingly.
@@ -51,6 +68,5 @@ export class DevicesService {
     return new ErrorObservable(
         'Something bad happened; please try again later.');
   };
-
 
 }

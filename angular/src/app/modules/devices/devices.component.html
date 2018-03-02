@@ -1,5 +1,9 @@
 <h3>Devices</h3>
 
+<app-device-form
+ (create)="onCreateDevice($event)">
+</app-device-form>
+
 <!-- List out devices -->
 <app-device-list
   [devices]="devices"
