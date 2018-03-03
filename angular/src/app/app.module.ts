@@ -9,8 +9,9 @@ import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './not-found.component';
 
 import { SampleModule } from './modules/sample/sample.module';
-import { ClassroomsModule } from './modules/classrooms/classrooms.module';
 import { HomeModule } from './modules/home/home.module';
+import { ClassroomsModule } from './modules/classrooms/classrooms.module';
+import { MessagingModule } from './modules/messaging/messaging.module';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { HomeModule } from './modules/home/home.module';
     routing,
     SampleModule,
     HomeModule,
-    ClassroomsModule
+    ClassroomsModule,
+    MessagingModule
   ],
   providers: [appRoutingProviders],
   bootstrap: [AppComponent]
