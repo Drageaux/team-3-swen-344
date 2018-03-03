@@ -5,9 +5,9 @@
     <button class="btn btn-primary" type="button">New Message</button>
   </div>
 
-
-  <table class="table table-bordered table-hover" id="inbox">
-    <thead class="thead-dark">
+  <!-- Inbox -->
+  <table class="table table-hover" id="inbox">
+    <thead class="thead-dark border border-dark">
       <tr>
         <th scope="col"></th>
         <th scope="col">Title</th>
@@ -15,7 +15,7 @@
         <th scope="col">Time Received</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody class="border-left border-right border-bottom">
       <tr>
         <th scope="row">
           <input type="checkbox" aria-label="Checkbox for following message">
@@ -42,4 +42,23 @@
       </tr>
     </tbody>
   </table>
+
+  <!-- Opened Message -->
+  <div class="card">
+    <div class="card-header">
+      <h4>Message</h4>
+    </div>
+    <div class="card-body">
+      <div class="clearfix" style="margin-bottom:1rem;">
+        <div class="float-left">
+          <h5 class="card-title" style="margin-bottom:0.3rem;">Big Shaq</h5>
+          <h6 class="card-subtitle text-muted">to you</h6>
+        </div>
+        <button class="btn btn-primary float-right" type="button">Reply</button>
+      </div>
+      <div class="d-block">
+        <p class="card-text">Two plus two is four, minus one that's three, quick maths.</p>
+      </div>
+    </div>
+  </div>
 </div>
