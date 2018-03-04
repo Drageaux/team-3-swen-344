@@ -30,7 +30,7 @@ import { DevicesService } from './modules/devices/devices.service';
     SampleModule,
     DevicesModule
   ],
-  providers: [appRoutingProviders, SampleService, DevicesService],
+  providers: [appRoutingProviders, SampleService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
