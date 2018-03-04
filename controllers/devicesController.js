@@ -28,11 +28,13 @@ function findDeviceByName(name){
 }
 
 function addNewDevice(newName){
-  data.devices.push({
+  newDevice = {
     id: data.devices.length,
     name: newName,
     rentStatus: true
-  });
+  }
+  data.devices.push(newDevice);
+  return newDevice;
 }
 
 function updateDevice(id, newName){
@@ -55,7 +57,7 @@ deviceController.get('/', function (req, res){
 });
 
 //Returns the device with of the requested id
-deviceController.get('/find/:id', function(req, res){
+deviceController.get('/:id', function(req, res){
   let devData = findDeviceByID(req.params.id);
   if(devData){
     res.json(devData);
@@ -68,8 +70,7 @@ deviceController.get('/find/:id', function(req, res){
 //Add new device
 deviceController.post('/', function (req, res) {
   if(req.body && req.body.newName){
-    addNewDevice(req,body.newName);
-    res.json(data.devices);
+    res.json(addNewDevice(req.body.newName));
   }
   else {
     res.status(500).send("Missing information.");
@@ -78,6 +79,7 @@ deviceController.post('/', function (req, res) {
 
 //Update device
 deviceController.put('/', function (req, res) {
+  console.log(req.body);
   if(req.body && req.body.id && req.body.newName){
     updateDevice(req.body.id, req.body.newName);
     res.json(data.devices);
@@ -88,13 +90,14 @@ deviceController.put('/', function (req, res) {
 });
 
 //Deletes a device
-deviceController.delete('/', function(req, res){
-  if(req.body && req.body.id){
+deviceController.delete('/:id', function(req, res){
+  let devData = findDeviceByID(req.params.id);
+  if(devData){
     deleteDeviceByID(req.params.id);
     res.json(data.devices);
   }
-  else{
-    res.status(500).send("Missing information.");
+  else {
   }
 });
+
 module.exports = deviceController;
