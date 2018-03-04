@@ -23,17 +23,29 @@ export class DevicesComponent implements OnInit {
     );
   }
 
-  onCreateDevice(device){
-    this.devicesService.createDevice(device.name).subscribe(
-      newDevice => {
-        this.devices = this.devices.concat(newDevice);
+  onCreateDevice(newDevice){
+    this.devicesService.createDevice(newDevice).subscribe(
+      nD => {
+        this.devices = this.devices.concat(nD);
+      }
+    );
+  }
+
+  onEditDevice(device){
+    this.devicesService.editDevice(device).subscribe(
+      devices => {
+        this.devices = devices;
       }
     );
   }
 
   onDeleteDevice(device) {
-    this.devicesService.deleteDeviceByID(device.id).subscribe();
-    this.devices = this.devices.filter(d => d.id !== device.id);
+    this.devicesService.deleteDevice(device).subscribe(
+      devices => {
+        this.devices = devices;
+      }
+    );
+    //this.devices = this.devices.filter(d => d.id !== device.id);
 
   }
 

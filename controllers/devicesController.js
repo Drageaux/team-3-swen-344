@@ -57,7 +57,7 @@ deviceController.get('/', function (req, res){
 });
 
 //Returns the device with of the requested id
-deviceController.get('/find/:id', function(req, res){
+deviceController.get('/:id', function(req, res){
   let devData = findDeviceByID(req.params.id);
   if(devData){
     res.json(devData);
@@ -79,6 +79,7 @@ deviceController.post('/', function (req, res) {
 
 //Update device
 deviceController.put('/', function (req, res) {
+  console.log(req.body);
   if(req.body && req.body.id && req.body.newName){
     updateDevice(req.body.id, req.body.newName);
     res.json(data.devices);
@@ -93,6 +94,7 @@ deviceController.delete('/:id', function(req, res){
   let devData = findDeviceByID(req.params.id);
   if(devData){
     deleteDeviceByID(req.params.id);
+    res.json(data.devices);
   }
   else {
   }

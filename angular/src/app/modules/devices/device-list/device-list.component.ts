@@ -13,10 +13,19 @@ export class DeviceListComponent {
   @Output()
   delete: EventEmitter<Device> = new EventEmitter();
 
+  @Output()
+  edit: EventEmitter<Device> = new EventEmitter();
+
   constructor() { }
 
-  onDeleteDevice(device: Device){
+  editDevice(device: Device){
+    this.edit.emit(device);
+  }
+
+  deleteDevice(device: Device){
     this.delete.emit(device);
   }
+
+
 
 }

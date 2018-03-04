@@ -3,7 +3,8 @@
     <li *ngFor="let device of devices">
       <app-device-list-item
         [device]="device"
-        (delete)="onDeleteDevice($event)"></app-device-list-item>
+        (edit)="editDevice($event)"
+        (delete)="deleteDevice($event)"></app-device-list-item>
     </li>
   </ul>
 </section>

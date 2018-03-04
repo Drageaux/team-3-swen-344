@@ -12,9 +12,16 @@ export class DeviceListItemComponent {
   device: Device;
 
   @Output()
+  edit: EventEmitter<Device> = new EventEmitter();
+
+  @Output()
   delete: EventEmitter<Device> = new EventEmitter();
 
   constructor() { }
+
+  editDevice(device: Device){
+    this.edit.emit(device);
+  }
 
   deleteDevice(device: Device){
     this.delete.emit(device);

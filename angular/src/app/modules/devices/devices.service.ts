@@ -24,9 +24,9 @@ export class DevicesService {
     );
   }
 
-  public createDevice(devName: string): Observable<Device> {
+  public createDevice(newDevice: Device): Observable<Device> {
     let body = {
-      newName: devName,
+      newName: newDevice.name,
     };
 
     const httpOptions = {
@@ -39,13 +39,29 @@ export class DevicesService {
     );
   }
 
-  public deleteDeviceByID(id: number): Observable<Device> {
+  public editDevice(editedDevice: Device): Observable<Device[]> {
+    let body = {
+      id: editedDevice.id,
+      newName: editedDevice.name
+    };
+
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
     };
-    return this.http.delete(DEVICE_API + '/' + id, httpOptions).pipe(
+    return this.http.put<Device>(DEVICE_API, body, httpOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  public deleteDevice(device: Device): Observable<Device[]> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.delete(DEVICE_API + '/' + device.id, httpOptions).pipe(
       catchError(this.handleError)
     );
   }
