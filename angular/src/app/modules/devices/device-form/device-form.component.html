@@ -1,8 +1,8 @@
 
-<form #f="ngForm" (ngSubmit)="creating && createDevice(f) || editDevice(f)" novalidate>
+<form #f="ngForm" (ngSubmit)="creating ? createDevice(f) : editDevice(f)" novalidate>
   <div class="form-group">
     <label for="deviceName">Device Name</label>
-    <input [(ngModel)]="creating && newDevice.name || editableDevice.name" id="devName" name="devName" type="text" class="validate"/>
+    <input [(ngModel)]="creating ? newDevice.name : editableDevice.name" id="devName" name="devName" type="text" class="validate"/>
   </div>
   <button type="submit" class="btn btn-success">Submit</button>
 </form>
