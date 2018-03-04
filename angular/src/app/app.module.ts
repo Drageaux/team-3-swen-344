@@ -10,7 +10,8 @@ import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './not-found.component';
 
 import { SampleModule } from './modules/sample/sample.module';
-import { SampleService } from "./modules/sample/sample.service";
+import { ClassroomsModule } from './modules/classrooms/classrooms.module';
+import { HomeModule } from './modules/home/home.module';
 
 import { DevicesModule } from './modules/devices/devices.module';
 import { DevicesService } from './modules/devices/devices.service';
@@ -28,9 +29,11 @@ import { DevicesService } from './modules/devices/devices.service';
     HttpModule,
     routing,
     SampleModule,
+    HomeModule,
+    ClassroomsModule,
     DevicesModule
   ],
-  providers: [appRoutingProviders, SampleService],
+  providers: [appRoutingProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
