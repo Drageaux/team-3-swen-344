@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core'; 
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -10,6 +10,7 @@ import { PageNotFoundComponent } from './not-found.component';
 
 import { SampleModule } from './modules/sample/sample.module';
 import { ClassroomsModule } from './modules/classrooms/classrooms.module';
+import { ReservationsModule } from './modules/reservations/reservations.module';
 import { HomeModule } from './modules/home/home.module';
 
 
@@ -25,7 +26,8 @@ import { HomeModule } from './modules/home/home.module';
     routing,
     SampleModule,
     HomeModule,
-    ClassroomsModule
+    ClassroomsModule,
+    ReservationsModule
   ],
   providers: [appRoutingProviders],
   bootstrap: [AppComponent]

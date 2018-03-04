@@ -1,0 +1,47 @@
+<div class="container">
+  <h2 class="bd-title">Reservation List</h2>
+  <div *ngFor="let r of reservationList" class="card container">
+    <!-- Card Header -->
+    <div class="card-header row" (click)="showCollapse('collapseClass' + r.id)">
+      <div class="col-5 col-sm-4 align-middle">
+        {{r.classroom.className}}
+      </div>
+      <div class="col-2 col-sm-4"></div>
+      <div class="col-5 col-sm-4 no-gutters text-center align-middle row justify-content-end" id="reservation-status"
+           [ngClass]="{'text-success': r.status=='RESERVED',
+                       'text-danger': r.status=='UNAVAILABLE'}">
+        <div>
+          {{r.classroom.noOfParticipants + ' / ' + r.classroom.capacity}}<br />
+        </div>
+        <i class="material-icons align-middle" style="margin-left: 0.3rem">lens</i>
+      </div>
+    </div>
+
+    <!-- Card Body (has to wrap .collapse div to make the animation smooth) -->
+    <div class="collapse" id="collapseClass{{r.id}}">
+      <div class="card-body row" style="padding-left: 0.25rem;">
+        <div class="col-6">
+          <strong>Location</strong>: Building 123<br />
+          <strong>Time</strong>: {{ r.startDate + " - " + r.endDate}}<br />
+          <strong>Reserved By</strong>: {{ r.reservedBy }}
+        </div>
+        <div class="col-6 text-right" style="padding-right: 0;">
+          <!-- Action Button -->
+          <div class="align-middle">
+            <button *ngIf="r.status=='RESERVED'" type="button"
+                    class="btn btn-success btn-sm">
+              <i class="material-icons align-middle">assignment</i>
+              <span class="align-middle">Cancel</span>
+            </button>
+            <button *ngIf="r.status=='UNAVAILABLE'" type="button"
+                    class="btn btn-secondary btn-sm" disabled>
+              <i class="material-icons align-middle">assignment</i>
+              <span class="align-middle">Expired</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
