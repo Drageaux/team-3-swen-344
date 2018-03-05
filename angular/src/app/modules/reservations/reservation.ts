@@ -1,4 +1,4 @@
-import {Classroom} from "../classrooms/classroom";
+import {Classroom} from '../classrooms/classroom';
 
 export class Reservation {
   constructor(
@@ -8,5 +8,5 @@ export class Reservation {
     public endDate: string,
     public reservedBy: string,
     public status: string
-  ){ }
+  ) { }
 }
