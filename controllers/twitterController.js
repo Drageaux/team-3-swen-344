@@ -19,11 +19,10 @@ twitterController.get('/', function (req, res) {
         screen_name: 'team3swen344',
         count: '10'
     }, function err(error, response, body) {
-        console.log('TWITTER ERROR [%s]', err);
         res.status(500).send(error);
     }, function success(data) {
-        console.log('TWITTER DATA [%s]', data);
-        res.json(data);
+        var parsedRes = JSON.parse(data);
+        res.json(parsedRes);
     });
 });
 
