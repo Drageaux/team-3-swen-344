@@ -3,7 +3,8 @@ import { Router, NavigationEnd } from '@angular/router';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
-import { catchError, retry } from 'rxjs/operators';
+import { map, catchError, retry } from 'rxjs/operators';
+
 import { Tweet } from './tweet';
 
 @Component({
@@ -13,11 +14,32 @@ import { Tweet } from './tweet';
 })
 export class HomeComponent implements OnDestroy {
   private twitter: any;
+  private tweets: Tweet[] = [];
 
   constructor(private _router: Router,
     private http: HttpClient) {
 
     this.initTwitterWidget();
+
+    this.getRecentTweets(10)
+      .subscribe(data => {
+        this.tweets = data;
+        if ((<any>window).twttr.ready())
+          (<any>window).twttr.widgets.load();
+        console.log(this.tweets)
+      });
+  }
+
+  ngOnDestroy() {
+    this.twitter.unsubscribe();
+  }
+
+  getRecentTweets(count: number) {
+    return this.http.get<Tweet[]>('api/twitter?count=' + count).pipe(
+      map(res => res as Tweet[]),
+      retry(3), // retry a failed request up to 3 times
+      catchError(this.handleError) // then handle the error
+    )
   }
 
   /**
@@ -48,19 +70,6 @@ export class HomeComponent implements OnDestroy {
       }
     });
   }
-
-  ngOnDestroy() {
-    this.twitter.unsubscribe();
-  }
-
-  getRecentTweets(count: number) {
-    if (!count) return;
-    this.http.get<Tweet>('api/twitter?count=' + count).pipe(
-      retry(3), // retry a failed request up to 3 times
-      catchError(this.handleError) // then handle the error
-    ).subscribe(data => console.log(data))
-  }
-
 
   /********************
    * HELPER FUNCTIONS *

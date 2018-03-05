@@ -17,7 +17,7 @@ var twitter = new Twitter(config);
 twitterController.get('/', function (req, res) {
     twitter.getUserTimeline({
         screen_name: 'team3swen344',
-        count: '10'
+        count: req.params.count ? req.params.count : '10'
     }, function err(error, response, body) {
         res.status(500).send(error);
     }, function success(data) {
