@@ -34,10 +34,12 @@ app.use('/', express.static(__dirname + '/dist'));
 var sampleApi = require('./controllers/sampleController');
 var devicesApi = require('./controllers/devicesController');
 var classroomsApi = require('./controllers/classroomsController');
+var twitterApi = require('./controllers/twitterController');
 // register controllers for endpoints
 router.use('/sample', sampleApi);
 router.use('/devices', devicesApi); //API for devices
 router.use('/classrooms', classroomsApi); //API for classrooms
+router.use('/twitter', twitterApi); //API for Twitter
 // any route starting with '/api' will be interfacing our API
 app.use('/api', router);
 
