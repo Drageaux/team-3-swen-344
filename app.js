@@ -43,8 +43,8 @@ app.use('/api', router);
 
 
 /** RUN APP */
-app.listen(process.env.PORT || '3000', function () {
+var server = app.listen(process.env.PORT || '3000', function () {
     console.log('[SERVER] I\'m listening on PORT: ' + (process.env.PORT || '3000'));
 });
 
-module.exports = app;
+module.exports = server;

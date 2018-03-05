@@ -29,27 +29,31 @@ function createMessage(message, fromId, toId, title){
       title: title,
       message: message,
       deleted: false,
-      id: data.messages.length + 1
+      id: data.messages.length
   });
 }
 
 function updateMessage(id, message, fromId, toId, title){
     for(var i = 0; i < data.messages.length; i += 1) {
-        if (data.messages[i]['id'] === id) {
+        if (data.messages[i]['id'] == id) {
             data.messages[i]['message'] = message;
             data.messages[i]['fromId'] = fromId;
             data.messages[i]['toId'] = toId;
             data.messages[i]['title'] = title;
+            return true;
         }
     }
+    return false;
 }
 
 function deleteMessageByID(id){
     for(var i = 0; i < data.messages.length; i += 1) {
         if (data.messages[i]['id'] == id) {
             data.messages[i]['deleted'] = true;
+            return true;
         }
     }
+    return false;
 }
 
 //Returns all devices
@@ -59,18 +63,22 @@ messagingController.get('/', function (req, res){
 
 //Returns the device with of the requested id
 messagingController.get('/to/:id', function(req, res){
-  let messagingData = findMessagesByToId(req.params.id);
-  if(messagingData.messages){
-    res.json(messagingData);
-  }
-  else{
-    res.status(500).send("Cannot find message.");
-  }
+    if(Number.isInteger(parseInt(req.params.id)) && parseInt(req.params.id) >= 0){
+        let messagingData = findMessagesByToId(req.params.id);
+        if(messagingData.messages.length > 0){
+            res.json(messagingData);
+        } else {
+            res.status(500).send("Cannot find message.");
+        }
+    }
+    else{
+        res.status(500).send("Improper Input Values.");
+    }
 });
 
 //Add new message
 messagingController.post('/', function (req, res) {
-  if(req.body && req.body.message && Number.isInteger(req.body.fromId) && Number.isInteger(req.body.toId) && req.body.title){
+  if(req.body && req.body.message && Number.isInteger(req.body.fromId) && req.body.fromId >= 0 && Number.isInteger(req.body.toId) && req.body.toId >= 0 && req.body.title){
     createMessage(req.body.message, req.body.fromId, req.body.toId, req.body.title);
     res.json(data.messages);
   }
@@ -81,10 +89,13 @@ messagingController.post('/', function (req, res) {
 
 //Update message
 messagingController.put('/', function (req, res) {
-    console.log((req.body.id || 0));
-  if(req.body && Number.isInteger(req.body.id) && req.body.message && Number.isInteger(req.body.fromId) && Number.isInteger(req.body.toId) && req.body.title){
-    updateMessage(req.body.id, req.body.message, req.body.fromId, req.body.toId, req.body.title);
-    res.json(data.messages);
+  if(req.body && Number.isInteger(req.body.id) && req.body.id >= 0 && req.body.message && Number.isInteger(req.body.fromId) && req.body.toId >= 0 && req.body.fromId >= 0 && Number.isInteger(req.body.toId) && req.body.title){
+    var result = updateMessage(req.body.id, req.body.message, req.body.fromId, req.body.toId, req.body.title);
+    if(result){
+        res.json(data.messages);
+    } else {
+        res.status(500).send("Message not found.");
+    }
   }
   else {
     res.status(500).send("Missing information.");
@@ -93,9 +104,13 @@ messagingController.put('/', function (req, res) {
 
 //Deletes a device
 messagingController.delete('/', function(req, res){
-  if(req.body && Number.isInteger(req.body.id)){
-    deleteMessageByID(req.body.id);
-    res.json(data.messages);
+  if(req.body && Number.isInteger(req.body.id) && req.body.id >= 0){
+    var result = deleteMessageByID(req.body.id);
+      if(result){
+          res.json(data.messages);
+      } else {
+          res.status(500).send("Message not found.");
+      }
   }
   else{
     res.status(500).send("Missing information.");
