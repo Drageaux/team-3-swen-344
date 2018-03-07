@@ -224,6 +224,7 @@ describe('Testing DELETE messaging API', function () {
 ///////////////////////////////
 //Device Controller Unit Test//
 ///////////////////////////////
+///GET
 describe('Testing GET devices API', function () {
     var server;
     before(function () {
@@ -256,5 +257,139 @@ describe('Testing GET devices API', function () {
         request(server)
             .get('/api/devices/abcd')
             .expect(500, done);
+    });
+});
+
+//POST
+describe('Testing POST devices API', function () {
+    var server;
+    before(function () {
+        server = require('./app');
+    });
+    after(function(done) {
+        server.close(done);
+    });
+    it('responds to POST /api/devices/', function testSlash(done) {
+        request(server)
+            .post('/api/devices/')
+            .send({"name": "Foo"})
+            .expect(200)
+            .expect('Content-Type', /json/)
+            .end(function(err, res) {
+                if (err) done(err);
+                res.body.should.be.instanceOf(Object);
+                done();
+            })
+    });
+    it('responds to POST /api/devices/ with missing field', function testSlash(done) {
+        request(server)
+            .post('/api/devices/')
+            .send({})
+            .expect(500)
+            .end(function(err, res) {
+                if (err) done(err);
+                done();
+            })
+    });
+});
+
+//PUT
+describe('Testing PUT devices API', function () {
+    var server;
+    before(function () {
+        server = require('./app');
+    });
+    after(function(done) {
+        server.close(done);
+    });
+    it('responds to PUT /api/devices/', function testSlash(done) {
+        request(server)
+            .put('/api/devices/')
+            .send({"id":1,"name": "Foo"})
+            .expect(200)
+            .expect('Content-Type', /json/)
+            .end(function(err, res) {
+                if (err) done(err);
+                res.body[1].should.have.property('name').which.equals("Foo");
+                done();
+            })
+    });
+    it('responds to PUT /api/devices/ with missing field', function testSlash(done) {
+        request(server)
+            .put('/api/devices/')
+            .send({"id":1})
+            .expect(500)
+            .end(function(err, res) {
+                if (err) done(err);
+                done();
+            })
+    });
+    it('responds to PUT /api/devices/ with non-integer id', function testSlash(done) {
+        request(server)
+            .put('/api/devices/')
+            .send({"id":'abc',"name": "Foo"})
+            .expect(500)
+            .end(function(err, res) {
+                if (err) done(err);
+                done();
+            })
+    });
+    it('responds to PUT /api/devices/ with negative id', function testSlash(done) {
+        request(server)
+            .put('/api/devices/')
+            .send({"id":-1,"name": "Foo"})
+            .expect(500)
+            .end(function(err, res) {
+                done();
+            })
+    });
+    it('responds to PUT /api/devices/ with device that does not exist', function testSlash(done) {
+        request(server)
+            .put('/api/devices/')
+            .send({"id":100,"name": "Foo"})
+            .expect(500)
+            .end(function(err, res) {
+                done();
+            })
+    });
+});
+
+//DELETE
+describe('Testing DELETE devices API', function () {
+    var server;
+    before(function () {
+        server = require('./app');
+    });
+    after(function(done) {
+        server.close(done);
+    });
+    it('responds to DELETE /api/devices/', function testSlash(done) {
+        request(server)
+            .delete('/api/devices/0')
+            .expect(200)
+            .expect('Content-Type', /json/)
+            .end(function(err, res) {
+                if (err) done(err);
+                res.body[0].should.have.property('id').and.is.equal(1);
+                done();
+            })
+    });
+    it('responds to DELETE /api/devices/ with non-integer id', function testSlash(done) {
+        request(server)
+            .delete('/api/devices/abcd')
+            .expect(500)
+            .end(function(err, res) {
+                if (err) done(err);
+                done();
+            })
+    });
+    it('responds to DELETE /api/devices/ with device that does not exist', function testSlash(done) {
+        request(server)
+            .delete('/api/devices/100')
+            .expect(500)
+            .end(function(err, res) {
+                if (err) done(err);
+                done();
+            })
     });
 });
