@@ -5,3 +5,11 @@
 .table-hover tr {
   cursor: pointer;
 }
+
+tr.collapsing {
+  
+}
+
+tr.collapse:not(.show) {
+  display: none !important;
+}
