@@ -8,8 +8,8 @@
       </div>
       <div class="col-2 col-sm-4"></div>
       <div class="col-5 col-sm-4 no-gutters text-center align-middle row justify-content-end" id="reservation-status"
-           [ngClass]="{'text-success': r.status=='RESERVED',
-                       'text-danger': r.status=='UNAVAILABLE'}">
+           [ngClass]="{'text-success': r.active==true,
+                       'text-danger': r.status==false}">
         <div>
           {{r.classroom.noOfParticipants + ' / ' + r.classroom.capacity}}<br />
         </div>
@@ -28,15 +28,15 @@
         <div class="col-6 text-right" style="padding-right: 0;">
           <!-- Action Button -->
           <div class="align-middle">
-            <button *ngIf="r.status=='RESERVED'" type="button"
-                    class="btn btn-success btn-sm">
+            <button *ngIf="r.active==true" type="button"
+                    class="btn btn-danger btn-sm" (click)="onCancelReservation(r)">
               <i class="material-icons align-middle">assignment</i>
               <span class="align-middle">Cancel</span>
             </button>
-            <button *ngIf="r.status=='UNAVAILABLE'" type="button"
+            <button *ngIf="r.active==false" type="button"
                     class="btn btn-secondary btn-sm" disabled>
               <i class="material-icons align-middle">assignment</i>
-              <span class="align-middle">Expired</span>
+              <span class="align-middle">Canceled</span>
             </button>
           </div>
         </div>

@@ -25,7 +25,7 @@ export class ReservationsService {
     );
   }
 
-  public deleteReservation(reservation: Reservation): Observable<Reservation[]> {
+  public cancelReservation(reservation: Reservation): Observable<Reservation[]> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
@@ -36,10 +36,9 @@ export class ReservationsService {
     );
   }
 
-  public createReservation(classroom: Classroom, reservation: Reservation): Observable<Reservation> {
+  public createReservation(classroom: Classroom): Observable<Reservation> {
     const body = {
-      classroomId: classroom.id,
-      reservedBy: reservation.reservedBy,
+      classroomId: classroom.id
     };
     const httpOptions = {
       headers: new HttpHeaders({
