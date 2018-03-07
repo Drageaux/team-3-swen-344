@@ -5,11 +5,9 @@ import { Device } from '../device';
 @Component({
   selector: 'app-device-form',
   templateUrl: './device-form.component.html',
-  styleUrls: ['./device-form.component.css']
+  styleUrls: ['../devices.component.css']
 })
 export class DeviceFormComponent {
-
-
 
   newDevice: Device = new Device();
 

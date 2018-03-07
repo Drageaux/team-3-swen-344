@@ -1,10 +1,20 @@
-<section class="main">
-  <ul class="device-list">
-    <li *ngFor="let device of devices">
-      <app-device-list-item
-        [device]="device"
-        (edit)="editDevice($event)"
-        (delete)="deleteDevice($event)"></app-device-list-item>
-    </li>
-  </ul>
-</section>
+<div *ngFor="let device of devices" class="card container">
+  <app-device-list-item
+    [device]="device"
+    (edit)="editDevice($event)"
+    (delete)="deleteDevice($event)">
+  </app-device-list-item>
+
+  <!--
+  <section class="main">
+    <ul class="device-list">
+      <li *ngFor="let device of devices">
+        <app-device-list-item
+          [device]="device"
+          (edit)="editDevice($event)"
+          (delete)="deleteDevice($event)"></app-device-list-item>
+      </li>
+    </ul>
+  </section>
+  -->
+</div>

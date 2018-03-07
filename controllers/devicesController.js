@@ -9,6 +9,8 @@ let data = {
   ]
 }
 
+let currID = data.devices.length;
+
 function findDeviceByID(id){
   for (var i = 0; i < data.devices.length; i++){
     if (data.devices[i].id == id){
@@ -29,11 +31,12 @@ function findDeviceByName(name){
 
 function addNewDevice(newName){
   newDevice = {
-    id: data.devices.length,
+    id: currID,
     name: newName,
     rentStatus: true
   }
   data.devices.push(newDevice);
+  currID++;
   return newDevice;
 }
 
@@ -70,7 +73,8 @@ deviceController.get('/:id', function(req, res){
 //Add new device
 deviceController.post('/', function (req, res) {
   if(req.body && req.body.newName){
-    res.json(addNewDevice(req.body.newName));
+    addNewDevice(req.body.newName)
+    res.json(data.devices);
   }
   else {
     res.status(500).send("Missing information.");
