@@ -58,12 +58,17 @@ deviceController.get('/', function (req, res){
 
 //Returns the device with of the requested id
 deviceController.get('/:id', function(req, res){
-  let devData = findDeviceByID(req.params.id);
-  if(devData){
-    res.json(devData);
+  if(Number.isInteger(parseInt(req.params.id)) && parseInt(req.params.id) >= 0){
+    let devData = findDeviceByID(req.params.id);
+    if(devData){
+      res.json(devData);
+    }
+    else{
+      res.status(500).send("Cannot find device.");
+    }
   }
-  else{
-    res.status(500).send("Cannot find device.");
+  else {
+    res.status(500).send("Invalid Input.");
   }
 });
 
@@ -79,7 +84,6 @@ deviceController.post('/', function (req, res) {
 
 //Update device
 deviceController.put('/', function (req, res) {
-  console.log(req.body);
   if(req.body && req.body.id && req.body.newName){
     updateDevice(req.body.id, req.body.newName);
     res.json(data.devices);

@@ -219,3 +219,42 @@ describe('Testing DELETE messaging API', function () {
             })
     });
 });
+
+
+///////////////////////////////
+//Device Controller Unit Test//
+///////////////////////////////
+describe('Testing GET devices API', function () {
+    var server;
+    before(function () {
+        server = require('./app');
+    });
+    after(function(done) {
+        server.close(done);
+    });
+    it('responds to get /api/devices/', function testSlash(done) {
+        request(server)
+            .get('/api/devices/')
+            .expect(200, done);
+    });
+    it('responds to GET with id /api/devices/0', function testSlash(done) {
+        request(server)
+            .get('/api/devices/0')
+            .expect(200, done);
+    });
+    it('Sends back 500 with improper id /api/devices/-1', function testSlash(done) {
+        request(server)
+            .get('/api/devices/-1')
+            .expect(500, done);
+    });
+    it('Sends back 500 with non-numeric id /api/devices/abcd', function testSlash(done) {
+        request(server)
+            .get('/api/devices/abcd')
+            .expect(500, done);
+    });
+    it('Sends back 500 with no messages found /api/devices/1000', function testSlash(done) {
+        request(server)
+            .get('/api/devices/abcd')
+            .expect(500, done);
+    });
+});
