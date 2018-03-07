@@ -35,7 +35,7 @@ var sampleApi = require('./controllers/sampleController');
 var devicesApi = require('./controllers/devicesController');
 var messagingApi = require('./controllers/messagingController');
 var classroomsApi = require('./controllers/classroomsController');
-var reservationsApi = require('./controllers/reservationsController')
+var reservationsApi = require('./controllers/reservationsController');
 // register controllers for endpoints
 router.use('/sample', sampleApi);
 router.use('/devices', devicesApi);//Api for devices

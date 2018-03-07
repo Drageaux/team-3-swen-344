@@ -10,3 +10,4 @@ export class Reservation {
     public status: string
   ) { }
 }
+
