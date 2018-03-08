@@ -29,7 +29,7 @@ function selectRandomQuote(quoteList) {
     return quoteList[index];
 }
 
-var weatherMachine = {
+var weatherController = {
     // Options:
     // search:     location name or zipcode
     // degreeType: F or C
@@ -63,4 +63,4 @@ var weatherMachine = {
     }
 };
 
-module.exports = weatherMachine;
+module.exports = weatherController;

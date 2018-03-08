@@ -45,7 +45,7 @@ app.use('/api', router);
 
 /** KRUTZ'S WEATHER MACHINE */
 var CronJob = require('cron').CronJob;
-var weatherMachine = require('./controllers/weatherMachine');
+var weatherController = require('./controllers/weatherController');
 var giphyController = require('./controllers/giphyController');
 var twitterClient = twitterApi.twitterClient;
 // callback functions 
@@ -60,10 +60,10 @@ var success = function (data) {
 var job = new CronJob('0 0 0 * * *',
     function () {
         // check weather
-        weatherMachine.getCurrentWeather(function callback(weather) {
+        weatherController.getCurrentWeather(function callback(weather) {
             if (weather.temperature) {
                 // get quote
-                var quote = weatherMachine.getWeatherQuote(weather.temperature);
+                var quote = weatherController.getWeatherQuote(weather.temperature);
                 // TODO: find Giphy gif
                 var giphyUrl = '';
 
