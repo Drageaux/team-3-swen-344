@@ -33,9 +33,7 @@ export class ClassroomReservationFormComponent{
   constructor(private reservationsService: ReservationsService) { }
 
   createReservation(form: NgForm) {
-    console.log("createReservation");
     if(form.valid){
-      this.newReservation.id = form.value.resId;
       //Classroom
       this.newReservation.classroomId = this.cId;
       this.newReservation.startDate = form.value.resStartDate;
@@ -43,17 +41,16 @@ export class ClassroomReservationFormComponent{
       this.newReservation.endDate = form.value.resEndDate;
       //reservedby
       this.newReservation.reservedBy = form.value.resReservedBy;
-      //active
-      this.newReservation.active = form.value.resActive;
       //this.create.emit(this.newReservation);
-      this.reservationsService.createReservation(this.newReservation);
-      //form.reset();
+      this.reservationsService.createReservation(this.newReservation)
+        .subscribe(data => console.log(data));
+      form.reset();
     }
   }
 
   editReservation(form: NgForm){
     if(form.valid){
-      this.editableReservation.id = form.value.resId;
+      //this.editableReservation.id = form.value.resId;
       this.editableReservation.classroomId = this.cId;
       this.editableReservation.startDate = form.value.resStartDate;
       //endDate
@@ -61,7 +58,7 @@ export class ClassroomReservationFormComponent{
       //reservedby
       this.editableReservation.reservedBy = form.value.resReservedBy;
       //active
-      this.editableReservation.active = form.value.resActive;
+      //this.editableReservation.active = form.value.resActive;
       this.edit.emit(this.editableReservation);
     }
   }

@@ -38,9 +38,8 @@ export class ReservationsService {
 
   public createReservation(newReservation: Reservation): Observable<Reservation> {
     let body = {
-      id: newReservation.id,
+      //id: newReservation.id,
       classroomId: newReservation.classroomId,
-      active: newReservation.active,
       startDate: newReservation.startDate,
       endDate: newReservation.endDate,
       participants: newReservation.participants,
