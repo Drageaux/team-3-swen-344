@@ -42,7 +42,6 @@ export class ReservationsService {
       classroomId: newReservation.classroomId,
       startDate: newReservation.startDate,
       endDate: newReservation.endDate,
-      participants: newReservation.participants,
       reservedBy: newReservation.reservedBy,
       eventName: newReservation.eventName
     };

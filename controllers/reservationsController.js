@@ -24,8 +24,7 @@ function findReservationByID(id) {
     return null;
 }
 
-function createNewReservations(classroomId, startDate, endDate, reservedBy, eventName, participants) {
-    console.log("reservationController");
+function createNewReservations(classroomId, startDate, endDate, reservedBy, eventName) {
     newReservation = {
         id: data.reservations.length,
         classroomId: classroomId,
@@ -34,7 +33,7 @@ function createNewReservations(classroomId, startDate, endDate, reservedBy, even
         reservedBy: reservedBy,
         active: true,
         eventName: eventName,
-        participants: participants,
+        participants: 1,
     }
     data.reservations.push(newReservation);
     return newReservation;
@@ -67,8 +66,8 @@ reservationsController.get('/:id', function (req, res) {
 
 //create a new reservation
 reservationsController.post('/', function (req, res) {
-    if(req.body && req.body.classroomId && req.body.startDate && req.body.endDate && req.body.reservedBy && req.body.eventName && req.body.participants){
-        res.json(createNewReservations(req.body.classroomId, req.body.startDate, req.body.endDate, req.body.reservedBy, req.body.eventName, req.body.participants));
+    if(req.body && req.body.classroomId && req.body.startDate && req.body.endDate && req.body.reservedBy && req.body.eventName){
+        res.json(createNewReservations(req.body.classroomId, req.body.startDate, req.body.endDate, req.body.reservedBy, req.body.eventName));
     }
     else {
         res.status(500).send("Bad Request");

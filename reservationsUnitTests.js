@@ -46,7 +46,7 @@ describe('Testing POST reservations API', function() {
     it('responds to POST /api/reservations', function testSlash(done) {
         request(server)
             .post(RESERVATIONS_API)
-            .send({"classroomId":0, "startDate":"1/1/1", "endDate":"1/1/1", "participants":"2", "reservedBy":"test", "eventName":"testName"})
+            .send({"classroomId":0, "startDate":"1/1/1", "endDate":"1/1/1", "reservedBy":"test", "eventName":"testName"})
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function(err, res) {

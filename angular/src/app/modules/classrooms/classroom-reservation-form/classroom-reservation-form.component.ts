@@ -41,7 +41,7 @@ export class ClassroomReservationFormComponent{
       this.newReservation.endDate = form.value.resEndDate;
       //reservedby
       this.newReservation.reservedBy = form.value.resReservedBy;
-      this.newReservation.eventName = form.value.eventName;
+      this.newReservation.eventName = form.value.resEventName;
       //this.create.emit(this.newReservation);
       this.reservationsService.createReservation(this.newReservation)
         .subscribe(data => console.log(data));
