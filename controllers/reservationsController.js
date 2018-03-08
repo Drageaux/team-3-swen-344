@@ -67,9 +67,8 @@ reservationsController.get('/:id', function (req, res) {
 
 //create a new reservation
 reservationsController.post('/', function (req, res) {
-    console.log("RESERVATIONS CONTROLLER!!!!");
     if(req.body){
-        res.json(createNewReservations(req.body.classroomId, req.body.startData, req.body.endDate, req.body.reservedBy, req.body.eventName, req.body.participants));
+        res.json(createNewReservations(req.body.classroomId, req.body.startDate, req.body.endDate, req.body.reservedBy, req.body.eventName, req.body.participants));
     }
     else {
         res.status(500).send("Bad Request");
