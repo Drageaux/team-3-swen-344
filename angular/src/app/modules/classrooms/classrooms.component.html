@@ -31,10 +31,33 @@
           <!-- Action Button -->
           <div class="align-middle">
             <button *ngIf="c.reservationStatus=='OPEN'" type="button"
-                    class="btn btn-success btn-sm">
+                    class="btn btn-success btn-sm" data-toggle="modal" data-target="#newFormModal">
               <i class="material-icons align-middle">assignment</i>
               <span class="align-middle">Reserve</span>
             </button>
+            <!-- Modal -->
+            <div class="modal fade" id="newFormModal" role="dialog">
+                <div class="modal-dialog">
+  
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Add a new Reservation</h4>
+                    </div>
+                    <div class="modal-body">
+                      <!--<app-device-form
+                      [creating]="true"
+                      (create)="onCreateDevice($event)">
+                      </app-device-form>-->
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+  
+                </div>
+              </div>
             <button *ngIf="c.reservationStatus=='RESERVED'" type="button"
                     class="btn btn-primary btn-sm"
                     style="padding-right: 5px;">
