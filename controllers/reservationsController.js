@@ -24,7 +24,7 @@ function findReservationByID(id) {
     return null;
 }
 
-function createNewReservations(classroomId, startDate, endDate, reservedBy, active, eventName, participants) {
+function createNewReservations(classroomId, startDate, endDate, reservedBy, eventName, participants) {
     console.log("reservationController");
     newReservation = {
         id: data.reservations.length,
@@ -32,7 +32,7 @@ function createNewReservations(classroomId, startDate, endDate, reservedBy, acti
         startDate: startDate,
         endDate: endDate,
         reservedBy: reservedBy,
-        active: active,
+        active: true,
         eventName: eventName,
         participants: participants,
     }
