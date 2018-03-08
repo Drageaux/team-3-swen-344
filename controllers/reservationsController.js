@@ -1,16 +1,19 @@
 var express = require('express');
 var reservationsController = express.Router();
 
-let data = {
+let classroomsData = {
     classrooms: [
-        { id: 0, name: "CLASS-0", reservationStatus: "OPEN", noOfParticipants: 0, capacity: 30 },
-        { id: 1, name: "CLASS-1", reservationStatus: "UNAVAILABLE", noOfParticipants: 12, capacity: 30 },
-        { id: 2, name: "CLASS-2", reservationStatus: "RESERVED", noOfParticipants: 10, capacity: 20 }
-    ],
-    reservations: [
-        { id: 0, classroom: this.classrooms[0], startDate: Date.now().toLocaleString(), endDate: Date.now().toLocaleString(), reservedBy: "test@email.com", status: "RESERVED"}
+        {id: 0, name: "CLASS-0", reservationStatus: "OPEN", noOfParticipants: 0, capacity: 30},
+        {id: 1, name: "CLASS-1", reservationStatus: "UNAVAILABLE", noOfParticipants: 12, capacity: 30},
+        {id: 2, name: "CLASS-2", reservationStatus: "RESERVED", noOfParticipants: 10, capacity: 20}
     ]
 }
+let data = {
+    reservations: [
+        { id: 0, classroom: classroomsData.classrooms[0], startDate: new Date().toLocaleDateString(), endDate: new Date().toLocaleDateString(), reservedBy: "test@email.com", active: true},
+        { id: 1, classroom: classroomsData.classrooms[2], startDate: new Date().toLocaleDateString(), endDate: new Date().toLocaleDateString(), reservedBy: "test12345@email.com", active: true}
+    ]
+};
 
 function findReservationByID(id) {
     for (var i = 0; i < data.reservations.length; i++) {
@@ -21,49 +24,62 @@ function findReservationByID(id) {
     return null;
 }
 
-function createNewReservations(classroomId, userName) {
-    data.reservations.push({
+function createNewReservations(classroomId) {
+    newReservation = {
         id: data.reservations.length,
-        classroom: data.classrooms[classroomId],
-        startDate: new Date.now().toLocaleDateString(),
+        classroom: classroomsData.classrooms[0],
+        startDate: new Date().toLocaleDateString(),
         endDate: this.startDate,
-        reservedBy: userName,
-        status: "RESERVED",
-    });
+        reservedBy: "testEmail123@email.com",
+        active: true,
+    }
+    data.reservations.push(newReservation);
+    return newReservation;
 }
 
 function cancelReservation(id) {
     for (var i = 0; i < data.reservations.length; i++) {
         if (data.reservations[i].id == id) {
-            data.reservations = data.reservations.filter(item => item !== data.reservations[i]);
+            data.reservations[i].active = false;
             break;
         }
     }
 }
 
+//returns all reservations
 reservationsController.get('/', function (req, res) {
     res.json(data.reservations);
 });
 
 //Returns the reservation with of the requested id
 reservationsController.get('/:id', function (req, res) {
-    let devData = findReservationByID(req.params.id);
-    if (devData) {
-        res.json(devData);
+    let reservation = findReservationByID(req.params.id);
+    if (reservation) {
+        res.json(reservation);
     }
     else {
         res.status(500).send("Cannot find reservation.");
     }
 });
 
-//Cancels a reservation
-reservationsController.delete('/', function (req, res) {
-    if (req.body && req.body.id) {
-        cancelReservation(req.params.id);
-        res.json(data.reservations);
+//create a new reservation
+reservationsController.post('/', function (req, res) {
+    if(req.body && req.body.classroomId){
+        res.json(createNewReservations(req.body.classroomId));
     }
     else {
         res.status(500).send("Missing information.");
     }
 });
+
+//Cancels a reservation
+reservationsController.delete('/:id', function(req, res){
+    let reservation = findReservationByID(req.params.id);
+    if(reservation){
+        cancelReservation(req.params.id);
+        res.json(data.reservations);
+    }
+    else { }
+});
+
 module.exports = reservationsController;

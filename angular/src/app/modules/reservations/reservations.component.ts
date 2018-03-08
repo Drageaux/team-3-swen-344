@@ -1,27 +1,37 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Reservation } from './reservation';
-import { Classroom } from "../classrooms/classroom";
+import { ReservationsService } from './reservations.service';
 
 declare var $;
 
 @Component({
   selector: 'app-reservations',
   templateUrl: './reservations.component.html',
-  styleUrls: ['./reservations.component.css']
+  styleUrls: ['./reservations.component.css'],
+  providers: [ReservationsService]
 })
 export class ReservationsComponent implements OnInit {
 
-  private reservationList: Reservation[] = [];
+  reservations: Reservation[] = [];
 
-  constructor() {
-    let class0 = new Classroom(0, "Class-0", "OPEN", 0, 30);
-    let res0 = new Reservation(0, class0, new Date().toLocaleDateString(), new Date().toLocaleDateString(),"test@email.com", "RESERVED");
-
-    this.reservationList = [res0];
+  constructor(private reservationsService: ReservationsService) {
   }
 
   ngOnInit() {
+    this.reservationsService.getAllReservations().subscribe(
+      reservations => {
+        this.reservations = reservations;
+      }
+    );
+  }
+
+  onCancelReservation(reservation) {
+    this.reservationsService.cancelReservation(reservation).subscribe(
+      reservations => {
+        this.reservations = reservations;
+      }
+    );
   }
 
   showCollapse(id: string): void {
