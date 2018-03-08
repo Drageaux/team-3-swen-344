@@ -2,18 +2,31 @@ var weather = require('weather-js');
 
 const weatherQuotes = {
     // below 32 F
-    cold: [],
+    cold: [
+        'Does the cold bother you now?',
+        'Do you want to build a snowman?'
+    ],
     // from 32 to 50 F
-    chilly: [],
+    chilly: [
+        'Sweater, n.: garment worn by child when its mother is feeling chilly.',
+        'It\'s chilly outside'
+    ],
     // from 50 to 68 F
-    warm: [],
+    warm: [
+        'Don\'t wear sweaters, please.'
+    ],
     // above 68 F
-    hot: [],
+    hot: [
+        'This weather isn\'t even close to what the Vietnam Veterans experienced.',
+        'Play with fire, they said. It\'ll be fun, they said.'
+    ],
 }
 
 function selectRandomQuote(quoteList) {
     var max = quoteList.length;
     var index = Math.floor(Math.random() * Math.floor(max));
+
+    return quoteList[index];
 }
 
 var weatherMachine = {
@@ -34,16 +47,16 @@ var weatherMachine = {
         switch (true) {
             case (temperature <= 32):
                 // cold
-                return;
-            case (temperature >= 32 ):
+                return selectRandomQuote(weatherQuotes.cold);
+            case (temperature > 32 && temperature <= 50):
                 // chilly
-                return;
-            case (temperature >= 32):
+                return selectRandomQuote(weatherQuotes.chilly);
+            case (temperature > 50 && temperature <= 68):
                 // warm
-                return;
+                return selectRandomQuote(weatherQuotes.warm);
             case (temperature > 68):
                 // warm
-                return;
+                return selectRandomQuote(weatherQuotes.hot);
             default:
                 return '';
         }
