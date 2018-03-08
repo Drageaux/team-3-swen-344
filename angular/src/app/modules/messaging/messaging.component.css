@@ -2,6 +2,13 @@
   margin-top: 2rem;
 }
 
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+  #inbox.message-open {
+    display: none;
+  } 
+}
+
 .table-hover tr {
   cursor: pointer;
 }

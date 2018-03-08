@@ -6,7 +6,9 @@
   </div>
 
   <!-- Inbox -->
-  <table class="table table-hover" id="inbox">
+  <table class="table table-hover"
+         [class.message-open]="messageOpen"
+         id="inbox">
     <thead class="thead-dark border border-dark">
       <tr>
         <th scope="col"></th>
@@ -16,7 +18,7 @@
       </tr>
     </thead>
     <tbody class="border-left border-right border-bottom">
-      <tr>
+      <tr (click)="messageOpen = !messageOpen">
         <th scope="row">
           <input type="checkbox" aria-label="Checkbox for following message">
         </th>
@@ -24,7 +26,7 @@
         <td>Mark Otto</td>
         <td>15 Sep, 8:56 AM (2013)</td>
       </tr>
-      <tr>
+      <tr (click)="messageOpen = !messageOpen">
         <th scope="row">
           <input type="checkbox" aria-label="Checkbox for following message">
         </th>
@@ -32,21 +34,23 @@
         <td>Jacob Thornton</td>
         <td>15 Sep, 8:56 AM (2013)</td>
       </tr>
-      <tr>
+      <tr (click)="messageOpen = !messageOpen">
         <th scope="row">
           <input type="checkbox" aria-label="Checkbox for following message">
         </th>
         <td>Test 1</td>
-        <td>Larry the Bird</td>
+        <td>Big Shaq</td>
         <td>15 Sep, 8:56 AM (2013)</td>
       </tr>
     </tbody>
   </table>
 
   <!-- Opened Message -->
-  <div class="card">
+  <div class="card" [class.hidden]="!messageOpen" style="margin-top: 2rem">
     <div class="card-header">
-      <h4>Message</h4>
+      <h4 class="float-left">Message</h4>
+      <button class="btn btn-danger float-right" type="button"
+              (click)="messageOpen = false">Close</button>
     </div>
     <div class="card-body">
       <div class="clearfix" style="margin-bottom:1rem;">
