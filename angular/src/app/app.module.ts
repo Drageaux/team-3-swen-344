@@ -9,7 +9,6 @@ import { appRoutingProviders, routing } from './app.routing';
 import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './not-found.component';
 
-import { SampleModule } from './modules/sample/sample.module';
 import { ClassroomsModule } from './modules/classrooms/classrooms.module';
 import { ReservationsModule } from './modules/reservations/reservations.module';
 import { HomeModule } from './modules/home/home.module';
@@ -30,7 +29,6 @@ import { DevicesService } from './modules/devices/devices.service';
     ReactiveFormsModule,
     HttpClientModule,
     routing,
-    SampleModule,
     HomeModule,
     ClassroomsModule,
     ReservationsModule,
