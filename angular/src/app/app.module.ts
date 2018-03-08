@@ -12,10 +12,10 @@ import { PageNotFoundComponent } from './not-found.component';
 import { ClassroomsModule } from './modules/classrooms/classrooms.module';
 import { ReservationsModule } from './modules/reservations/reservations.module';
 import { HomeModule } from './modules/home/home.module';
+import { MessagingModule } from './modules/messaging/messaging.module';
 
 import { DevicesModule } from './modules/devices/devices.module';
 import { DevicesService } from './modules/devices/devices.service';
-
 
 
 @NgModule({
@@ -28,11 +28,13 @@ import { DevicesService } from './modules/devices/devices.service';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    HttpModule,
     routing,
     HomeModule,
     ClassroomsModule,
     ReservationsModule,
-    DevicesModule
+    DevicesModule,
+    MessagingModule
   ],
   providers: [appRoutingProviders],
   bootstrap: [AppComponent]
