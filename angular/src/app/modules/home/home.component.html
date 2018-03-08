@@ -20,38 +20,7 @@
     <div class="col-lg-4 col-md-6">
       <div class="card " style="background-color: #e6ecf0; padding-left: 1rem; padding-right: 1rem;">
         <!-- Embedded Tweets -->
-        <blockquote *ngFor="let t of tweets" class="twitter-tweet" data-lang="en">
-          <p lang="en" dir="ltr">
-            {{t?.text}}
-          </p>
-          &mdash;
-          Facility Management (@team3swen344)
-          <a href="https://twitter.com/team3swen344/status/{{t?.id}}?ref_src=twsrc%5Etfw">{{t?.created_at}}</a>
-        </blockquote>
-        <blockquote class="twitter-tweet" data-lang="en">
-          <p lang="en" dir="ltr">
-            This is my first ever Tweet
-          </p>
-          &mdash;
-          Facility Management (@team3swen344)
-          <a href="https://twitter.com/team3swen344/status/970711247036526592?ref_src=twsrc%5Etfw">March 5, 2018</a>
-        </blockquote>
-        <blockquote class="twitter-tweet" data-lang="en">
-          <p lang="en" dir="ltr">
-            This is my first ever Tweet
-          </p>
-          &mdash;
-          Facility Management (@team3swen344)
-          <a href="https://twitter.com/team3swen344/status/970711247036526592?ref_src=twsrc%5Etfw">March 5, 2018</a>
-        </blockquote>
-        <blockquote class="twitter-tweet" data-lang="en">
-          <p lang="en" dir="ltr">
-            This is my first ever Tweet
-          </p>
-          &mdash;
-          Facility Management (@team3swen344)
-          <a href="https://twitter.com/team3swen344/status/970711247036526592?ref_src=twsrc%5Etfw">March 5, 2018</a>
-        </blockquote>
+        <ngxc-tweet *ngFor="let t of tweets" tweetId="{{t.id_str}}"></ngxc-tweet>
       </div>
     </div>
   </div>
