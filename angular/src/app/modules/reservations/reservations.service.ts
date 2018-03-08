@@ -36,9 +36,16 @@ export class ReservationsService {
     );
   }
 
-  public createReservation(classroom: Classroom): Observable<Reservation> {
+  public createReservation(reservation: Reservation): Observable<Reservation> {
     const body = {
-      classroomId: classroom.id
+      id: reservation.id,
+      classroomId: reservation.classroomId,
+      active: reservation.active,
+      startDate: reservation.startDate,
+      endDate: reservation.endDate,
+      participants: reservation.participants,
+      reservedBy: reservation.reservedBy,
+      eventName: reservation.eventName      
     };
     const httpOptions = {
       headers: new HttpHeaders({

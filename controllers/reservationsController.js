@@ -3,15 +3,15 @@ var reservationsController = express.Router();
 
 let classroomsData = {
     classrooms: [
-        {id: 0, name: "CLASS-0", reservationStatus: "OPEN", noOfParticipants: 0, capacity: 30},
-        {id: 1, name: "CLASS-1", reservationStatus: "UNAVAILABLE", noOfParticipants: 12, capacity: 30},
-        {id: 2, name: "CLASS-2", reservationStatus: "RESERVED", noOfParticipants: 10, capacity: 20}
+        { id: 0, capacity: 200, location: "GOL-1400", description: "A large auditorium"},
+        { id: 1, capacity: 30, location: "GAN-1337", description: "An art studio" },
+        { id: 2, capacity: 20, location: "GOS-2550", description: "A chemistry lab" }
     ]
 }
 let data = {
     reservations: [
-        { id: 0, classroom: classroomsData.classrooms[0], startDate: new Date().toLocaleDateString(), endDate: new Date().toLocaleDateString(), reservedBy: "test@email.com", active: true},
-        { id: 1, classroom: classroomsData.classrooms[2], startDate: new Date().toLocaleDateString(), endDate: new Date().toLocaleDateString(), reservedBy: "test12345@email.com", active: true}
+        { id: 0, classroomId: classroomsData.classrooms[0].id, startDate: new Date().toLocaleDateString(), endDate: new Date().toLocaleDateString(), reservedBy: "test@email.com", active: true, eventName: "CSCI-141", participants: 72},
+        { id: 1, classroomID: classroomsData.classrooms[2].id, startDate: new Date().toLocaleDateString(), endDate: new Date().toLocaleDateString(), reservedBy: "test12345@email.com", active: true, eventName: "FNRT-200", participants: 21}
     ]
 };
 
@@ -27,11 +27,13 @@ function findReservationByID(id) {
 function createNewReservations(classroomId) {
     newReservation = {
         id: data.reservations.length,
-        classroom: classroomsData.classrooms[0],
+        classroomId: classroomsData.classrooms[0].id,
         startDate: new Date().toLocaleDateString(),
         endDate: this.startDate,
         reservedBy: "testEmail123@email.com",
         active: true,
+        eventName: "SOME-141",
+        participants: 0
     }
     data.reservations.push(newReservation);
     return newReservation;

@@ -9,16 +9,19 @@ import { Classroom } from '../classroom';
   styleUrls: ['./classroom-reservation-form.component.css']
 })
 export class ClassroomReservationFormComponent{
+  @Input()
+  cId = 0;
 
-  testClassroom = new Classroom(1,"Test Class","OPEN",5,30);
 
-  newReservation = new Reservation(null,null,null,null,null,null);//new Reservation(1,this.testClassroom,"Today","Tomorrow","Me","Reserved");
+  testClassroom = new Classroom(this.cId,50,"EAS-2000","Small auditorium");
+
+  newReservation = new Reservation(0,this.cId,null,null,null,null,null,null);//new Reservation(1,this.testClassroom,"Today","Tomorrow","Me","Reserved");
 
   @Input()
   creating: boolean;
 
   @Input()
-  editableReservation: Reservation = new Reservation(null,null,null,null,null,null);//new device by default
+  editableReservation: Reservation = new Reservation(0,this.cId,null,null,null,null,null,null);//new device by default
 
   @Output()
   create: EventEmitter<Reservation> = new EventEmitter();
@@ -32,6 +35,7 @@ export class ClassroomReservationFormComponent{
     if(form.valid){
       this.newReservation.id = form.value.resId;
       //Classroom
+      this.newReservation.classroomId = this.cId;
       this.newReservation.startDate = form.value.resStartDate;
       //endDate
       this.newReservation.endDate = form.value.resEndDate;
@@ -47,6 +51,7 @@ export class ClassroomReservationFormComponent{
   editReservation(form: NgForm){
     if(form.valid){
       this.editableReservation.id = form.value.resId;
+      this.editableReservation.classroomId = this.cId;
       this.editableReservation.startDate = form.value.resStartDate;
       //endDate
       this.editableReservation.endDate = form.value.resEndDate;

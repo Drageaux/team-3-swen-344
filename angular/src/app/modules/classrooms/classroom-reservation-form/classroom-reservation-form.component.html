@@ -2,8 +2,6 @@
   <div class="form-group">
     <label for="id">Id</label>
     <input [(ngModel)]="creating ? newReservation.id : editableReservation.id" id="resId" name="resId" type="text" class="validate"/><br/>
-    <label for="classroom">Classroom</label>
-    <input [(ngModel)]="creating ? newReservation.classId : editableReservation.classId" id="resClassId" name="resClassId" type="text" class="validate"/><br/>
     <label for="startDate">Start Date</label>
     <input [(ngModel)]="creating ? newReservation.startDate : editableReservation.startDate" id="resStartDate" name="resStartDate" type="text" class="validate"/><br/>
     <label for="endDate">End Date</label>
