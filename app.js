@@ -45,7 +45,7 @@ app.use('/api', router);
 
 /** KRUTZ'S WEATHER MACHINE */
 var CronJob = require('cron').CronJob;
-var weatherMachine = require('./controllers/weatherMachine
+var weatherMachine = require('./controllers/weatherMachine');
 var giphyController = require('./controllers/giphyController');
 var twitterClient = twitterApi.twitterClient;
 // callback functions 

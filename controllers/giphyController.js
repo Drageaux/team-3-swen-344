@@ -5,14 +5,14 @@ var giphyController = {
     getGifUrl: function (temperature, callback) {
         var query = this.getQuery(temperature);
         giphyClient.search('gifs', {
-            'q': 'weather ' + query,
+            'q': query + ' weather',
             'limit': 1,
             'rating': 'pg-13',
             'sort': 'recent'
         }).then((response) => {
-            callback(response.data.url)
+            callback(response.data[0].bitly_url)
         }).catch((err) => {
-                console.log('GIPHY ERROR [%s]', err);
+            console.log('GIPHY ERROR [%s]', err);
         })
     },
     getQuery: function (temperature) {
