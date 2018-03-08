@@ -1,0 +1,77 @@
+<div class="container">
+  <div class="clearfix">
+    <h2 class="bd-title float-md-left">Messaging Inbox</h2>
+    <div class="float-md-right"
+         [class.message-open]="messageOpen"
+         id="inbox-buttons">
+      <button class="btn btn-danger" type="button">Remove Selected</button>
+      <button class="btn btn-primary" type="button">New Message</button>
+    </div>
+  </div>
+</div>
+
+<div class="container row" style="margin-left: auto; margin-right: auto;">
+  <!-- Inbox -->
+  <table class="col-md-5 table table-hover"
+         [class.message-open]="messageOpen"
+         id="inbox">
+    <thead class="thead-dark border border-dark">
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">Title</th>
+        <th scope="col">From</th>
+        <th scope="col">Time Received</th>
+      </tr>
+    </thead>
+    <tbody class="border-left border-right border-bottom">
+      <tr (click)="messageOpen = !messageOpen">
+        <th scope="row">
+          <input type="checkbox" aria-label="Checkbox for following message">
+        </th>
+        <td>Test 1</td>
+        <td>Mark Otto</td>
+        <td>15 Sep, 8:56 AM (2013)</td>
+      </tr>
+      <tr (click)="messageOpen = !messageOpen">
+        <th scope="row">
+          <input type="checkbox" aria-label="Checkbox for following message">
+        </th>
+        <td>Test 1</td>
+        <td>Jacob Thornton</td>
+        <td>15 Sep, 8:56 AM (2013)</td>
+      </tr>
+      <tr (click)="messageOpen = !messageOpen">
+        <th scope="row">
+          <input type="checkbox" aria-label="Checkbox for following message">
+        </th>
+        <td>Test 1</td>
+        <td>Big Shaq</td>
+        <td>15 Sep, 8:56 AM (2013)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="col-md-1"></div>
+  <!-- Opened Message -->
+  <div class="card col-md-6" [class.hidden]="!messageOpen" style="margin-top: 2rem">
+    <div class="card-header">
+      <h4 class="float-left">Message</h4>
+      <button class="btn btn-danger float-right" type="button"
+              (click)="messageOpen = false">
+        Close
+      </button>
+    </div>
+    <div class="card-body">
+      <div class="clearfix" style="margin-bottom:1rem;">
+        <div class="float-left">
+          <h5 class="card-title" style="margin-bottom:0.3rem;">Big Shaq</h5>
+          <h6 class="card-subtitle text-muted">to you</h6>
+        </div>
+        <button class="btn btn-primary float-right" type="button">Reply</button>
+      </div>
+      <div class="d-block">
+        <p class="card-text">Two plus two is four, minus one that's three, quick maths.</p>
+      </div>
+    </div>
+  </div>
+</div>

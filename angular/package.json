@@ -6,7 +6,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json",
-    "build": "ng build --prod --aot=false",
+    "build": "node --max_old_space_size=5048 ./node_modules/@angular/cli/bin/ng build --prod --aot=false",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

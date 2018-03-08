@@ -3,9 +3,9 @@ var classroomsController = express.Router();
 
 let data = {
     classrooms: [
-        { id: 0, name: "CLASS-0", reservationStatus: "OPEN", noOfParticipants: 0, capacity: 30 },
-        { id: 1, name: "CLASS-1", reservationStatus: "UNAVAILABLE", noOfParticipants: 12, capacity: 30 },
-        { id: 2, name: "CLASS-2", reservationStatus: "RESERVED", noOfParticipants: 10, capacity: 20 }
+        { id: 0, capacity: 200, location: "GOL-1400", description: "A large auditorium"},
+        { id: 1, capacity: 30, location: "GAN-1337", description: "An art studio" },
+        { id: 2, capacity: 20, location: "GOS-2550", description: "A chemistry lab" }
     ]
 }
 

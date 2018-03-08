@@ -2,31 +2,48 @@ import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Http, Response } from '@angular/http';
-import { Device } from './device';
+import { Reservation } from './reservation';
 import { Observable } from 'rxjs/Observable';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { catchError, retry } from 'rxjs/operators';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
+import {Classroom} from '../classrooms/classroom';
 
-const DEVICE_API = 'api/devices';
+const RESERVATION_API = 'api/reservations';
 
 @Injectable()
-export class DevicesService {
+export class ReservationsService {
 
   constructor(private http: HttpClient) {
   }
 
-  public getAllDevices(): Observable<any> {
-    return this.http.get(DEVICE_API).pipe(
+  public getAllReservations(): Observable<any> {
+    return this.http.get(RESERVATION_API).pipe(
       catchError(this.handleError)
     );
   }
 
-  public createDevice(newDevice: Device): Observable<Device> {
+  public cancelReservation(reservation: Reservation): Observable<Reservation[]> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.delete(RESERVATION_API + '/' + reservation.id, httpOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  public createReservation(newReservation: Reservation): Observable<Reservation> {
     let body = {
-      name: newDevice.name,
+      //id: newReservation.id,
+      classroomId: newReservation.classroomId,
+      startDate: newReservation.startDate,
+      endDate: newReservation.endDate,
+      reservedBy: newReservation.reservedBy,
+      eventName: newReservation.eventName
     };
 
     const httpOptions = {
@@ -34,34 +51,7 @@ export class DevicesService {
         'Content-Type': 'application/json'
       })
     };
-    return this.http.post<Device>(DEVICE_API, body, httpOptions).pipe(
-      catchError(this.handleError)
-    );
-  }
-
-  public editDevice(editedDevice: Device): Observable<Device[]> {
-    let body = {
-      id: editedDevice.id,
-      name: editedDevice.name
-    };
-
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
-    return this.http.put<Device>(DEVICE_API, body, httpOptions).pipe(
-      catchError(this.handleError)
-    );
-  }
-
-  public deleteDevice(device: Device): Observable<Device[]> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
-    return this.http.delete(DEVICE_API + '/' + device.id, httpOptions).pipe(
+    return this.http.post<Reservation>(RESERVATION_API, body, httpOptions).pipe(
       catchError(this.handleError)
     );
   }
@@ -77,12 +67,12 @@ export class DevicesService {
       // the backend returned an unsuccessful response code.
       // the response body may contain clues as to what went wrong,
       console.error(
-          `Backend returned code ${error.status}, ` +
-          `body was: ${error.error}`);
+        `Backend returned code ${error.status}, ` +
+        `body was: ${error.error}`);
     }
     // return an ErrorObservable with a user-facing error message
     return new ErrorObservable(
-        'Something bad happened; please try again later.');
-  };
+      'Something bad happened; please try again later.');
+  }
 
 }

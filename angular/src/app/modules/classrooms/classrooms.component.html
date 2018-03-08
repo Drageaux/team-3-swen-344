@@ -4,7 +4,7 @@
     <!-- Card Header -->
     <div class="card-header row" (click)="showCollapse('collapseClass' + c.id)">
       <div class="col-5 col-sm-4 align-middle">
-        {{c.className}}
+        {{c.location}}
       </div>
       <div class="col-2 col-sm-4"></div>
       <div class="col-5 col-sm-4 no-gutters text-center align-middle row justify-content-end" id="reservation-status"
@@ -12,8 +12,7 @@
                        'text-primary': c.reservationStatus=='RESERVED',
                        'text-danger': c.reservationStatus=='UNAVAILABLE'}">
         <div>
-          {{c.reservationStatus}}<br />
-          {{c.noOfParticipants + '/' + c.capacity}}
+          <strong>Capacity: </strong>{{c.capacity}}
         </div>
         <i class="material-icons align-middle" style="margin-left: 0.3rem">lens</i>
       </div>
@@ -23,19 +22,42 @@
     <div class="collapse" id="collapseClass{{c.id}}">
       <div class="card-body row" style="padding-left: 0.25rem;">
         <div class="col-6">
-          <strong>Location</strong>: Building 123<br />
-          <strong>Time</strong>: February 19, 2018 5:00pm<br />
-          <strong>Reserved By</strong>: abc1234@rit.edu
+          <strong>Location</strong>: {{c.location}}<!--Building 123--><br />
+          <strong>Description</strong>: {{c.description}}<!--Building 123--><br />
         </div>
         <div class="col-6 text-right" style="padding-right: 0;">
           <!-- Action Button -->
           <div class="align-middle">
-            <button *ngIf="c.reservationStatus=='OPEN'" type="button"
-                    class="btn btn-success btn-sm">
+            <button type="button"
+                    class="btn btn-success btn-sm" data-toggle="modal" data-target="#newFormModal">
               <i class="material-icons align-middle">assignment</i>
               <span class="align-middle">Reserve</span>
             </button>
-            <button *ngIf="c.reservationStatus=='RESERVED'" type="button"
+            <!-- Modal -->
+            <div class="modal fade" id="newFormModal" role="dialog">
+                <div class="modal-dialog">
+  
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Add a new Reservation</h4>
+                    </div>
+                    <div class="modal-body">
+                      <app-classroom-reservation-form
+                      [creating]="true"
+                      (create)="onCreateReservation($event)"
+                      [cId]="c.id">
+                      </app-classroom-reservation-form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+  
+                </div>
+              </div>
+            <!--<button *ngIf="c.reservationStatus=='RESERVED'" type="button"
                     class="btn btn-primary btn-sm"
                     style="padding-right: 5px;">
               <span class="align-middle">Your Reservation</span>
@@ -45,7 +67,7 @@
                     class="btn btn-secondary btn-sm" disabled>
               <i class="material-icons align-middle">assignment</i>
               <span class="align-middle">Reserve</span>
-            </button>
+            </button>-->
           </div>
         </div>
       </div>

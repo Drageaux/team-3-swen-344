@@ -1,0 +1,19 @@
+<form #f="ngForm" (ngSubmit)="creating ? createReservation(f) : editReservation(f)" novalidate>
+  <div class="form-group">
+    <label for="eventName">Event Name</label>
+    <input [(ngModel)]="creating ? newReservation.eventName : editableReservation.eventName" id="resEventName" name="resEventName" type="text" class="validate"/><br/>
+    <label for="startDate">Start Date</label>
+    <input [(ngModel)]="creating ? newReservation.startDate : editableReservation.startDate" id="resStartDate" name="resStartDate" type="text" class="validate"/><br/>
+    <label for="endDate">End Date</label>
+    <input [(ngModel)]="creating ? newReservation.endDate : editableReservation.endDate" id="resEndDate" name="resEndDate" type="text" class="validate"/><br/>
+    <label for="reservedBy">Reserved By</label>
+    <input [(ngModel)]="creating ? newReservation.reservedBy : editableReservation.reservedBy" id="resReservedBy" name="resReservedBy" type="text" class="validate"/><br/>
+  </div>
+  <button type="submit" class="btn btn-success">Submit</button>
+
+  <!--<button type="button"
+          class="btn btn-danger btn-sm" (click)="testApi()">
+    <i class="material-icons align-middle">Test API</i>
+    <span class="align-middle">Test</span>
+  </button>-->
+</form>
