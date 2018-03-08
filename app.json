@@ -3,10 +3,27 @@
   "scripts": {
   },
   "env": {
-    "INHERIT_THIS_CONFIG_VAR": {
+    "JAWSDB_URL": {
       "required": true
     },
-    "DONT_INHERIT_THIS_CONFIG_VAR": "production"
+    "TWITTER_ACCESS_TOKEN": {
+      "required": true
+    },
+    "TWITTER_ACCESS_TOKEN_SECRET": {
+      "required": true
+    },
+    "TWITTER_API_KEY": {
+      "required": true
+    },
+    "TWITTER_API_SECRET": {
+      "required": true
+    },
+    "TWITTER_CALLBACK_URL": {
+      "required": true
+    },
+    "GIPHY_API_KEY": {
+      "required": true
+    }
   },
   "formation": {
     "web": {
