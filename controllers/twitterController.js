@@ -13,6 +13,7 @@ var config = {
 }
 var twitter = new Twitter(config);
 
+twitterController.twitterClient = twitter;
 
 twitterController.get('/', function (req, res) {
     twitter.getUserTimeline({
