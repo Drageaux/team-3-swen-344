@@ -16,11 +16,7 @@
       </tr>
     </thead>
     <tbody class="border-left border-right border-bottom">
-      <tr data-toggle="collapse"
-          data-target="#message1"
-          aria-expanded="false"
-          aria-controls="message1"
-          id="heading1">
+      <tr>
         <th scope="row">
           <input type="checkbox" aria-label="Checkbox for following message">
         </th>
@@ -28,31 +24,6 @@
         <td>Mark Otto</td>
         <td>15 Sep, 8:56 AM (2013)</td>
       </tr>
-      <!-- Opened Message -->
-      <tr class="card collapse"
-          id="message1"
-          aria-labelledby="heading1"
-          data-parent="#inbox">
-        <td colspan="4">
-          <div class="card-header">
-            <h4>Message</h4>
-          </div>
-          <div class="card-body">
-            <div class="clearfix" style="margin-bottom:1rem;">
-              <div class="float-left">
-                <h5 class="card-title" style="margin-bottom:0.3rem;">Big Shaq</h5>
-                <h6 class="card-subtitle text-muted">to you</h6>
-              </div>
-              <button class="btn btn-primary float-right" type="button">Reply</button>
-            </div>
-            <div class="d-block">
-              <p class="card-text">Two plus two is four, minus one that's three, quick maths.</p>
-            </div>
-          </div>
-        </td>
-      </tr>
-
-
       <tr>
         <th scope="row">
           <input type="checkbox" aria-label="Checkbox for following message">
@@ -72,5 +43,22 @@
     </tbody>
   </table>
 
-
+  <!-- Opened Message -->
+  <div class="card">
+    <div class="card-header">
+      <h4>Message</h4>
+    </div>
+    <div class="card-body">
+      <div class="clearfix" style="margin-bottom:1rem;">
+        <div class="float-left">
+          <h5 class="card-title" style="margin-bottom:0.3rem;">Big Shaq</h5>
+          <h6 class="card-subtitle text-muted">to you</h6>
+        </div>
+        <button class="btn btn-primary float-right" type="button">Reply</button>
+      </div>
+      <div class="d-block">
+        <p class="card-text">Two plus two is four, minus one that's three, quick maths.</p>
+      </div>
+    </div>
+  </div>
 </div>
