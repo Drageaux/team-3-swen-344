@@ -51,3 +51,7 @@ body {
 a:hover {
   cursor: pointer
 }
+
+.hidden {
+  display: none !important;
+}
