@@ -7,7 +7,7 @@
     "dev": "concurrently \"nodemon app.js\" \"cd angular && npm run start\"",
     "preinstall": "cd angular && npm install",
     "prestart": "cd angular && npm run build",
-    "test": "nyc mocha unittests.js"
+    "test": "nyc mocha --recursive unit_tests/"
   },
   "engines": {
     "node": ">= 6.10.0"
@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "concurrently": "^3.5.1",
-    "mocha": "^5.0.1",
+    "mocha": "^5.0.4",
     "nodemon": "^1.11.0",
     "nyc": "^11.4.1",
     "really-need": "^1.9.2",
