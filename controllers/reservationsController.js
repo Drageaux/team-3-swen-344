@@ -66,7 +66,7 @@ reservationsController.get('/:id', function (req, res) {
 
 //create a new reservation
 reservationsController.post('/', function (req, res) {
-    if(req.body && req.body.classroomId && req.body.startDate && req.body.endDate && req.body.reservedBy && req.body.eventName){
+    if(req.body){
         res.json(createNewReservations(req.body.classroomId, req.body.startDate, req.body.endDate, req.body.reservedBy, req.body.eventName));
     }
     else {
