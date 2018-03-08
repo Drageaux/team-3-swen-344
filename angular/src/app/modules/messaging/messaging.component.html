@@ -1,12 +1,18 @@
 <div class="container">
-  <h2 class="bd-title float-md-left">Messaging Inbox</h2>
-  <div class="float-md-right">
-    <button class="btn btn-danger" type="button">Remove Selected</button>
-    <button class="btn btn-primary" type="button">New Message</button>
+  <div class="clearfix">
+    <h2 class="bd-title float-md-left">Messaging Inbox</h2>
+    <div class="float-md-right"
+         [class.message-open]="messageOpen"
+         id="inbox-buttons">
+      <button class="btn btn-danger" type="button">Remove Selected</button>
+      <button class="btn btn-primary" type="button">New Message</button>
+    </div>
   </div>
+</div>
 
+<div class="container row" style="margin-left: auto; margin-right: auto;">
   <!-- Inbox -->
-  <table class="table table-hover"
+  <table class=" col-md-5 table table-hover"
          [class.message-open]="messageOpen"
          id="inbox">
     <thead class="thead-dark border border-dark">
@@ -45,12 +51,15 @@
     </tbody>
   </table>
 
+  <div class="col-md-1"></div>
   <!-- Opened Message -->
-  <div class="card" [class.hidden]="!messageOpen" style="margin-top: 2rem">
+  <div class="card col-md-6" [class.hidden]="!messageOpen" style="margin-top: 2rem">
     <div class="card-header">
       <h4 class="float-left">Message</h4>
       <button class="btn btn-danger float-right" type="button"
-              (click)="messageOpen = false">Close</button>
+              (click)="messageOpen = false">
+        Close
+      </button>
     </div>
     <div class="card-body">
       <div class="clearfix" style="margin-bottom:1rem;">
