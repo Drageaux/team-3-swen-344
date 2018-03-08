@@ -68,7 +68,7 @@ reservationsController.post('/', function (req, res) {
         res.json(createNewReservations(req.body.classroomId));
     }
     else {
-        res.status(500).send("Missing information.");
+        res.status(500).send("Bad Request");
     }
 });
 
@@ -79,7 +79,9 @@ reservationsController.delete('/:id', function(req, res){
         cancelReservation(req.params.id);
         res.json(data.reservations);
     }
-    else { }
+    else {
+        res.status(500).send("Bad Request");
+    }
 });
 
 module.exports = reservationsController;
