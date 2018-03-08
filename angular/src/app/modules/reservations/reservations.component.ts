@@ -38,6 +38,14 @@ export class ReservationsComponent implements OnInit {
     );
   }
 
+  testApi(){
+    this.reservationsService.getAllReservations().subscribe(
+      reservations => {
+        this.reservations = reservations;
+      }
+    );
+  }
+
   showCollapse(id: string): void {
     $('#' + id).collapse('toggle');
   }

@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Reservation } from '../../reservations/reservation';
 import { Classroom } from '../classroom';
+import { ReservationsService } from '../../reservations/reservations.service';
 
 @Component({
   selector: 'app-classroom-reservation-form',
@@ -29,9 +30,10 @@ export class ClassroomReservationFormComponent{
   @Output()
   edit: EventEmitter<Reservation> = new EventEmitter();
 
-  constructor() { }
+  constructor(private reservationsService: ReservationsService) { }
 
   createReservation(form: NgForm) {
+    console.log("createReservation");
     if(form.valid){
       this.newReservation.id = form.value.resId;
       //Classroom
@@ -43,8 +45,9 @@ export class ClassroomReservationFormComponent{
       this.newReservation.reservedBy = form.value.resReservedBy;
       //active
       this.newReservation.active = form.value.resActive;
-      this.create.emit(this.newReservation);
-      form.reset();
+      //this.create.emit(this.newReservation);
+      this.reservationsService.createReservation(this.newReservation);
+      //form.reset();
     }
   }
 
@@ -62,5 +65,15 @@ export class ClassroomReservationFormComponent{
       this.edit.emit(this.editableReservation);
     }
   }
+
+  /*private reserves: Reservation[] = [];
+
+  testApi(){
+    this.reservationsService.getAllReservations().subscribe(
+      reservations => {
+        this.reserves = reservations;
+      }
+    );
+  }*/
 
 }

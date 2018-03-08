@@ -24,7 +24,8 @@ function findReservationByID(id) {
     return null;
 }
 
-function createNewReservations(classroomId) {
+function createNewReservations(reservation) {
+    console.log("reservationController");
     newReservation = {
         id: data.reservations.length,
         classroomId: classroomsData.classrooms[0].id,
@@ -66,8 +67,9 @@ reservationsController.get('/:id', function (req, res) {
 
 //create a new reservation
 reservationsController.post('/', function (req, res) {
-    if(req.body && req.body.classroomId){
-        res.json(createNewReservations(req.body.classroomId));
+    console.log("RESERVATIONS CONTROLLER!!!!");
+    if(req.body && req.body.id){
+        res.json(createNewReservations(req.body));
     }
     else {
         res.status(500).send("Bad Request");

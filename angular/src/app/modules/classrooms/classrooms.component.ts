@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Classroom } from './classroom';
 import { ReservationsService } from '../reservations/reservations.service';
+import { Reservation } from '../reservations/reservation';
 
 declare var $;
 
@@ -14,6 +15,7 @@ export class ClassroomsComponent implements OnInit {
 
   private classroomList: Classroom[] = [];
   
+  private reserves: Reservation[] = [];
 
   constructor(private reservationsService: ReservationsService) {
     // create mock data
@@ -31,6 +33,13 @@ export class ClassroomsComponent implements OnInit {
     this.reservationsService.createReservation(reservation);
   }
 
+  testApi(){
+    this.reservationsService.getAllReservations().subscribe(
+      reservations => {
+        this.reserves = reservations;
+      }
+    );
+  }
 
   showCollapse(id: string): void {
     $('#' + id).collapse('toggle');

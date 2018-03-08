@@ -5,7 +5,7 @@ import { Http, Response } from '@angular/http';
 import { Reservation } from './reservation';
 import { Observable } from 'rxjs/Observable';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
-import { catchError } from 'rxjs/operators';
+import { catchError, retry } from 'rxjs/operators';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
@@ -36,17 +36,18 @@ export class ReservationsService {
     );
   }
 
-  public createReservation(reservation: Reservation): Observable<Reservation> {
-    const body = {
-      id: reservation.id,
-      classroomId: reservation.classroomId,
-      active: reservation.active,
-      startDate: reservation.startDate,
-      endDate: reservation.endDate,
-      participants: reservation.participants,
-      reservedBy: reservation.reservedBy,
-      eventName: reservation.eventName      
+  public createReservation(newReservation: Reservation): Observable<Reservation> {
+    let body = {
+      id: newReservation.id,
+      classroomId: newReservation.classroomId,
+      active: newReservation.active,
+      startDate: newReservation.startDate,
+      endDate: newReservation.endDate,
+      participants: newReservation.participants,
+      reservedBy: newReservation.reservedBy,
+      eventName: newReservation.eventName
     };
+
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
