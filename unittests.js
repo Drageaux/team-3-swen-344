@@ -238,9 +238,9 @@ describe('Testing GET devices API', function () {
             .get('/api/devices/')
             .expect(200, done);
     });
-    it('responds to GET with id /api/devices/0', function testSlash(done) {
+    it('responds to GET with id /api/devices/1', function testSlash(done) {
         request(server)
-            .get('/api/devices/0')
+            .get('/api/devices/1')
             .expect(200, done);
     });
     it('Sends back 500 with improper id /api/devices/-1', function testSlash(done) {
@@ -253,9 +253,9 @@ describe('Testing GET devices API', function () {
             .get('/api/devices/abcd')
             .expect(500, done);
     });
-    it('Sends back 500 with no messages found /api/devices/1000', function testSlash(done) {
+    it('Sends back 500 with no messages found /api/devices/100', function testSlash(done) {
         request(server)
-            .get('/api/devices/abcd')
+            .get('/api/devices/100')
             .expect(500, done);
     });
 });
@@ -327,7 +327,7 @@ describe('Testing PUT devices API', function () {
     it('responds to PUT /api/devices/ with non-integer id', function testSlash(done) {
         request(server)
             .put('/api/devices/')
-            .send({"id":'abc',"name": "Foo"})
+            .send({"id": "abc","name": "Foo"})
             .expect(500)
             .end(function(err, res) {
                 if (err) done(err);
@@ -337,7 +337,7 @@ describe('Testing PUT devices API', function () {
     it('responds to PUT /api/devices/ with negative id', function testSlash(done) {
         request(server)
             .put('/api/devices/')
-            .send({"id":-1,"name": "Foo"})
+            .send({"id": -1,"name": "Foo"})
             .expect(500)
             .end(function(err, res) {
                 done();
@@ -346,7 +346,7 @@ describe('Testing PUT devices API', function () {
     it('responds to PUT /api/devices/ with device that does not exist', function testSlash(done) {
         request(server)
             .put('/api/devices/')
-            .send({"id":100,"name": "Foo"})
+            .send({"id": 10,"name": "Foo"})
             .expect(500)
             .end(function(err, res) {
                 done();
@@ -371,6 +371,15 @@ describe('Testing DELETE devices API', function () {
             .end(function(err, res) {
                 if (err) done(err);
                 res.body[0].should.have.property('id').and.is.equal(1);
+                done();
+            })
+    });
+    it('responds to DELETE /api/devices/ with negative id', function testSlash(done) {
+        request(server)
+            .delete('/api/devices/-1')
+            .expect(500)
+            .end(function(err, res) {
+                if (err) done(err);
                 done();
             })
     });

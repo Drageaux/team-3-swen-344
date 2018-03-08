@@ -18,15 +18,6 @@ function findDeviceByID(id){
   return null;
 }
 
-function findDeviceByName(name){
-  for (var i = 0; i < data.devices.length; i++){
-    if (data.devices[i].name.toLowerCase() == name.toLowerCase()){
-      return data.devices[i];
-    }
-  }
-  return null;
-}
-
 function addNewDevice(newName){
   newDevice = {
     id: data.devices.length,
@@ -91,9 +82,9 @@ deviceController.post('/', function (req, res) {
 
 //Update device
 deviceController.put('/', function (req, res) {
-  if(req.body && req.body.id && req.body.name && Number.isInteger(req.body.id) && req.body.id >= 0){
+  if(req.body && req.body.id && Number.isInteger(req.body.id) && req.body.id >= 0 && req.body.name){
     let updatedDevice = updateDevice(req.body.id, req.body.name);
-    if(updateDevice){
+    if(updatedDevice){
       res.json(data.devices);
     }
     else {
