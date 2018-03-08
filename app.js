@@ -31,15 +31,15 @@ app.use('/', express.static(__dirname + '/dist'));
 
 /** API ENDPOINTS */
 // import the API controllers
-var sampleApi = require('./controllers/sampleController');
 var devicesApi = require('./controllers/devicesController');
 var messagingApi = require('./controllers/messagingController');
 var classroomsApi = require('./controllers/classroomsController');
+var reservationsApi = require('./controllers/reservationsController');
 // register controllers for endpoints
-router.use('/sample', sampleApi);
 router.use('/devices', devicesApi);//Api for devices
 router.use('/messaging', messagingApi); //Api for messaging
 router.use('/classrooms', classroomsApi); //API for classrooms
+router.use('/reservations', reservationsApi); //API for reservations
 // any route starting with '/api' will be interfacing our API
 app.use('/api', router);
 
