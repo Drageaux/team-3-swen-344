@@ -27,18 +27,4 @@ twitterController.get('/', function (req, res) {
     });
 });
 
-twitterController.post('/', function (req, res) {
-    if (!req.body.status) return res.status(500).send('Missing Tweet content!');
-    else if (!req.body.status.length > 280) return res.status(500).send('Tweet is too long!');
-
-    twitter.postTweet({
-        status: req.body.status
-    }, function err(error, response, body) {
-        res.status(500).send(error);
-    }, function success(data) {
-        var parsedRes = JSON.parse(data);
-        res.json(parsedRes);
-    });
-});
-
 module.exports = twitterController;

@@ -44,44 +44,7 @@ app.use('/api', router);
 
 
 /** KRUTZ'S WEATHER MACHINE */
-var CronJob = require('cron').CronJob;
-var weatherController = require('./controllers/weatherController');
-var giphyController = require('./controllers/giphyController');
-var twitterClient = twitterApi.twitterClient;
-// callback functions 
-var error = function (err, response, body) {
-    console.log('TWITTER ERROR [%s]', err);
-};
-var success = function (data) {
-    console.log('TWITTER DATA [%s]', data);
-};
-
-// runs everyday at 12AM
-var job = new CronJob('0 0 0 * * *',
-    function () {
-        // check weather
-        weatherController.getCurrentWeather(function callback(weather) {
-            if (weather.temperature) {
-                // get quote
-                var quote = weatherController.getWeatherQuote(weather.temperature);
-                // TODO: find Giphy gif
-                var giphyUrl = '';
-
-                // tweet
-                var tweetStatus = 'The current temperature is ' + weather.temperature + ' degree. ' +
-                    quote + ' #Krutzweathermachine ' + giphyUrl;
-                console.log('[CRONJOB] Tweet is: ' + tweetStatus);
-
-            }
-        });
-    }, function () {
-        // this function is executed when the job stops
-        console.log("[CRONJOB ERROR] CronJob stopped!");
-    },
-    true, // start the job right now
-    "America/New_York" // time zone of this job
-);
-
+var weatherMachine = require('./controllers/krutzsWeatherMachine');
 
 /** RUN APP */
 app.listen(process.env.PORT || '3000', function () {
