@@ -346,7 +346,7 @@ describe('Testing PUT devices API', function () {
     it('responds to PUT /api/devices/ with device that does not exist', function testSlash(done) {
         request(server)
             .put('/api/devices/')
-            .send({"id": 10,"name": "Foo"})
+            .send({"id": 100,"name": "Foo"})
             .expect(500)
             .end(function(err, res) {
                 done();
