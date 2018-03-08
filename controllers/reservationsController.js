@@ -11,7 +11,7 @@ let classroomsData = {
 let data = {
     reservations: [
         { id: 0, classroomId: classroomsData.classrooms[0].id, startDate: new Date().toLocaleDateString(), endDate: new Date().toLocaleDateString(), reservedBy: "test@email.com", active: true, eventName: "CSCI-141", participants: 72},
-        { id: 1, classroomID: classroomsData.classrooms[2].id, startDate: new Date().toLocaleDateString(), endDate: new Date().toLocaleDateString(), reservedBy: "test12345@email.com", active: true, eventName: "FNRT-200", participants: 21}
+        { id: 1, classroomId: classroomsData.classrooms[2].id, startDate: new Date().toLocaleDateString(), endDate: new Date().toLocaleDateString(), reservedBy: "test12345@email.com", active: true, eventName: "FNRT-200", participants: 21}
     ]
 };
 
@@ -67,7 +67,7 @@ reservationsController.get('/:id', function (req, res) {
 
 //create a new reservation
 reservationsController.post('/', function (req, res) {
-    if(req.body){
+    if(req.body && req.body.classroomId && req.body.startDate && req.body.endDate && req.body.reservedBy && req.body.eventName && req.body.participants){
         res.json(createNewReservations(req.body.classroomId, req.body.startDate, req.body.endDate, req.body.reservedBy, req.body.eventName, req.body.participants));
     }
     else {
