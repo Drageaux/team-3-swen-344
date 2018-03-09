@@ -1,5 +1,6 @@
 var request = require('supertest');
 var should = require('should');
+require('dotenv').load();
 
 describe('Testing GET classrooms API', function () {
     var server;

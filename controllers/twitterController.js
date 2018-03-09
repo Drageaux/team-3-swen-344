@@ -16,15 +16,19 @@ var twitter = new Twitter(config);
 twitterController.twitterClient = twitter;
 
 twitterController.get('/', function (req, res) {
+    if (parseInt(req.query.count) <= 0) {
+        return res.status(500).send('Invalid Tweets count.');
+    }
     twitter.getUserTimeline({
         screen_name: 'team3swen344',
-        count: req.params.count ? req.params.count : '10'
+        count: req.query.count ? req.query.count : '10'
     }, function err(error, response, body) {
         res.status(500).send(error);
     }, function success(data) {
         var parsedRes = JSON.parse(data);
         res.json(parsedRes);
     });
+
 });
 
 module.exports = twitterController;
