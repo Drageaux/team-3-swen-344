@@ -18,19 +18,19 @@ function findClassroomByID(id) {
     return null;
 }
 
-function addNewClassroom(newName) {
+function addNewClassroom(newDescription) {
     newClassroom = {
         id: data.classrooms.length,
-        name: newName
+        description: newDescription
     }
     data.classrooms.push(newClassroom);
     return newClassroom;
 }
 
-function updateClassroom(id, newName) {
+function updateClassroom(id, newDescription) {
     var dev = findClassroomByID(id);
     if (dev) {
-        dev.name = newName;
+        dev.description = newDescription;
         return dev;
     }
     else {
@@ -71,8 +71,8 @@ classroomsController.get('/:id', function (req, res) {
 
 //Add new classroom
 classroomsController.post('/', function (req, res) {
-    if (req.body && req.body.name) {
-        res.json(addNewClassroom(req.body.name));
+    if (req.body && req.body.description) {
+        res.json(addNewClassroom(req.body.description));
     }
     else {
         res.status(500).send("Missing information.");
@@ -81,8 +81,8 @@ classroomsController.post('/', function (req, res) {
 
 //Update classroom
 classroomsController.put('/', function (req, res) {
-    if (req.body && req.body.id && Number.isInteger(req.body.id) && req.body.id >= 0 && req.body.name) {
-        let updatedClassroom = updateClassroom(req.body.id, req.body.name);
+    if (req.body && req.body.id && Number.isInteger(req.body.id) && req.body.id >= 0 && req.body.description) {
+        let updatedClassroom = updateClassroom(req.body.id, req.body.description);
         if (updatedClassroom) {
             res.json(data.classrooms);
         }
