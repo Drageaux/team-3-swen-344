@@ -34,9 +34,6 @@ describe('Testing GET classrooms API', function () {
     after(function () {
         server.close();
     });
-    after(function () {
-        server.close();
-    });
 });
 describe('Testing POST classrooms API', function () {
     var server;
