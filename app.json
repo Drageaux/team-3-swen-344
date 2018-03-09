@@ -3,27 +3,10 @@
   "scripts": {
   },
   "env": {
-    "JAWSDB_URL": {
+    "INHERIT_THIS_CONFIG_VAR": {
       "required": true
     },
-    "TWITTER_ACCESS_TOKEN": {
-      "required": true
-    },
-    "TWITTER_ACCESS_TOKEN_SECRET": {
-      "required": true
-    },
-    "TWITTER_API_KEY": {
-      "required": true
-    },
-    "TWITTER_API_SECRET": {
-      "required": true
-    },
-    "TWITTER_CALLBACK_URL": {
-      "required": true
-    },
-    "GIPHY_API_KEY": {
-      "required": true
-    }
+    "DONT_INHERIT_THIS_CONFIG_VAR": "production"
   },
   "formation": {
     "web": {
@@ -31,7 +14,7 @@
     }
   },
   "addons": [
-    "jawsdb"
+
   ],
   "buildpacks": [
     {
