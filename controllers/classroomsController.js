@@ -3,9 +3,9 @@ var classroomsController = express.Router();
 
 let data = {
     classrooms: [
-        { id: 0, name: "CLASS-0", reservationStatus: "OPEN", noOfParticipants: 0, capacity: 30 },
-        { id: 1, name: "CLASS-1", reservationStatus: "UNAVAILABLE", noOfParticipants: 12, capacity: 30 },
-        { id: 2, name: "CLASS-2", reservationStatus: "RESERVED", noOfParticipants: 10, capacity: 20 }
+        { id: 0, capacity: 200, location: "GOL-1400", description: "A large auditorium" },
+        { id: 1, capacity: 30, location: "GAN-1337", description: "An art studio" },
+        { id: 2, capacity: 20, location: "GOS-2550", description: "A chemistry lab" }
     ]
 }
 
@@ -18,28 +18,25 @@ function findClassroomByID(id) {
     return null;
 }
 
-function findClassroomByName(name) {
-    for (var i = 0; i < data.classrooms.length; i++) {
-        if (data.classrooms[i].name.toLowerCase() == name.toLowerCase()) {
-            return data.classrooms[i];
-        }
-    }
-    return null;
-}
-
 function addNewClassroom(newName) {
-    data.classrooms.push({
+    newClassroom = {
         id: data.classrooms.length,
-        name: newName,
-        reservationStatus: "OPEN",
-        noOfParticipants: 0,
-        capacity: 30 // default capacity
-    });
+        name: newName
+    }
+    data.classrooms.push(newClassroom);
+    return newClassroom;
 }
 
 function updateClassroom(id, newName) {
     var dev = findClassroomByID(id);
-    dev.name = newName;
+    if (dev) {
+        dev.name = newName;
+        return dev;
+    }
+    else {
+        return null;
+    }
+
 }
 
 function deleteClassroomByID(id) {
@@ -51,7 +48,6 @@ function deleteClassroomByID(id) {
     }
 }
 
-
 //Returns all classrooms
 classroomsController.get('/', function (req, res) {
     res.json(data.classrooms);
@@ -59,20 +55,24 @@ classroomsController.get('/', function (req, res) {
 
 //Returns the classroom with of the requested id
 classroomsController.get('/:id', function (req, res) {
-    let devData = findClassroomByID(req.params.id);
-    if (devData) {
-        res.json(devData);
+    if (Number.isInteger(parseInt(req.params.id)) && parseInt(req.params.id) >= 0) {
+        let devData = findClassroomByID(req.params.id);
+        if (devData) {
+            res.json(devData);
+        }
+        else {
+            res.status(500).send("Cannot find classroom.");
+        }
     }
     else {
-        res.status(500).send("Cannot find classroom.");
+        res.status(500).send("Invalid Input.");
     }
 });
 
 //Add new classroom
 classroomsController.post('/', function (req, res) {
-    if (req.body && req.body.newName) {
-        addNewClassroom(req, body.newName);
-        res.json(data.classrooms);
+    if (req.body && req.body.name) {
+        res.json(addNewClassroom(req.body.name));
     }
     else {
         res.status(500).send("Missing information.");
@@ -81,23 +81,35 @@ classroomsController.post('/', function (req, res) {
 
 //Update classroom
 classroomsController.put('/', function (req, res) {
-    if (req.body && req.body.id && req.body.newName) {
-        updateClassroom(req.body.id, req.body.newName);
-        res.json(data.classrooms);
+    if (req.body && req.body.id && Number.isInteger(req.body.id) && req.body.id >= 0 && req.body.name) {
+        let updatedClassroom = updateClassroom(req.body.id, req.body.name);
+        if (updatedClassroom) {
+            res.json(data.classrooms);
+        }
+        else {
+            res.status(500).send("Classroom not found.");
+        }
     }
     else {
-        res.status(500).send("Missing information.");
+        res.status(500).send("Invalid or missing information.");
     }
 });
 
 //Deletes a classroom
-classroomsController.delete('/', function (req, res) {
-    if (req.body && req.body.id) {
-        deleteClassroomByID(req.params.id);
-        res.json(data.classrooms);
+classroomsController.delete('/:id', function (req, res) {
+    if (Number.isInteger(parseInt(req.params.id)) && parseInt(req.params.id) >= 0) {
+        let devData = findClassroomByID(req.params.id);
+        if (devData) {
+            deleteClassroomByID(req.params.id);
+            res.json(data.classrooms);
+        }
+        else {
+            res.status(500).send("Classroom not found.");
+        }
     }
     else {
-        res.status(500).send("Missing information.");
+        res.status(500).send("Invalid or missing information.")
     }
 });
+
 module.exports = classroomsController;

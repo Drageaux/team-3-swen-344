@@ -1,31 +1,36 @@
-import { NgModule } from '@angular/core'; 
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { appRoutingProviders, routing } from './app.routing';
 
 import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './not-found.component';
 
-import { SampleModule } from './modules/sample/sample.module';
-import { ClassroomsModule } from './modules/classrooms/classrooms.module';
 import { HomeModule } from './modules/home/home.module';
+import { ReservationsModule } from './modules/reservations/reservations.module';
+import { ClassroomsModule } from './modules/classrooms/classrooms.module';
+import { DevicesModule } from './modules/devices/devices.module';
+import { MessagingModule } from './modules/messaging/messaging.module';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     routing,
-    SampleModule,
     HomeModule,
-    ClassroomsModule
+    ReservationsModule,
+    ClassroomsModule,
+    DevicesModule,
+    MessagingModule
   ],
   providers: [appRoutingProviders],
   bootstrap: [AppComponent]

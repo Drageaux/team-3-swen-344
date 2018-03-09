@@ -18,26 +18,26 @@ function findDeviceByID(id){
   return null;
 }
 
-function findDeviceByName(name){
-  for (var i = 0; i < data.devices.length; i++){
-    if (data.devices[i].name.toLowerCase() == name.toLowerCase()){
-      return data.devices[i];
-    }
-  }
-  return null;
-}
-
 function addNewDevice(newName){
-  data.devices.push({
+  newDevice = {
     id: data.devices.length,
     name: newName,
     rentStatus: true
-  });
+  }
+  data.devices.push(newDevice);
+  return newDevice;
 }
 
 function updateDevice(id, newName){
   var dev = findDeviceByID(id);
-  dev.name = newName;
+  if(dev){
+    dev.name = newName;
+    return dev;
+  }
+  else{
+    return null;
+  }
+
 }
 
 function deleteDeviceByID(id){
@@ -55,21 +55,25 @@ deviceController.get('/', function (req, res){
 });
 
 //Returns the device with of the requested id
-deviceController.get('/find/:id', function(req, res){
-  let devData = findDeviceByID(req.params.id);
-  if(devData){
-    res.json(devData);
+deviceController.get('/:id', function(req, res){
+  if(Number.isInteger(parseInt(req.params.id)) && parseInt(req.params.id) >= 0){
+    let devData = findDeviceByID(req.params.id);
+    if(devData){
+      res.json(devData);
+    }
+    else{
+      res.status(500).send("Cannot find device.");
+    }
   }
-  else{
-    res.status(500).send("Cannot find device.");
+  else {
+    res.status(500).send("Invalid Input.");
   }
 });
 
 //Add new device
 deviceController.post('/', function (req, res) {
-  if(req.body && req.body.newName){
-    addNewDevice(req,body.newName);
-    res.json(data.devices);
+  if(req.body && req.body.name){
+    res.json(addNewDevice(req.body.name));
   }
   else {
     res.status(500).send("Missing information.");
@@ -78,23 +82,35 @@ deviceController.post('/', function (req, res) {
 
 //Update device
 deviceController.put('/', function (req, res) {
-  if(req.body && req.body.id && req.body.newName){
-    updateDevice(req.body.id, req.body.newName);
-    res.json(data.devices);
+  if(req.body && req.body.id && Number.isInteger(req.body.id) && req.body.id >= 0 && req.body.name){
+    let updatedDevice = updateDevice(req.body.id, req.body.name);
+    if(updatedDevice){
+      res.json(data.devices);
+    }
+    else {
+      res.status(500).send("Device not found.");
+    }
   }
   else {
-    res.status(500).send("Missing information.");
+    res.status(500).send("Invalid or missing information.");
   }
 });
 
 //Deletes a device
-deviceController.delete('/', function(req, res){
-  if(req.body && req.body.id){
-    deleteDeviceByID(req.params.id);
-    res.json(data.devices);
+deviceController.delete('/:id', function(req, res){
+  if(Number.isInteger(parseInt(req.params.id)) && parseInt(req.params.id) >= 0){
+    let devData = findDeviceByID(req.params.id);
+    if(devData){
+      deleteDeviceByID(req.params.id);
+      res.json(data.devices);
+    }
+    else {
+      res.status(500).send("Device not found.");
+    }
   }
-  else{
-    res.status(500).send("Missing information.");
+  else {
+    res.status(500).send("Invalid or missing information.")
   }
 });
+
 module.exports = deviceController;

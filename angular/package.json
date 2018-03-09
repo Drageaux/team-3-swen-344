@@ -6,7 +6,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json",
-    "build": "ng build --prod --aot=false",
+    "build": "node --optimize_for_size --max_old_space_size=920 ./node_modules/@angular/cli/bin/ng build --prod --aot=false",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -26,6 +26,7 @@
     "@angular/router": "^5.2.0",
     "@types/jasmine": "~2.8.3",
     "@types/jasminewd2": "~2.0.2",
+    "ngx-tweet": "^1.0.1",
     "@types/node": "~6.0.60",
     "codelyzer": "^4.0.1",
     "core-js": "^2.4.1",
