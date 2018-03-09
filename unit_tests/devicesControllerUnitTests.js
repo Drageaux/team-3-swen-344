@@ -8,10 +8,7 @@ var should = require('should');
 describe('Testing GET devices API', function () {
     var server;
     before(function () {
-        server = require('./app');
-    });
-    after(function(done) {
-        server.close(done);
+        server = require('../app');
     });
     it('responds to get /api/devices/', function testSlash(done) {
         request(server)
@@ -38,16 +35,16 @@ describe('Testing GET devices API', function () {
             .get('/api/devices/100')
             .expect(500, done);
     });
+    after(function () {
+        server.close();
+    });
 });
 
 //POST
 describe('Testing POST devices API', function () {
     var server;
     before(function () {
-        server = require('./app');
-    });
-    after(function(done) {
-        server.close(done);
+        server = require('../app');
     });
     it('responds to POST /api/devices/', function testSlash(done) {
         request(server)
@@ -71,16 +68,16 @@ describe('Testing POST devices API', function () {
                 done();
             })
     });
+    after(function () {
+        server.close();
+    });
 });
 
 //PUT
 describe('Testing PUT devices API', function () {
     var server;
     before(function () {
-        server = require('./app');
-    });
-    after(function(done) {
-        server.close(done);
+        server = require('../app');
     });
     it('responds to PUT /api/devices/', function testSlash(done) {
         request(server)
@@ -132,16 +129,16 @@ describe('Testing PUT devices API', function () {
                 done();
             })
     });
+    after(function () {
+        server.close();
+    });
 });
 
 //DELETE
 describe('Testing DELETE devices API', function () {
     var server;
     before(function () {
-        server = require('./app');
-    });
-    after(function(done) {
-        server.close(done);
+        server = require('../app');
     });
     it('responds to DELETE /api/devices/', function testSlash(done) {
         request(server)
@@ -180,5 +177,8 @@ describe('Testing DELETE devices API', function () {
                 if (err) done(err);
                 done();
             })
+    });
+    after(function () {
+        server.close();
     });
 });

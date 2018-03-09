@@ -4,10 +4,7 @@ const RESERVATIONS_API = '/api/reservations/';
 describe('Testing GET reservations API', function() {
     var server;
     before(function() {
-       server = require('./app');
-    });
-    after(function(done) {
-        server.close(done);
+       server = require('../app');
     });
     it('responds to GET /api/reservations', function testSlash(done) {
         request(server)
@@ -34,14 +31,14 @@ describe('Testing GET reservations API', function() {
             .get(RESERVATIONS_API + '1000')
             .expect(500, done);
     });
+    after(function () {
+        server.close();
+    });
 });
 describe('Testing POST reservations API', function() {
     var server;
     before(function () {
-        server = require('./app');
-    });
-    after(function(done) {
-        server.close(done);
+        server = require('../app');
     });
     it('responds to POST /api/reservations', function testSlash(done) {
         request(server)
@@ -61,7 +58,6 @@ describe('Testing POST reservations API', function() {
             .send({"blah":"0"})
             .expect(500)
             .end(function(err, res) {
-                if (err) done(err);
                 done();
             })
     });
@@ -71,18 +67,17 @@ describe('Testing POST reservations API', function() {
             .send({})
             .expect(500)
             .end(function(err, res) {
-                if (err) done(err);
                 done();
             })
+    });
+    after(function () {
+        server.close();
     });
 });
 describe('Testing DELETE reservations API', function() {
     var server;
     before(function () {
-        server = require('./app');
-    });
-    after(function(done) {
-        server.close(done);
+        server = require('../app');
     });
     it('responds to DELETE /api/reservations/', function testSlash(done) {
         request(server)
@@ -98,5 +93,8 @@ describe('Testing DELETE reservations API', function() {
         request(server)
             .delete(RESERVATIONS_API + '1000')
             .expect(500, done);
+    });
+    after(function () {
+        server.close();
     });
 });

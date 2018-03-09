@@ -7,7 +7,7 @@
     "dev": "concurrently \"nodemon --exec \"\"node -r dotenv\\config\"\" app.js\" \"cd angular && npm run start\"",
     "heroku-prebuild": "npm install --prefix ./angular",
     "heroku-postbuild": "npm run build --prefix ./angular",
-    "test": "nyc mocha unittests.js"
+    "test": "nyc mocha --recursive unit_tests/"
   },
   "engines": {
     "node": ">= 6.10.0"
@@ -27,7 +27,7 @@
   "devDependencies": {
     "concurrently": "^3.5.1",
     "dotenv": "^5.0.1",
-    "mocha": "^5.0.1",
+    "mocha": "^5.0.4",
     "nodemon": "^1.11.0",
     "nyc": "^11.4.1",
     "really-need": "^1.9.2",
