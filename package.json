@@ -7,7 +7,7 @@
     "dev": "concurrently \"nodemon --exec \"\"node -r dotenv\\config\"\" app.js\" \"cd angular && npm run start\"",
     "heroku-prebuild": "npm install --prefix ./angular",
     "heroku-postbuild": "npm run build --prefix ./angular",
-    "test": "nyc mocha --recursive unit_tests/",
+    "test": "nyc mocha --recursive unit_tests/"
   },
   "engines": {
     "node": ">= 6.10.0"
