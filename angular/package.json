@@ -6,7 +6,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json",
-    "build": "node --max_old_space_size=5048 ./node_modules/@angular/cli/bin/ng build --prod --aot=false",
+    "build": "node --optimize_for_size --max_old_space_size=920 ./node_modules/@angular/cli/bin/ng build --prod --aot=false",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -36,6 +36,7 @@
     "karma-coverage-istanbul-reporter": "^1.2.1",
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "ngx-tweet": "^1.0.1",
     "protractor": "~5.1.2",
     "rxjs": "^5.5.6",
     "ts-node": "~4.1.0",

@@ -1,7 +1,9 @@
 ## INSTALL DEPENDENCIES
 1. make sure you are using Node 6.10.0 and above to avoid inconsistencies
 2. run `npm install` to automatically install packages for both Angular and Express
-3. run `npm install -g concurrently @angular/cli nodemon` to install globally the packages for development
+3. if your computer doesn't one of the following packages
+  - run `npm install -g concurrently @angular/cli nodemon dotenv` to install globally the packages for development
+4. download the .env file pinned on our main Slack channel (NOTE: do NOT commit the file)
 
 ## RUN APP
 - **development**: run `npm run dev`. Angular test server will start serving on http://localhost:4200, proxying to the Express server in port `3000` with live-reload for both client- and server-side code
