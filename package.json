@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node app.js",
     "dev": "concurrently \"nodemon --exec \"\"node -r dotenv\\config\"\" app.js\" \"cd angular && npm run start\"",
-    "preinstall": "cd angular && npm install",
+    "heroku-postbuild": "npm install --prefix ./angular",
     "prestart": "cd angular && npm run build",
     "test": "nyc mocha unittests.js"
   },
