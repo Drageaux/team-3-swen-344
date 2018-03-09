@@ -3,10 +3,7 @@ var should = require('should');
 describe('Testing GET messaging API', function () {
     var server;
     before(function () {
-        server = require('./app');
-    });
-    after(function(done) {
-        server.close(done);
+        server = require('../app');
     });
     it('responds to get /api/messaging/', function testSlash(done) {
         request(server)
@@ -33,14 +30,14 @@ describe('Testing GET messaging API', function () {
             .get('/api/messaging/to/abcd')
             .expect(500, done);
     });
+    after(function () {
+        server.close();
+    });
 });
 describe('Testing POST messaging API', function () {
     var server;
     before(function () {
-        server = require('./app');
-    });
-    after(function(done) {
-        server.close(done);
+        server = require('../app');
     });
     it('responds to POST /api/messaging/', function testSlash(done) {
         request(server)
@@ -60,7 +57,6 @@ describe('Testing POST messaging API', function () {
             .send({"fromId": 10, "toId": 12, "title": "WHAT IS HAPPENING"})
             .expect(500)
             .end(function(err, res) {
-                if (err) done(err);
                 done();
             })
     });
@@ -70,7 +66,6 @@ describe('Testing POST messaging API', function () {
             .send({"message": "This is askdjhaskjda", "fromId": 10, "toId": "abc", "title": "WHAT IS HAPPENING"})
             .expect(500)
             .end(function(err, res) {
-                if (err) done(err);
                 done();
             })
     });
@@ -80,7 +75,6 @@ describe('Testing POST messaging API', function () {
             .send({"message": "This is askdjhaskjda", "fromId": "abc", "toId": 10, "title": "WHAT IS HAPPENING"})
             .expect(500)
             .end(function(err, res) {
-                if (err) done(err);
                 done();
             })
     });
@@ -90,7 +84,6 @@ describe('Testing POST messaging API', function () {
             .send({"message": "This is askdjhaskjda", "fromId": 10, "toId": -5, "title": "WHAT IS HAPPENING"})
             .expect(500)
             .end(function(err, res) {
-                if (err) done(err);
                 done();
             })
     });
@@ -100,18 +93,17 @@ describe('Testing POST messaging API', function () {
             .send({"message": "This is askdjhaskjda", "fromId": -1, "toId": 10, "title": "WHAT IS HAPPENING"})
             .expect(500)
             .end(function(err, res) {
-                if (err) done(err);
                 done();
             })
+    });
+    after(function () {
+        server.close();
     });
 });
 describe('Testing PUT messaging API', function () {
     var server;
     before(function () {
-        server = require('./app');
-    });
-    after(function(done) {
-        server.close(done);
+        server = require('../app');
     });
     it('responds to PUT /api/messaging/', function testSlash(done) {
         request(server)
@@ -176,14 +168,14 @@ describe('Testing PUT messaging API', function () {
                 done();
             })
     });
+    after(function () {
+        server.close();
+    });
 });
 describe('Testing DELETE messaging API', function () {
     var server;
     before(function () {
-        server = require('./app');
-    });
-    after(function(done) {
-        server.close(done);
+        server = require('../app');
     });
     it('responds to DELETE /api/messaging/', function testSlash(done) {
         request(server)
@@ -204,7 +196,6 @@ describe('Testing DELETE messaging API', function () {
             .send({"id":"abcd"})
             .expect(500)
             .end(function(err, res) {
-                if (err) done(err);
                 done();
             })
     });
@@ -214,8 +205,10 @@ describe('Testing DELETE messaging API', function () {
             .send({"id":100})
             .expect(500)
             .end(function(err, res) {
-                if (err) done(err);
                 done();
             })
+    });
+    after(function () {
+        server.close();
     });
 });
