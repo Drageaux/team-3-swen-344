@@ -1,5 +1,6 @@
 var request = require('supertest');
 var should = require('should');
+require('dotenv').load();
 
 describe('Testing GET classrooms API', function () {
     var server;
@@ -34,9 +35,6 @@ describe('Testing GET classrooms API', function () {
     after(function () {
         server.close();
     });
-    after(function () {
-        server.close();
-    });
 });
 describe('Testing POST classrooms API', function () {
     var server;
@@ -46,7 +44,7 @@ describe('Testing POST classrooms API', function () {
     it('responds to POST /api/classrooms/', function testSlash(done) {
         request(server)
             .post('/api/classrooms/')
-            .send({ "name": "Foo" })
+            .send({ "description": "Foo" })
             .expect(200)
             .expect('Content-Type', /json/)
             .end(function (err, res) {
@@ -77,12 +75,12 @@ describe('Testing PUT classrooms API', function () {
     it('responds to PUT /api/classrooms/', function testSlash(done) {
         request(server)
             .put('/api/classrooms/')
-            .send({ "id": 1, "name": "Foo" })
+            .send({ "id": 1, "description": "Foo" })
             .expect(200)
             .expect('Content-Type', /json/)
             .end(function (err, res) {
                 if (err) return done(err);
-                res.body[1].should.have.property('name').which.equals("Foo");
+                res.body[1].should.have.property('description').which.equals("Foo");
                 done();
             })
     });
@@ -99,7 +97,7 @@ describe('Testing PUT classrooms API', function () {
     it('responds to PUT /api/classrooms/ with non-integer id', function testSlash(done) {
         request(server)
             .put('/api/classrooms/')
-            .send({ "id": "abc", "name": "Foo" })
+            .send({ "id": "abc", "description": "Foo" })
             .expect(500)
             .end(function (err, res) {
                 if (err) return done(err);
@@ -109,7 +107,7 @@ describe('Testing PUT classrooms API', function () {
     it('responds to PUT /api/classrooms/ with negative id', function testSlash(done) {
         request(server)
             .put('/api/classrooms/')
-            .send({ "id": -1, "name": "Foo" })
+            .send({ "id": -1, "description": "Foo" })
             .expect(500)
             .end(function (err, res) {
                 done();
@@ -118,7 +116,7 @@ describe('Testing PUT classrooms API', function () {
     it('responds to PUT /api/classrooms/ with classroom that does not exist', function testSlash(done) {
         request(server)
             .put('/api/classrooms/')
-            .send({ "id": 100, "name": "Foo" })
+            .send({ "id": 100, "description": "Foo" })
             .expect(500)
             .end(function (err, res) {
                 done();
