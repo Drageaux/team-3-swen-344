@@ -30,6 +30,6 @@ export class DeviceListItemComponent {
   }
 
   showCollapse(id: string): void {
-    $('#' + id).collapse('toggle');
+    $('#' + id).collapse("toggle");
   }
 }
