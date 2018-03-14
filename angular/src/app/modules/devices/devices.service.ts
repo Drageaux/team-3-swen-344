@@ -26,7 +26,7 @@ export class DevicesService {
 
   public createDevice(newDevice: Device): Observable<Device[]> {
     let body = {
-      newName: newDevice.name,
+      name: newDevice.name,
     };
 
     const httpOptions = {
@@ -42,7 +42,7 @@ export class DevicesService {
   public editDevice(editedDevice: Device): Observable<Device[]> {
     let body = {
       id: editedDevice.id,
-      newName: editedDevice.name
+      name: editedDevice.name
     };
 
     const httpOptions = {

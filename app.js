@@ -33,16 +33,20 @@ app.use('/', express.static(__dirname + '/dist'));
 // import the API controllers
 var sampleApi = require('./controllers/sampleController');
 var devicesApi = require('./controllers/devicesController');
+var messagingApi = require('./controllers/messagingController');
 var classroomsApi = require('./controllers/classroomsController');
 // register controllers for endpoints
 router.use('/sample', sampleApi);
-router.use('/devices', devicesApi); //API for devices
+router.use('/devices', devicesApi);//Api for devices
+router.use('/messaging', messagingApi); //Api for messaging
 router.use('/classrooms', classroomsApi); //API for classrooms
 // any route starting with '/api' will be interfacing our API
 app.use('/api', router);
 
 
 /** RUN APP */
-app.listen(process.env.PORT || '3000', function () {
+var server = app.listen(process.env.PORT || '3000', function () {
     console.log('[SERVER] I\'m listening on PORT: ' + (process.env.PORT || '3000'));
 });
+
+module.exports = server;
