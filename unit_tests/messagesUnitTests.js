@@ -47,7 +47,8 @@ describe('Testing POST messaging API', function () {
             .expect('Content-Type', /json/)
             .end(function(err, res) {
                 if (err) done(err);
-                res.body.should.be.instanceOf(Array);
+                res.body.should.have.property("message");
+                res.body.should.have.property("status");
                 done();
             })
     });
@@ -113,10 +114,7 @@ describe('Testing PUT messaging API', function () {
             .expect('Content-Type', /json/)
             .end(function(err, res) {
                 if (err) done(err);
-                res.body[0].should.have.property('message').which.equals("This is askdjhaskjda");
-                res.body[0].should.have.property('fromId').which.equals(1);
-                res.body[0].should.have.property('toId').which.equals(10);
-                res.body[0].should.have.property('title').which.equals("WHAT IS HAPPENING");
+                res.body.should.have.property('status').which.equals("Success");
                 done();
             })
     });
@@ -185,8 +183,7 @@ describe('Testing DELETE messaging API', function () {
             .expect('Content-Type', /json/)
             .end(function(err, res) {
                 if (err) done(err);
-                res.body[0].should.have.property('id').and.is.equal(0);
-                res.body[0].should.have.property('deleted').and.is.equal(true);
+                res.body.should.have.property('status').which.equals("Success");
                 done();
             })
     });
