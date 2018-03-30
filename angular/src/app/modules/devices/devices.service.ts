@@ -24,7 +24,7 @@ export class DevicesService {
     );
   }
 
-  public createDevice(newDevice: Device): Observable<Device> {
+  public createDevice(newDevice: Device): Observable<Device[]> {
     let body = {
       name: newDevice.name,
     };

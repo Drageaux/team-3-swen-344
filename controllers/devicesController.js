@@ -9,6 +9,8 @@ let data = {
   ]
 }
 
+let currID = data.devices.length;
+
 function findDeviceByID(id){
   for (var i = 0; i < data.devices.length; i++){
     if (data.devices[i].id == id){
@@ -20,11 +22,12 @@ function findDeviceByID(id){
 
 function addNewDevice(newName){
   newDevice = {
-    id: data.devices.length,
+    id: currID,
     name: newName,
     rentStatus: true
   }
   data.devices.push(newDevice);
+  currID++;
   return newDevice;
 }
 

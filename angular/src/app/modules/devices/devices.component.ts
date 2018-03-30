@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { DevicesService } from './devices.service';
 import { Device } from './device';
 
+declare var $;
+
 @Component({
   selector: 'app-devices',
   templateUrl: './devices.component.html',
@@ -25,8 +27,8 @@ export class DevicesComponent implements OnInit {
 
   onCreateDevice(newDevice){
     this.devicesService.createDevice(newDevice).subscribe(
-      nD => {
-        this.devices = this.devices.concat(nD);
+      devices => {
+        this.devices = devices;
       }
     );
   }

@@ -3,7 +3,7 @@ import { Device } from '../device';
 @Component({
   selector: 'app-device-list',
   templateUrl: './device-list.component.html',
-  styleUrls: ['./device-list.component.css']
+  styleUrls: ['../devices.component.css']
 })
 export class DeviceListComponent {
 
