@@ -22,6 +22,7 @@ function findMessagesByToId(id){
 
 
 function createMessage(message, fromId, toId, title){
+    let numMessages = data.messages.length;
   data.messages.push({
       fromId: fromId,
       toId: toId,
@@ -31,6 +32,21 @@ function createMessage(message, fromId, toId, title){
       deleted: false,
       id: data.messages.length
   });
+
+  let returnMessage = {};
+
+  if (numMessages == data.messages.length - 1) {
+      returnMessage = {
+          message: data.messages[numMessages],
+          status : "Success"
+      }
+  } else {
+      returnMessage = {
+          status: "Not Successful"
+      }
+  }
+
+  return returnMessage;
 }
 
 function updateMessage(id, message, fromId, toId, title){
@@ -79,8 +95,8 @@ messagingController.get('/to/:id', function(req, res){
 //Add new message
 messagingController.post('/', function (req, res) {
   if(req.body && req.body.message && Number.isInteger(req.body.fromId) && req.body.fromId >= 0 && Number.isInteger(req.body.toId) && req.body.toId >= 0 && req.body.title){
-    createMessage(req.body.message, req.body.fromId, req.body.toId, req.body.title);
-    res.json(data.messages);
+    let messageResponse = createMessage(req.body.message, req.body.fromId, req.body.toId, req.body.title);
+    res.json(messageResponse);
   }
   else {
     res.status(500).send("Missing information.");
@@ -92,7 +108,9 @@ messagingController.put('/', function (req, res) {
   if(req.body && Number.isInteger(req.body.id) && req.body.id >= 0 && req.body.message && Number.isInteger(req.body.fromId) && req.body.toId >= 0 && req.body.fromId >= 0 && Number.isInteger(req.body.toId) && req.body.title){
     var result = updateMessage(req.body.id, req.body.message, req.body.fromId, req.body.toId, req.body.title);
     if(result){
-        res.json(data.messages);
+        res.json({
+            status: "Success"
+        });
     } else {
         res.status(500).send("Message not found.");
     }
@@ -107,7 +125,9 @@ messagingController.delete('/', function(req, res){
   if(req.body && Number.isInteger(req.body.id) && req.body.id >= 0){
     var result = deleteMessageByID(req.body.id);
       if(result){
-          res.json(data.messages);
+          res.json({
+              status: "Success"
+          });
       } else {
           res.status(500).send("Message not found.");
       }
