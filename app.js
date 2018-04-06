@@ -10,13 +10,10 @@ var mysql = require('mysql');
 
 /** SETTINGS */
 app.use(bodyParser.json()); // parse application/json
-var connection = mysql.createConnection({ // set up MySQL
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: ''
-});
-connection.connect(function (err) {
+var dbUrl = process.env.JAWSDB_URL;
+var connection = mysql.createConnection(dbUrl); // set up MySQL
+
+connection.connect(function(err) {
     if (err) {
         console.error('[DATABASE] Error connecting: ' + err.stack);
         return;
