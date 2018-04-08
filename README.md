@@ -2,7 +2,7 @@
 1. make sure you are using Node 6.10.0 and above to avoid inconsistencies
 2. run `npm install` & `npm install --prefix ./angular` to automatically install packages for both Express & Angular
 3. if your computer doesn't one of the following packages
-  - run `npm install -g concurrently @angular/cli nodemon dotenv` to install globally the packages for development
+   * run `npm install -g concurrently nodemon dotenv sequelize-cli` to install globally the packages for development
 4. download the .env file pinned on our main Slack channel (NOTE: do NOT commit the file)
 
 ## RUN APP
