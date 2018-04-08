@@ -84,10 +84,10 @@ rentalsController.post('/', function (req, res) {
 });
 
 //rental returns
-reservationsController.post('/return/:id', function(req, res){
+rentalsController.post('/return/:id', function(req, res){
     let rental = findRentalByID(req.params.id);
     if(rental && req.body){
-        returnRental(req.params.id, req.body.condition, req.body.comment, req.body.returnDate);
+        returnRental(req.params.id, req.body.returnCondition, req.body.comment, req.body.returnDate);
         res.json(data.reservations);
     }
     else {
