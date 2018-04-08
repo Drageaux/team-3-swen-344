@@ -6,7 +6,7 @@ export class Rental {
     public returnCondition: string, //enum
     public comment: string,
     public rentDate: string, //date
-    public đueDate: string, //date
+    public dueDate: string, //date
     public returnDate: string //date
   ) { }
 }

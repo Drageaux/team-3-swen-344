@@ -21,11 +21,11 @@ export class RentalsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.rentalsService.getAllRentals().subscribe(
-      rentals => {
-        this.rentals = rentals;
-      }
-    );
+    // this.rentalsService.getAllRentals().subscribe(
+    //   rentals => {
+    //     this.rentals = rentals;
+    //   }
+    // );
   }
 
   onCancelRental(rental) {

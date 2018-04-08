@@ -4,28 +4,20 @@
     <!-- Card Header -->
     <div class="card-header row" (click)="showCollapse('collapseClass' + r.id)">
       <div class="col-5 col-sm-4 align-middle">
-        {{r.eventName}}
-      </div>
-      <div class="col-2 col-sm-4"></div>
-      <div class="col-5 col-sm-4 no-gutters text-center align-middle row justify-content-end" id="rental-status"
-           [ngClass]="{'text-success': r.active==true,
-                       'text-danger': r.status==false}">
-        <div>
-          <strong>Participants: </strong>{{r.participants}}
-        </div>
-        <i class="material-icons align-middle" style="margin-left: 0.3rem">lens</i>
+        <!--TODO: get Device's information-->
+        {{r.deviceId}}
       </div>
     </div>
-
 
 
     <!-- Card Body (has to wrap .collapse div to make the animation smooth) -->
     <div class="collapse" id="collapseClass{{r.id}}">
       <div class="card-body row" style="padding-left: 0.25rem;">
         <div class="col-6">
-          <strong>Location</strong>: Building 123<br />
-          <strong>Time</strong>: {{ r.startDate + " - " + r.endDate}}<br />
-          <strong>Reserved By</strong>: {{ r.reservedBy }}
+          <strong>Comment</strong>: {{r.comment || "(no comments)"}}<br/>
+          <strong>Time</strong>: {{r.rentDate + " - " + r.dueDate}}<br/>
+          <!--TODO: get renter User's information-->
+          <strong>Reserved By</strong>: {{ r.renterId }}
         </div>
         <div class="col-6 text-right" style="padding-right: 0;">
           <!-- Action Button -->

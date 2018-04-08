@@ -42,7 +42,7 @@ export class RentalsService {
       returnCondition: newRental.returnCondition,
       comment: newRental.comment,
       rentDate: newRental.rentDate,
-      đueDate: newRental.đueDate,
+      dueDate: newRental.dueDate,
       returnDate: newRental.returnDate
     };
 
