@@ -57,12 +57,12 @@ function returnRental(id, condition, comment, returnDate){
   }
 }
 
-//returns all reservations
+//returns all rentals
 rentalsController.get('/', function (req, res) {
     res.json(data.rental);
 });
 
-//Returns the reservation with of the requested id
+//Returns the rental with of the requested id
 rentalsController.get('/:id', function (req, res) {
     let rental = findRentalByID(req.params.id);
     if (rental) {
@@ -73,21 +73,21 @@ rentalsController.get('/:id', function (req, res) {
     }
 });
 
-//create a new reservation
+//create a new rental
 rentalsController.post('/', function (req, res) {
     if(req.body){
-        res.json(createNewRentals(req.body.classroomId, req.body.startDate, req.body.endDate, req.body.reservedBy, req.body.eventName));
+        res.json(createNewRentals(req.body.deviceId, req.body.renterId, req.body.rentDate, req.body.dueDate));
     }
     else {
         res.status(500).send("Bad Request");
     }
 });
 
-//Cancels a reservation
-reservationsController.delete('/:id', function(req, res){
-    let reservation = findReservationByID(req.params.id);
-    if(reservation){
-        cancelReservation(req.params.id);
+//rental returns
+reservationsController.post('/return/:id', function(req, res){
+    let rental = findRentalByID(req.params.id);
+    if(rental && req.body){
+        returnRental(req.params.id, req.body.condition, req.body.comment, req.body.returnDate);
         res.json(data.reservations);
     }
     else {
