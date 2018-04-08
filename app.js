@@ -38,7 +38,7 @@ var reservationsApi = require('./controllers/reservationsController');
 var twitterApi = require('./controllers/twitterController');
 // register controllers for endpoints
 router.use('/devices', devicesApi);//Api for devices
-router.use('/rentals', devicesApi);//Api for rentals
+router.use('/rentals', rentalsApi);//Api for rentals
 router.use('/messaging', messagingApi); //Api for messaging
 router.use('/classrooms', classroomsApi); //API for classrooms
 router.use('/reservations', reservationsApi); //API for reservations
