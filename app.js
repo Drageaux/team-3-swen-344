@@ -5,27 +5,15 @@ var app = express();
 
 /** IMPORT DEPENDENCIES */
 var bodyParser = require('body-parser');
-var mysql = require('mysql');
-var Sequelize = require('sequelize');
 
 
 /** SETTINGS */
+// parse incoming requests data (https://github.com/expressjs/body-parser)
 app.use(bodyParser.json()); // parse application/json
+app.use(bodyParser.urlencoded({ extended: false }));
 
-/** SET UP DATABASE CONNECTION */
-var dbUrl = process.env.JAWSDB_URL;
-var sequelize = new Sequelize(dbUrl, {
-    dialect: 'mysql'
-});
-sequelize // testing the connection
-    .authenticate()
-    .then(function () {
-        console.log('[DATABASE] Connection has been established successfully.');
-    })
-    .catch(function (err) {
-        console.error('[DATABASE] Unable to connect to the database:', err);
-    });
-
+/** SET UP DATABASE */
+var models = require('./models');
 
 /** SERVE PUBLIC FILES */
 app.use('/', express.static(__dirname + '/dist'));
