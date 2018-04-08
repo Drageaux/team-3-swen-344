@@ -21,6 +21,8 @@
     "express": "^4.14.0",
     "giphy-js-sdk-core": "^1.0.3",
     "mysql": "^2.15.0",
+    "mysql2": "^1.5.3",
+    "sequelize": "^4.37.6",
     "twitter-node-client": "0.0.6",
     "weather-js": "^2.0.0"
   },

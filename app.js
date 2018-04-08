@@ -6,20 +6,25 @@ var app = express();
 /** IMPORT DEPENDENCIES */
 var bodyParser = require('body-parser');
 var mysql = require('mysql');
+var Sequelize = require('sequelize');
 
 
 /** SETTINGS */
 app.use(bodyParser.json()); // parse application/json
-var dbUrl = process.env.JAWSDB_URL;
-var connection = mysql.createConnection(dbUrl); // set up MySQL
 
-connection.connect(function(err) {
-    if (err) {
-        console.error('[DATABASE] Error connecting: ' + err.stack);
-        return;
-    }
-    console.log('[DATABASE] Connected as id ' + connection.threadId);
+/** SET UP DATABASE CONNECTION */
+var dbUrl = process.env.JAWSDB_URL;
+var sequelize = new Sequelize(dbUrl, {
+    dialect: 'mysql'
 });
+sequelize // testing the connection
+    .authenticate()
+    .then(function () {
+        console.log('[DATABASE] Connection has been established successfully.');
+    })
+    .catch(function (err) {
+        console.error('[DATABASE] Unable to connect to the database:', err);
+    });
 
 
 /** SERVE PUBLIC FILES */
