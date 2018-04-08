@@ -177,8 +177,7 @@ describe('Testing DELETE messaging API', function () {
     });
     it('responds to DELETE /api/messaging/', function testSlash(done) {
         request(server)
-            .delete('/api/messaging/')
-            .send({"id":0})
+            .delete('/api/messaging/0')
             .expect(200)
             .expect('Content-Type', /json/)
             .end(function(err, res) {
@@ -189,8 +188,7 @@ describe('Testing DELETE messaging API', function () {
     });
     it('responds to DELETE /api/messaging/ with ID not an integer', function testSlash(done) {
         request(server)
-            .delete('/api/messaging/')
-            .send({"id":"abcd"})
+            .delete('/api/messaging/abcd')
             .expect(500)
             .end(function(err, res) {
                 done();
@@ -198,8 +196,7 @@ describe('Testing DELETE messaging API', function () {
     });
     it('responds to DELETE /api/messaging/ with ID not found', function testSlash(done) {
         request(server)
-            .delete('/api/messaging/')
-            .send({"id":100})
+            .delete('/api/messaging/-1')
             .expect(500)
             .end(function(err, res) {
                 done();
