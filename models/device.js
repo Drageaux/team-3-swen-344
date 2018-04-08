@@ -1,15 +1,11 @@
 'use strict';
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
     var Device = sequelize.define('Device', {
-        // id: DataTypes.UUID,
-        // deviceNameId: DataTypes.UUID,
         type: DataTypes.STRING,
         serial: DataTypes.STRING
-    });
-
-    Device.associate = function(models) {
-        models.Device.hasOne(models.DeviceName);
+    }, {});
+    Device.associate = function (models) {
+        // associations can be defined here
     };
-
     return Device;
 };
