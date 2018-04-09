@@ -4,10 +4,6 @@ module.exports = function (sequelize, DataTypes) {
         type: DataTypes.STRING,
         serial: DataTypes.STRING
     });
-    Device.associate = function (models) {
-        models.Device.belongsTo(models.DeviceName, {
-            onDelete: "CASCADE"
-        });
-    };
+
     return Device;
 };

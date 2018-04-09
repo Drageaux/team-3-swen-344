@@ -4,5 +4,10 @@ module.exports = function (sequelize, DataTypes) {
         name: DataTypes.STRING
     });
 
+    Device.associate = function (models) {
+        models.DeviceName.hasMany(models.Device, {
+            onDelete: "CASCADE"
+        });
+    };
     return DeviceName;
 };
