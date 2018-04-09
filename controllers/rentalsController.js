@@ -6,12 +6,12 @@ let data = {
     {id:0, username:"abc1234"},
     {id:1, username:"dpo5678"},
     {id:2, username:"zxc0987"}
-  ]
+  ],
   devices: [
     {id: 0, name: "Microscope", rentStatus: true},
     {id: 1, name: "Laptop", rentStatus: true},
     {id: 2, name: "Tape Measure", rentStatus: false}
-  ]
+  ],
   rentals: [
     {id:0, deviceId:0,renterId:0,returnCondition:"good",comment:"none",rentDate:"2018-4-7T09:08:00",dueDate:"2018-4-14T09:00:00",returnDate:"2018-4-9T10:00:00"},
     {id:1, deviceId:1,renterId:1,returnCondition:"brocken",comment:"heavily damaged",rentDate:"2018-4-7T09:08:00",dueDate:"2018-4-14T09:00:00",returnDate:"2018-4-9T10:00:00"}
@@ -59,7 +59,7 @@ function returnRental(id, condition, comment, returnDate){
 
 //returns all rentals
 rentalsController.get('/', function (req, res) {
-    res.json(data.rental);
+    res.json(data.rentals);
 });
 
 //Returns the rental with of the requested id
