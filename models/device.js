@@ -4,6 +4,5 @@ module.exports = function (sequelize, DataTypes) {
         type: DataTypes.STRING,
         serial: DataTypes.STRING
     });
-
     return Device;
 };
