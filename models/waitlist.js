@@ -4,7 +4,8 @@ module.exports = function (sequelize, DataTypes) {
         position: DataTypes.INTEGER
     }, {});
     WaitList.associate = function (models) {
-        // associations can be defined here
+        models.WaitList.belongsTo(models.User);
+        models.WaitList.belongsTo(models.Device);
     };
     return WaitList;
 };
