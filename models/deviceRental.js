@@ -1,7 +1,7 @@
 'use strict';
 module.exports = function (sequelize, DataTypes) {
     var DeviceRental = sequelize.define('DeviceRental', {
-        returnCondition: DataTypes.ENUM,
+        returnCondition: DataTypes.ENUM('good', 'usable', 'broken'),
         comment: DataTypes.STRING,
         rentDate: DataTypes.DATE,
         dueDate: DataTypes.DATE,
