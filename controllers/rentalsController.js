@@ -75,7 +75,7 @@ rentalsController.get('/:id', function (req, res) {
 
 //create a new rental
 rentalsController.post('/', function (req, res) {
-    if(req.body){
+    if(req.body && req.body.deviceId && req.body.renterId && req.body.rentDate && req.body.dueDate){
         res.json(createNewRentals(req.body.deviceId, req.body.renterId, req.body.rentDate, req.body.dueDate));
     }
     else {
@@ -86,7 +86,7 @@ rentalsController.post('/', function (req, res) {
 //rental returns
 rentalsController.post('/return/:id', function(req, res){
     let rental = findRentalByID(req.params.id);
-    if(rental && req.body){
+    if(rental && req.body req.params.id && req.body.returnCondition && req.body.comment && req.body.returnDate){
         returnRental(req.params.id, req.body.returnCondition, req.body.comment, req.body.returnDate);
         res.json(data.reservations);
     }
