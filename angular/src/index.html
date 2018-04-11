@@ -40,7 +40,7 @@
       //$(".error").hide();
       $(".signed-in").show();
       var profile = googleUser.getBasicProfile();
-      //$('.user-name').html(profile.getName());
+      $('.user-name').html(profile.getName());
       //$('.user-email').html(profile.getEmail());
       //$('.user-image').attr('src', profile.getImageUrl());
       console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
