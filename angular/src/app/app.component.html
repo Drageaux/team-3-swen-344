@@ -22,10 +22,14 @@
         <li class="nav-item"><a class="nav-link disabled" href="#">Settings</a></li>
       </ul>
 
-      <ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav navbar-right default">
+        <li><div class="g-signin2" data-onsuccess="onSignIn"></div></li>
+      </ul>
+      
+      <ul class="nav navbar-nav navbar-right signed-in" style="display: none;">
         <li class="nav-item"><a class="nav-link" disabled href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Profile</a></li>
         <li class="nav-item"><a class="nav-link" [routerLink]="['/messaging']" routerLinkActive="active">Messaging</a></li>
-        <li class="nav-item"><a class="nav-link" disabled href="#"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Log Out</a></li>
+        <li class="nav-item"><a class="nav-link" disabled href="#"><span class="glyphicon glyphicon-log-out" onclick="signOut" aria-hidden="true"></span>Log Out</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
