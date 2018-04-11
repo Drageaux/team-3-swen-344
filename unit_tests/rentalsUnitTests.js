@@ -20,33 +20,31 @@ describe('Testing GET rentals API', function() {
     it('responds to GET with id /api/rentals/1', function testSlash(done) {
         request(server).get(RENTALS_API + '1').expect(200, done);
     });
-    it('Sends back 500 with bad id /api/reservations/-1', function testSlash(done) {
+    it('Sends back 500 with bad id /api/rentals/-1', function testSlash(done) {
+        request(server).get(RENTALS_API + '-1').expect(500, done);
+    });
+    it('Sends back 500 with non-numeric id /api/rentals/abcd', function testSlash(done) {
         request(server)
-            .get(RESERVATIONS_API + '-1')
+            .get(RENTALS_API + 'abcd')
             .expect(500, done);
     });
-    it('Sends back 500 with non-numeric id /api/reservations/abcd', function testSlash(done) {
-        request(server)
-            .get(RESERVATIONS_API + 'abcd')
-            .expect(500, done);
-    });
-    it('Sends back 500 with no reservations found /api/reservations/1000', function testSlash(done) {
-        request(server)
-            .get(RESERVATIONS_API + '1000')
-            .expect(500, done);
+    it('Sends back 500 with no reservations found /api/rentals/1000', function testSlash(done) {
+        request(server).get(RENTALS_API + '1000').expect(500, done);
     });
     after(function () {
         server.close();
     });
 });
+
+//POST
 describe('Testing POST reservations API', function() {
     var server;
     before(function () {
         server = require('../app');
     });
-    it('responds to POST /api/reservations', function testSlash(done) {
+    it('responds to POST /api/rentals', function testSlash(done) {
         request(server)
-            .post(RESERVATIONS_API)
+            .post(RENTALS_API)
             .send({"classroomId":0, "startDate":"1/1/1", "endDate":"1/1/1", "reservedBy":"test", "eventName":"testName"})
             .expect('Content-Type', /json/)
             .expect(200)
