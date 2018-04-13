@@ -59,39 +59,44 @@ function returnRental(id, condition, comment, returnDate){
 
 //returns all rentals
 rentalsController.get('/', function (req, res) {
-    res.json(data.rentals);
+  res.json(data.rentals);
 });
 
 //Returns the rental with of the requested id
 rentalsController.get('/:id', function (req, res) {
-    let rental = findRentalByID(req.params.id);
-    if (rental) {
-        res.json(rental);
-    }
-    else {
-        res.status(500).send("Cannot find rental.");
-    }
+  let rental = findRentalByID(req.params.id);
+  if (rental) {
+    res.json(rental);
+  }
+  else {
+    res.status(500).send("Cannot find rental.");
+  }
 });
 
 //create a new rental
 rentalsController.post('/', function (req, res) {
-    if(req.body && req.body.deviceId && req.body.renterId && req.body.rentDate && req.body.dueDate){
-        res.json(createNewRentals(req.body.deviceId, req.body.renterId, req.body.rentDate, req.body.dueDate));
-    }
-    else {
-        res.status(500).send("Bad Request");
-    }
+  if(req.body && req.body.deviceId && req.body.renterId && req.body.rentDate && req.body.dueDate){
+    res.json(createNewRentals(req.body.deviceId, req.body.renterId, req.body.rentDate, req.body.dueDate));
+  }
+  else {
+    res.status(500).send("Bad Request");
+  }
 });
 
 //rental returns
-rentalsController.post('/return/:id', function(req, res){
-    let rental = findRentalByID(req.params.id);
-    if(rental && req.body req.params.id && req.body.returnCondition && req.body.comment && req.body.returnDate){
-        returnRental(req.params.id, req.body.returnCondition, req.body.comment, req.body.returnDate);
+rentalsController.put('/return', function(req, res){
+    if(rental && req.body && req.body.id && req.body.returnCondition && req.body.comment && req.body.returnDate){
+      let rental = findRentalByID(req.body.id);
+      if(rental){
+        returnRental(req.body.id, req.body.returnCondition, req.body.comment, req.body.returnDate);
         res.json(data.reservations);
+      }
+      else {
+        res.status(500).send("Bad Request");
+      }
     }
     else {
-        res.status(500).send("Bad Request");
+      res.status(500).send("Bad Request");
     }
 });
 

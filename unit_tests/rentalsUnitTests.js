@@ -37,64 +37,65 @@ describe('Testing GET rentals API', function() {
 });
 
 //POST
-describe('Testing POST reservations API', function() {
+describe('Testing POST rentals API', function() {
     var server;
     before(function () {
         server = require('../app');
     });
     it('responds to POST /api/rentals', function testSlash(done) {
         request(server)
-            .post(RENTALS_API)
-            .send({"classroomId":0, "startDate":"1/1/1", "endDate":"1/1/1", "reservedBy":"test", "eventName":"testName"})
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                    if (err) done(err);
-                    res.body.should.be.instanceOf(Object);
-                    done();
-                })
+          .post(RENTALS_API)
+          .send({"deviceId":2, "renterId":1, "rentDate":"2018-4-10T08:00:00", "dueDate":"2018-4-15T08:00:00"})
+          .expect('Content-Type', /json/).expect(200).end(function(err, res) {
+            //if (err) done(err);
+            res.body.should.be.instanceOf(Object);
+            done();
+          })
     });
-    it('responds with 500 for POST /api/reservations with wrong data', function testSlash(done) {
+    it('responds with 500 for POST /api/rentals with wrong data', function testSlash(done) {
         request(server)
-            .post(RESERVATIONS_API)
-            .send({"blah":"0"})
-            .expect(500)
-            .end(function(err, res) {
-                done();
-            })
+          .post(RENTALS_API).send({"blah":"0"}).expect(500).end(function(err, res) {
+            done();
+          })
     });
-    it('responds with 500 for POST /api/reservations with empty data', function testSlash(done) {
+    it('responds with 500 for POST /api/rentals with empty data', function testSlash(done) {
         request(server)
-            .post(RESERVATIONS_API)
-            .send({})
-            .expect(500)
-            .end(function(err, res) {
-                done();
-            })
+          .post(RENTALS_API).send({}).expect(500).end(function(err, res) {
+            done();
+          })
     });
     after(function () {
         server.close();
     });
 });
-describe('Testing DELETE reservations API', function() {
+
+//PUT
+describe('Testing PUT messaging API', function () {
     var server;
     before(function () {
         server = require('../app');
     });
-    it('responds to DELETE /api/reservations/', function testSlash(done) {
+    it('responds to PUT /api/rentals/return', function testSlash(done) {
         request(server)
-            .delete(RESERVATIONS_API + '0')
-            .expect('Content-Type', /json/)
-            .end(function(err, res) {
-                if (err) done(err);
-                res.body[0].should.have.property('active').and.is.equal(false);
-                done();
-            })
+          .post(RENTALS_API+'/return')
+          .send({"id":1, "returnCondition":"Good", "comment":"None", "returnDate":"2018-4-14T08:00:00"})
+          .expect('Content-Type', /json/).expect(200).end(function(err, res) {
+            //if (err) done(err);
+            res.body.should.be.instanceOf(Object);
+            done();
+          })
     });
-    it('responds with 500 to DELETE /api/reservations/ with wrong id', function testSlash(done) {
+    it('responds with 500 for PUT /api/rentals/return with wrong data', function testSlash(done) {
         request(server)
-            .delete(RESERVATIONS_API + '1000')
-            .expect(500, done);
+          .post(RENTALS_API+'/return').send({"blah":"0"}).expect(500).end(function(err, res) {
+            done();
+          })
+    });
+    it('responds with 500 for PUT /api/rentals/return with empty data', function testSlash(done) {
+        request(server)
+          .post(RENTALS_API+'/return').send({}).expect(500).end(function(err, res) {
+            done();
+          })
     });
     after(function () {
         server.close();
