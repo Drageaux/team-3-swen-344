@@ -32,8 +32,9 @@ describe('Testing GET classrooms API', function () {
             .get('/api/classrooms/100')
             .expect(500, done);
     });
-    after(function () {
+    after(function (done) {
         server.close();
+        done();
     });
 });
 describe('Testing POST classrooms API', function () {
@@ -63,8 +64,9 @@ describe('Testing POST classrooms API', function () {
                 done();
             })
     });
-    after(function () {
+    after(function (done) {
         server.close();
+        done();
     });
 });
 describe('Testing PUT classrooms API', function () {
@@ -122,8 +124,9 @@ describe('Testing PUT classrooms API', function () {
                 done();
             })
     });
-    after(function () {
+    after(function (done) {
         server.close();
+        done();
     });
 });
 describe('Testing DELETE classrooms API', function () {
@@ -169,7 +172,8 @@ describe('Testing DELETE classrooms API', function () {
                 done();
             })
     });
-    after(function () {
+    after(function (done) {
         server.close();
+        done();
     });
 });

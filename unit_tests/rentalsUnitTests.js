@@ -31,8 +31,9 @@ describe('Testing GET rentals API', function() {
     it('Sends back 500 with no reservations found /api/rentals/1000', function testSlash(done) {
         request(server).get(RENTALS_API + '1000').expect(500, done);
     });
-    after(function () {
+    after(function (done) {
         server.close();
+        done();
     });
 });
 
@@ -64,8 +65,9 @@ describe('Testing POST rentals API', function() {
             done();
           })
     });
-    after(function () {
+    after(function (done) {
         server.close();
+        done();
     });
 });
 
@@ -97,7 +99,8 @@ describe('Testing PUT messaging API', function () {
             done();
           })
     });
-    after(function () {
+    after(function (done) {
         server.close();
+        done();
     });
 });

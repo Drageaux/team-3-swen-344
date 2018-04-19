@@ -30,8 +30,9 @@ describe('Testing GET messaging API', function () {
             .get('/api/messaging/to/abcd')
             .expect(500, done);
     });
-    after(function () {
+    after(function (done) {
         server.close();
+        done();
     });
 });
 describe('Testing POST messaging API', function () {
@@ -97,8 +98,9 @@ describe('Testing POST messaging API', function () {
                 done();
             })
     });
-    after(function () {
+    after(function (done) {
         server.close();
+        done();
     });
 });
 describe('Testing PUT messaging API', function () {
@@ -166,8 +168,9 @@ describe('Testing PUT messaging API', function () {
                 done();
             })
     });
-    after(function () {
+    after(function (done) {
         server.close();
+        done();
     });
 });
 describe('Testing DELETE messaging API', function () {
@@ -205,7 +208,8 @@ describe('Testing DELETE messaging API', function () {
                 done();
             })
     });
-    after(function () {
+    after(function (done) {
         server.close();
+        done();
     });
 });
