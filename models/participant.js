@@ -2,8 +2,8 @@
 module.exports = function (sequelize, DataTypes) {
     var Participant = sequelize.define('Participant', {}, {});
     Participant.associate = function (models) {
-        models.User.hasMany(model.Participant);
-        models.ClassroomReservation.hasMany(model.Participant, {
+        models.User.hasMany(models.Participant);
+        models.ClassroomReservation.hasMany(models.Participant, {
             foreignKey: 'reservationId'
         });
     };
