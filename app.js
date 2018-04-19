@@ -5,22 +5,15 @@ var app = express();
 
 /** IMPORT DEPENDENCIES */
 var bodyParser = require('body-parser');
-var mysql = require('mysql');
 
 
 /** SETTINGS */
+// parse incoming requests data (https://github.com/expressjs/body-parser)
 app.use(bodyParser.json()); // parse application/json
-var dbUrl = process.env.JAWSDB_URL;
-var connection = mysql.createConnection(dbUrl); // set up MySQL
+app.use(bodyParser.urlencoded({ extended: false }));
 
-connection.connect(function(err) {
-    if (err) {
-        console.error('[DATABASE] Error connecting: ' + err.stack);
-        return;
-    }
-    console.log('[DATABASE] Connected as id ' + connection.threadId);
-});
-
+/** SET UP DATABASE */
+var models = require('./models');
 
 /** SERVE PUBLIC FILES */
 app.use('/', express.static(__dirname + '/dist'));
