@@ -41,7 +41,7 @@ function createNewRentals(deviceId, renterId, rentDate, dueDate) {
     returnDate:null
   }
   currID++;
-  data.renatals.push(newRental);
+  data.rentals.push(newRental);
   return newRental;
 }
 
