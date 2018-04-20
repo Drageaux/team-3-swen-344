@@ -75,7 +75,7 @@ rentalsController.get('/:id', function (req, res) {
 
 //create a new rental
 rentalsController.post('/', function (req, res) {
-  if(req.body && req.body.deviceId && req.body.renterId && req.body.rentDate && req.body.dueDate){
+  if(req.body && req.body.deviceId && Number.isInteger(req.body.deviceId) && req.body.deviceId >= 0 && req.body.renterId && Number.isInteger(req.body.renterId) && req.body.renterId >= 0 && req.body.rentDate && req.body.dueDate){
     res.json(createNewRentals(req.body.deviceId, req.body.renterId, req.body.rentDate, req.body.dueDate));
   }
   else {
@@ -84,8 +84,8 @@ rentalsController.post('/', function (req, res) {
 });
 
 //rental returns
-rentalsController.put('/return', function(req, res){
-    if(rental && req.body && req.body.id && req.body.returnCondition && req.body.comment && req.body.returnDate){
+rentalsController.put('/', function(req, res){
+    if(req.body && req.body.id && Number.isInteger(req.body.id) && req.body.id >= 0 && req.body.returnCondition && req.body.comment && req.body.returnDate){
       let rental = findRentalByID(req.body.id);
       if(rental){
         returnRental(req.body.id, req.body.returnCondition, req.body.comment, req.body.returnDate);

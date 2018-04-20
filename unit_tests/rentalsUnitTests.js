@@ -48,7 +48,7 @@ describe('Testing POST rentals API', function() {
           .post(RENTALS_API)
           .send({"deviceId":2, "renterId":1, "rentDate":"2018-4-10T08:00:00", "dueDate":"2018-4-15T08:00:00"})
           .expect('Content-Type', /json/).expect(200).end(function(err, res) {
-            //if (err) done(err);
+            if (err) done(err);
             res.body.should.be.instanceOf(Object);
             done();
           })
@@ -77,25 +77,35 @@ describe('Testing PUT messaging API', function () {
     before(function () {
         server = require('../app');
     });
-    it('responds to PUT /api/rentals/return', function testSlash(done) {
+    it('responds to PUT /api/rentals', function testSlash(done) {
         request(server)
-          .post(RENTALS_API+'/return')
+          .put(RENTALS_API)
           .send({"id":1, "returnCondition":"Good", "comment":"None", "returnDate":"2018-4-14T08:00:00"})
-          .expect('Content-Type', /json/).expect(200).end(function(err, res) {
-            //if (err) done(err);
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .end(function(err, res) {
+            if (err) done(err);
             res.body.should.be.instanceOf(Object);
             done();
           })
     });
-    it('responds with 500 for PUT /api/rentals/return with wrong data', function testSlash(done) {
+    it('responds with 500 for PUT /api/rentals with wrong id', function testSlash(done) {
         request(server)
-          .post(RENTALS_API+'/return').send({"blah":"0"}).expect(500).end(function(err, res) {
+          .put(RENTALS_API)
+          .send({"id":100, "returnCondition":"Good", "comment":"None", "returnDate":"2018-4-14T08:00:00"})
+          .expect(500).end(function(err, res) {
             done();
           })
     });
-    it('responds with 500 for PUT /api/rentals/return with empty data', function testSlash(done) {
+    it('responds with 500 for PUT /api/rentals with wrong data', function testSlash(done) {
         request(server)
-          .post(RENTALS_API+'/return').send({}).expect(500).end(function(err, res) {
+          .put(RENTALS_API+'return').send({"blah":"0"}).expect(500).end(function(err, res) {
+            done();
+          })
+    });
+    it('responds with 500 for PUT /api/rentals with empty data', function testSlash(done) {
+        request(server)
+          .put(RENTALS_API).send({}).expect(500).end(function(err, res) {
             done();
           })
     });
