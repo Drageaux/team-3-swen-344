@@ -63,6 +63,7 @@ export class MessagingComponent implements OnInit {
             messages => {
               this.messages = [messages];
               this.showTable = (this.messages[0] && (Object.keys(this.messages[0]).length !== 0));
+              this.messageOpen = null;
             }
           );
         }
