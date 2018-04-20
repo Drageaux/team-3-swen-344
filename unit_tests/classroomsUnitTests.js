@@ -4,8 +4,9 @@ require('dotenv').load();
 
 describe('Testing GET classrooms API', function () {
     var server;
-    before(function () {
+    before(function (done) {
         server = require('../app');
+        done();
     });
     it('responds to get /api/classrooms/', function testSlash(done) {
         request(server)
