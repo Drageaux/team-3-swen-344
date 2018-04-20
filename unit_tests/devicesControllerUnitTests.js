@@ -35,8 +35,9 @@ describe('Testing GET devices API', function () {
             .get('/api/devices/100')
             .expect(500, done);
     });
-    after(function () {
+    after(function (done) {
         server.close();
+        done();
     });
 });
 
@@ -68,8 +69,9 @@ describe('Testing POST devices API', function () {
                 done();
             })
     });
-    after(function () {
+    after(function (done) {
         server.close();
+        done();
     });
 });
 
@@ -129,8 +131,9 @@ describe('Testing PUT devices API', function () {
                 done();
             })
     });
-    after(function () {
+    after(function (done) {
         server.close();
+        done();
     });
 });
 
@@ -178,7 +181,8 @@ describe('Testing DELETE devices API', function () {
                 done();
             })
     });
-    after(function () {
+    after(function (done) {
         server.close();
+        done();
     });
 });
