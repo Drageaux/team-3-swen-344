@@ -47,7 +47,7 @@
         <th scope="col">Time Received</th>
       </tr>
     </thead>
-    <tbody class="border-left border-right border-bottom">
+    <tbody class="border-left border-right border-bottom" *ngIf="showTable">
       <tr *ngFor="let message of messages" (click)="messageOpen = message">
         <th scope="row">
           <input type="checkbox" name="removeMessage" data-id="{{message.id}}" aria-label="Checkbox for following message">

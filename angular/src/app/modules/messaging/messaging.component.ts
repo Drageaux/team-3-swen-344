@@ -14,6 +14,7 @@ export class MessagingComponent implements OnInit {
   private messageOpen: Message = null;
   private id = 15;
   messages: Message[] = [];
+  showTable = true;
 
   constructor(private messageService: MessageService) {
   }
@@ -21,7 +22,6 @@ export class MessagingComponent implements OnInit {
   ngOnInit() {
     // prevent checkbox event from "bubbling" up to the entire row (since they're overlapping)
     $('#inbox input[type=checkbox]').click(function (event) {
-      console.log('test')
       if (event.stopPropagation) {
         // standard
         event.stopPropagation();
@@ -34,6 +34,7 @@ export class MessagingComponent implements OnInit {
     this.messageService.getAllMessages(this.id).subscribe(
       messages => {
         this.messages = messages.messages;
+        this.showTable = (this.messages[0] && (Object.keys(this.messages[0]).length !== 0));
       }
     );
   }
@@ -44,6 +45,7 @@ export class MessagingComponent implements OnInit {
         this.messageService.getAllMessages(this.id).subscribe(
           messages => {
             this.messages = messages.messages;
+            this.showTable = (this.messages[0] && (Object.keys(this.messages[0]).length !== 0));
           }
         );
       }
@@ -55,12 +57,12 @@ export class MessagingComponent implements OnInit {
 
     for (var i = 0; i < checkedBoxes.length; i++) {
       var id = parseInt(checkedBoxes[i].getAttribute("id"));
-      console.log(id);
       this.messageService.deleteMessage(id).subscribe(
         messages => {
           this.messageService.getAllMessages(15).subscribe(
             messages => {
               this.messages = [messages];
+              this.showTable = (this.messages[0] && (Object.keys(this.messages[0]).length !== 0));
             }
           );
         }
