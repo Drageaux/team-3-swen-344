@@ -1,6 +1,10 @@
 var express = require('express');
 var deviceController = express.Router();
 
+//models
+var models = require('../models');
+
+
 let data = {
   devices: [
     {id: 0, name: "Microscope", rentStatus: true},
@@ -54,7 +58,12 @@ function deleteDeviceByID(id){
 
 //Returns all devices
 deviceController.get('/', function (req, res){
-  res.json(data.devices);
+  //res.json(data.devices);
+
+  //select name, serial, type from DEVICES d inner join DEVICE_NAMES dn on d.deviceName = dn.id;
+  models.Device.findAll({ include: [models.deviceName, {required: true}]}).success(function(devices){
+    res.json(devices);
+  });
 });
 
 //Returns the device with of the requested id
