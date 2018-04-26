@@ -139,7 +139,7 @@ deviceController.post('/', function (req, res) {
 
 //Update device
 deviceController.put('/', function (req, res) {
-  if(req.body && req.body.id && Number.isInteger(req.body.id) && req.body.id >= 0 && req.body.name){
+  if(req.body && req.body.id && Number.isInteger(req.body.id) && req.body.id >= 0 && req.body.name && req.body.type && req.body.serial){
     let updatedDevice = updateDevice(req.body.id, req.body.name);
     if(updatedDevice){
       res.json(data.devices);
@@ -147,6 +147,35 @@ deviceController.put('/', function (req, res) {
     else {
       res.status(500).send("Device not found.");
     }
+
+    let dNID = null;
+    //Find or create the device name.
+    models.DeviceName.findOrCreate({
+      where: {name: req.body.name}
+    }).spread((dNames, created) => {
+      console.log(dNames);
+      dNID = dNames[0].id;
+    });
+
+    models.Device.findOne({
+      include: [models.deviceName, {required: true}],
+      attributes: ['name', 'type', 'serial'],
+      where: {
+        id: req.params.id
+      }
+    }).then(function(device){
+      if(!device){
+        res.status(500).send("Device not found.");
+      }
+      else {
+        device.update({
+          deviceName: dNID,
+          type: req.body.type,
+          serial: req.body.serial
+        });
+      }
+    });
+
   }
   else {
     res.status(500).send("Invalid or missing information.");
