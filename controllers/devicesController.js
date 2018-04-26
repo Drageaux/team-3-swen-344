@@ -61,9 +61,13 @@ deviceController.get('/', function (req, res){
   //res.json(data.devices);
 
   //select name, serial, type from DEVICES d inner join DEVICE_NAMES dn on d.deviceName = dn.id;
-  models.Device.findAll({ include: [models.deviceName, {required: true}]}).success(function(devices){
+  models.Device.findAll({
+    include: [models.deviceName, {required: true}],
+    attributes: ['name', 'type', 'serial']
+  }).success(function(devices){
     res.json(devices);
   });
+
 });
 
 //Returns the device with of the requested id
@@ -71,7 +75,18 @@ deviceController.get('/:id', function(req, res){
   if(Number.isInteger(parseInt(req.params.id)) && parseInt(req.params.id) >= 0){
     let devData = findDeviceByID(req.params.id);
     if(devData){
-      res.json(devData);
+      //res.json(devData);
+
+      models.Device.findOne({
+        include: [models.deviceName, {required: true}],
+        attributes: ['name', 'type', 'serial'],
+        where: {
+          id: req.params.id
+        }
+      }).success(function(device){
+        res.json(device);
+      });
+
     }
     else{
       res.status(500).send("Cannot find device.");
@@ -84,8 +99,38 @@ deviceController.get('/:id', function(req, res){
 
 //Add new device
 deviceController.post('/', function (req, res) {
-  if(req.body && req.body.name){
+  if(req.body && req.body.name && req.body.type && req.body.serial){
     res.json(addNewDevice(req.body.name));
+
+    let dNID = null;
+    //Find or create the device name.
+    models.DeviceName.findOrCreate({
+      where: {name: req.body.name}
+    }).spread((dNames, created) => {
+      console.log(dNames);
+      dNID = dNames[0].id;
+    });
+
+    /*
+    //Find or create the device.
+    models.Device.findOrCreate({
+      where: {
+        deviceName: dNID;
+        type: req.body.type,
+        serial: req.body.serial
+      }
+    }).spread((devices, created) => {
+      //list should contain one item
+      //combination of deviceName, type, and serial must be unique
+      console.log(devices);
+      if(!created){
+        //do something if the device already exist
+
+      }
+      res.json(devices[0]);
+    });
+    */
+
   }
   else {
     res.status(500).send("Missing information.");
