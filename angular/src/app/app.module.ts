@@ -1,18 +1,18 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { appRoutingProviders, routing } from './app.routing';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
+import {appRoutingProviders, routing} from './app.routing';
 
-import { AppComponent } from './app.component';
-import { PageNotFoundComponent } from './not-found.component';
+import {AppComponent} from './app.component';
+import {PageNotFoundComponent} from './not-found.component';
 
-import { HomeModule } from './modules/home/home.module';
-import { ReservationsModule } from './modules/reservations/reservations.module';
-import { ClassroomsModule } from './modules/classrooms/classrooms.module';
-import { DevicesModule } from './modules/devices/devices.module';
-import { MessagingModule } from './modules/messaging/messaging.module';
-
+import {HomeModule} from './modules/home/home.module';
+import {ReservationsModule} from './modules/reservations/reservations.module';
+import {RentalsModule} from "./modules/rentals/rentals.module";
+import {ClassroomsModule} from './modules/classrooms/classrooms.module';
+import {DevicesModule} from './modules/devices/devices.module';
+import {MessagingModule} from './modules/messaging/messaging.module';
 
 
 @NgModule({
@@ -28,6 +28,7 @@ import { MessagingModule } from './modules/messaging/messaging.module';
     routing,
     HomeModule,
     ReservationsModule,
+    RentalsModule,
     ClassroomsModule,
     DevicesModule,
     MessagingModule
@@ -35,4 +36,5 @@ import { MessagingModule } from './modules/messaging/messaging.module';
   providers: [appRoutingProviders],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
