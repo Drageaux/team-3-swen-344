@@ -1,7 +1,7 @@
 <!-- Card Header -->
 <div class="card-header row" (click)="showCollapse('collapseClass' + device.id)">
   <div class="col-5 col-sm-4 align-middle">
-    {{device.name}}
+    <strong>{{device.name}}</strong>
   </div>
   <div class="col-2 col-sm-4"></div>
 
@@ -20,11 +20,21 @@
 <div class="collapse" id="collapseClass{{device.id}}">
   <div class="card-body row" style="padding-left: 0.25rem;">
     <div class="col-6">
-      <br />
-      <strong>{{device.name}}</strong>
-      <strong>{{device.type}}</strong>
-      <strong>{{device.serial}}</strong>
-      <br />
+      <table>
+        <tr>
+          <td><strong>Name: </strong></td>
+          <td>{{device.name}}</td>
+        <tr>
+        <tr>
+          <td><strong>Type: </strong></td>
+          <td>{{device.type}}</td>
+        </tr>
+
+        <tr>
+          <td><strong>Serial: </strong></td>
+          <td>{{device.serial}}</td>
+        </tr>
+      </table>
     </div>
     <div class="col-6 text-right" style="padding-right: 0;">
       <!-- Action Button -->

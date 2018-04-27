@@ -63,7 +63,7 @@ deviceController.get('/', function (req, res){
 
   //select name, serial, type from DEVICES d inner join DEVICE_NAMES dn on d.deviceName = dn.id;
   models.Device.findAll({
-    attributes: [[Sequelize.literal('DeviceName.name'), 'name'],'type', 'serial'],
+    attributes: ['id', [Sequelize.literal('DeviceName.name'), 'name'],'type', 'serial'],
     include: [
       {
         model: models.DeviceName,
@@ -92,7 +92,7 @@ deviceController.get('/:id', function(req, res){
     */
 
     models.Device.findOne({
-      attributes: [[Sequelize.literal('DeviceName.name'), 'name'],'type', 'serial'],
+      attributes: ['id', [Sequelize.literal('DeviceName.name'), 'name'],'type', 'serial'],
       where: {
         id: req.params.id
       },

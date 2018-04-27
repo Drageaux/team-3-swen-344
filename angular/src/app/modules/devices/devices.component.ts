@@ -21,7 +21,6 @@ export class DevicesComponent implements OnInit {
     this.devicesService.getAllDevices().subscribe(
       devices => {
         this.devices = devices;
-        console.log(devices);
       }
     );
   }
@@ -29,7 +28,8 @@ export class DevicesComponent implements OnInit {
   onCreateDevice(newDevice){
     this.devicesService.createDevice(newDevice).subscribe(
       devices => {
-        this.devices = devices;
+        location.reload();
+        //this.devices = devices;
       }
     );
   }
@@ -37,7 +37,8 @@ export class DevicesComponent implements OnInit {
   onEditDevice(device){
     this.devicesService.editDevice(device).subscribe(
       devices => {
-        this.devices = devices;
+        location.reload();
+        //this.devices = devices;
       }
     );
   }
@@ -45,7 +46,8 @@ export class DevicesComponent implements OnInit {
   onDeleteDevice(device) {
     this.devicesService.deleteDevice(device).subscribe(
       devices => {
-        this.devices = devices;
+        location.reload();
+        //this.devices = devices;
       }
     );
     //this.devices = this.devices.filter(d => d.id !== device.id);
