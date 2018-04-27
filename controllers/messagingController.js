@@ -34,7 +34,7 @@ messagingController.get('/to/:id', function(req, res){
 });
 
 
-messagingController.get('/users', function(req, res){
+messagingController.get('/users/', function(req, res){
     models.User.findAll({
         attributes: ['authId', 'name', 'email']
     }).then((users) => {
