@@ -6,8 +6,8 @@ module.exports = function (sequelize, DataTypes) {
         eventName: DataTypes.STRING
     }, {});
     ClassroomReservation.associate = function (models) {
-        models.ClassroomReservation.belongsTo(models.Classroom);
-        models.ClassroomReservation.belongsTo(models.User, {as: 'ReservedBy'});
+        models.ClassroomReservation.belongsTo(models.Classroom, {as: 'Classroom'}, {foreignKey: 'id'});
+        models.ClassroomReservation.belongsTo(models.User, {as: 'ReservedBy'}, {foreignKey: 'id'});
     };
     return ClassroomReservation;
 };

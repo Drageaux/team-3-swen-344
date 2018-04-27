@@ -1,6 +1,9 @@
 var express = require('express');
 var reservationsController = express.Router();
 
+//models for talking to DB
+models = require("../models");
+
 let classroomsData = {
     classrooms: [
         { id: 0, capacity: 200, location: "GOL-1400", description: "A large auditorium"},
@@ -50,7 +53,28 @@ function cancelReservation(id) {
 
 //returns all reservations
 reservationsController.get('/', function (req, res) {
-    res.json(data.reservations);
+
+    models.ClassroomReservation.findAll({
+        attributes: ['startDate', 'endDate', 'eventName'],
+        include: [
+            {
+                model: models.Classroom,
+                as: 'Classroom',
+                attributes: ['id'],
+                required: true
+            },
+            {
+                model: models.User,
+                as: 'ReservedBy',
+                attributes: ['id'],
+                required: true
+            }
+        ]
+    }).then(function(reservations){
+        res.json(reservations);
+    }).catch((error) => {
+        console.log(error);
+    });
 });
 
 //Returns the reservation with of the requested id
