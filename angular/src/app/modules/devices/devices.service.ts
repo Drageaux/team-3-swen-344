@@ -18,7 +18,7 @@ export class DevicesService {
   constructor(private http: HttpClient) {
   }
 
-  public getAllDevices(): Observable<any> {
+  public getAllDevices(): Observable<Device[]> {
     return this.http.get(DEVICE_API).pipe(
       catchError(this.handleError)
     );

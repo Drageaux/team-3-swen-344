@@ -3,6 +3,7 @@ var deviceController = express.Router();
 
 //models
 var models = require('../models');
+const Sequelize = require('sequelize');
 
 
 let data = {
@@ -62,11 +63,10 @@ deviceController.get('/', function (req, res){
 
   //select name, serial, type from DEVICES d inner join DEVICE_NAMES dn on d.deviceName = dn.id;
   models.Device.findAll({
-    attributes: ['type', 'serial'],
+    attributes: [[Sequelize.literal('DeviceName.name'), 'name'],'type', 'serial'],
     include: [
       {
         model: models.DeviceName,
-        attributes: ['name'],
         required: true
       }
     ]
@@ -92,14 +92,13 @@ deviceController.get('/:id', function(req, res){
     */
 
     models.Device.findOne({
-      attributes: ['type', 'serial'],
+      attributes: [[Sequelize.literal('DeviceName.name'), 'name'],'type', 'serial'],
       where: {
         id: req.params.id
       },
       include: [
         {
           model: models.DeviceName,
-          attributes: ['name'],
           required: true
         }
       ]
@@ -133,14 +132,14 @@ deviceController.post('/', function (req, res) {
           type: req.body.type,
           serial: req.body.serial
         }
-      }).spread((devices, created) => {
+      }).spread((device, created) => {
         //list should contain one item
         if(!created){
           //do something if the device already exist
           res.status(500).send("Device already exist.");
         }
         else{
-          res.json(devices[0]);
+          res.json(device);
         }
       });
 

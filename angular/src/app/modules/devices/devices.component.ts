@@ -21,6 +21,7 @@ export class DevicesComponent implements OnInit {
     this.devicesService.getAllDevices().subscribe(
       devices => {
         this.devices = devices;
+        console.log(devices);
       }
     );
   }
