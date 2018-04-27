@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from './messaging.service';
 import { Message } from './message';
+import  validatePermissions  from '../../utilities/permissions'
 
 declare var $;
 
@@ -20,7 +21,9 @@ export class MessagingComponent implements OnInit {
   }
 
   ngOnInit() {
-    // prevent checkbox event from "bubbling" up to the entire row (since they're overlapping)
+    // prevent checkbox event from "bubbling" up to the entire row (since they're overlappig)
+    validatePermissions([]);
+
     $('#inbox input[type=checkbox]').click(function (event) {
       if (event.stopPropagation) {
         // standard
