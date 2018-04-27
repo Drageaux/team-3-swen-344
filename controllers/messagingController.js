@@ -33,6 +33,28 @@ messagingController.get('/to/:id', function(req, res){
     }
 });
 
+
+messagingController.get('/users', function(req, res){
+    models.User.findAll({
+        attributes: ['authId', 'name', 'email']
+    }).then((users) => {
+        let retAry = [];
+        if(users) {
+            users.forEach((user) => {
+                retAry.push({
+                    "name": user.get('name'),
+                    "email": user.get('email'),
+                    "authId": user.get("authId")
+                })
+            });
+        }
+
+        res.json({
+            users: retAry
+        });
+    })
+});
+
 //Add new message
 messagingController.post('/', function (req, res) {
   if(req.body && req.body.message && Number.isInteger(req.body.fromId) && req.body.fromId >= 0 && Number.isInteger(req.body.toId) && req.body.toId >= 0 && req.body.title){
