@@ -4,7 +4,7 @@ module.exports = function (sequelize, DataTypes) {
         name: DataTypes.STRING
     }, {});
     DeviceName.associate = function (models) {
-        models.DeviceName.hasMany(models.Device);
+        models.DeviceName.hasMany(models.Device, {foreignKey: "deviceName"});
     };
     return DeviceName;
 };

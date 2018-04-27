@@ -62,10 +62,18 @@ deviceController.get('/', function (req, res){
 
   //select name, serial, type from DEVICES d inner join DEVICE_NAMES dn on d.deviceName = dn.id;
   models.Device.findAll({
-    include: [models.deviceName, {required: true}],
-    attributes: ['name', 'type', 'serial']
-  }).success(function(devices){
-    res.json(devices);
+    attributes: ['type', 'serial'],
+    include: [
+      {
+        model: models.DeviceName,
+        attributes: ['name'],
+        required: true
+      }
+    ]
+  }).then(function(devices){
+      res.json(devices);
+  }).catch((error) => {
+      console.log(error);
   });
 
 });
@@ -84,19 +92,21 @@ deviceController.get('/:id', function(req, res){
     */
 
     models.Device.findOne({
-      include: [models.deviceName, {required: true}],
-      attributes: ['name', 'type', 'serial'],
+      attributes: ['type', 'serial'],
       where: {
         id: req.params.id
-      }
+      },
+      include: [
+        {
+          model: models.DeviceName,
+          attributes: ['name'],
+          required: true
+        }
+      ]
     }).then(function(device){
-      if(!device){
-        res.status(500).send("Device not found.");
-      }
-      else {
-        res.json(device);
-      }
+      res.json(device);
     });
+
   }
   else {
     res.status(500).send("Invalid Input.");
@@ -120,14 +130,12 @@ deviceController.post('/', function (req, res) {
     //Find or create the device.
     models.Device.findOrCreate({
       where: {
-        deviceName: dNID;
+        deviceName: dNID,
         type: req.body.type,
         serial: req.body.serial
       }
     }).spread((devices, created) => {
       //list should contain one item
-      //combination of deviceName, type, and serial must be unique
-      console.log(devices);
       if(!created){
         //do something if the device already exist
         res.status(500).send("Device already exist.");
@@ -192,6 +200,7 @@ deviceController.put('/', function (req, res) {
 
 //Deletes a device
 deviceController.delete('/:id', function(req, res){
+
   if(Number.isInteger(parseInt(req.params.id)) && parseInt(req.params.id) >= 0){
 
     /*
@@ -217,8 +226,6 @@ deviceController.delete('/:id', function(req, res){
         device.destroy();
       }
     });
-
-
   }
   else {
     res.status(500).send("Invalid or missing information.")

@@ -6,6 +6,7 @@ module.exports = function (sequelize, DataTypes) {
     }, {});
     Device.associate = function (models) {
         // associations can be defined here
+        models.Device.belongsTo(models.DeviceName, {foreignKey: "deviceName"});
     };
     return Device;
 };
