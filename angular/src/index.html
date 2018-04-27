@@ -8,8 +8,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 
-  <meta name="google-signin-client_id" content="1063496487067-u6dorc4qjgmqh80dbabb1cjgnagos01q.apps.googleusercontent.com">
-
 </head>
 <body>
   <app-root></app-root>
@@ -20,36 +18,5 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-  <!-- Adding JQuery -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" ></script>
-
-	<script>
-		// What happens when you sign out
-		function signOut() {
-			var auth2 = gapi.auth2.getAuthInstance();
-			auth2.signOut().then(function () {
-				$(".default").show();
-				//$(".error").hide();
-				$(".signed-in").hide();
-			});
-		}
-
-    // What happens when you sign in. 
-    function onSignIn (googleUser) {
-      $(".default").hide();
-      //$(".error").hide();
-      $(".signed-in").show();
-      var profile = googleUser.getBasicProfile();
-      $('.user-name').html(profile.getName());
-      //$('.user-email').html(profile.getEmail());
-      //$('.user-image').attr('src', profile.getImageUrl());
-      console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-      console.log('Name: ' + profile.getName());
-      console.log('Image URL: ' + profile.getImageUrl());
-      console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-    }
-  </script>
-  <!-- Google API Platform Library -->
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
 </body>
 </html>
