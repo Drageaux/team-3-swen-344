@@ -14,7 +14,7 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="responsive-navbar">
-      <ul class="navbar-nav mr-auto">
+      <ul class="navbar-nav mr-auto" *ngIf="auth.isAuthenticated()">
         <li class="nav-item"><a class="nav-link" [routerLink]="['/home']" routerLinkActive="active">Home</a></li>
         <li class="nav-item"><a class="nav-link" [routerLink]="['/reservations']" routerLinkActive="active">My Reservations</a></li>
         <li class="nav-item"><a class="nav-link" [routerLink]="['/classrooms']" routerLinkActive="active">Classrooms</a></li>
@@ -23,37 +23,11 @@
       </ul>
 
       <ul class="nav navbar-nav navbar-right" *ngIf="!auth.isAuthenticated()">
-        <li class="nav-item">
-          <button
-            class="btn btn-primary btn-margin"
-            routerLink="/">
-            Home
-          </button>
-        </li>
-        <li class="nav-item">
-          <button
-            class="btn btn-primary btn-margin"
-            (click)="auth.login()">
-              Log In
-          </button>
-        </li>
+        <li class="nav-item"><a class="nav-link" (click)="auth.login()" routerLinkActive="active">Login</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right" *ngIf="auth.isAuthenticated()">
-        <li class="nav-item">
-          <button
-            class="btn btn-primary btn-margin"
-            routerLink="/">
-            Home
-          </button>
-        </li>
         <li class="nav-item"><a class="nav-link" [routerLink]="['/messaging']" routerLinkActive="active">Messaging</a></li>
-        <li class="nav-item">
-          <button
-            class="btn btn-primary btn-margin"
-            (click)="auth.logout()">
-              Log Out
-          </button>
-        </li>
+        <li class="nav-item"><a class="nav-link" (click)="auth.logout()" routerLinkActive="active">Logout</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
