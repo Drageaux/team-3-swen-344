@@ -84,7 +84,7 @@ messagingController.get('/to/:id', function(req, res){
         if(messagingData.messages.length > 0){
             res.json(messagingData);
         } else {
-            res.status(500).send("Cannot find message.");
+            res.json({});
         }
     }
     else{
@@ -121,9 +121,9 @@ messagingController.put('/', function (req, res) {
 });
 
 //Deletes a device
-messagingController.delete('/', function(req, res){
-  if(req.body && Number.isInteger(req.body.id) && req.body.id >= 0){
-    var result = deleteMessageByID(req.body.id);
+messagingController.delete('/:id', function(req, res){
+  if(!!req.params.id && (req.params.id >= 0)){
+    var result = deleteMessageByID(req.params.id);
       if(result){
           res.json({
               status: "Success"
