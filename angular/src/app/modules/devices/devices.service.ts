@@ -27,6 +27,8 @@ export class DevicesService {
   public createDevice(newDevice: Device): Observable<Device[]> {
     let body = {
       name: newDevice.name,
+      type: newDevice.type,
+      serial: newDevice.serial
     };
 
     const httpOptions = {

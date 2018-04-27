@@ -30,6 +30,8 @@ export class DeviceFormComponent {
   createDevice(form: NgForm) {
     if(form.valid){
       this.newDevice.name = form.value.devName;
+      this.newDevice.type = form.value.type;
+      this.newDevice.serial = form.value.serial;
       this.create.emit(this.newDevice);
       form.reset();
     }

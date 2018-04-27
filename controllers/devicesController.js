@@ -118,31 +118,32 @@ deviceController.post('/', function (req, res) {
   if(req.body && req.body.name && req.body.type && req.body.serial){
     //res.json(addNewDevice(req.body.name));
 
-    let dNID = null;
     //Find or create the device name.
     models.DeviceName.findOrCreate({
       where: {name: req.body.name}
-    }).spread((dNames, created) => {
-      console.log(dNames);
-      dNID = dNames[0].id;
-    });
+    }).spread((dName, created) => {
+      //console.log("****start****")
+      //console.log(dName.id);
+      //console.log("****end****");
 
-    //Find or create the device.
-    models.Device.findOrCreate({
-      where: {
-        deviceName: dNID,
-        type: req.body.type,
-        serial: req.body.serial
-      }
-    }).spread((devices, created) => {
-      //list should contain one item
-      if(!created){
-        //do something if the device already exist
-        res.status(500).send("Device already exist.");
-      }
-      else{
-        res.json(devices[0]);
-      }
+      //////Find or Create the Device////////
+      models.Device.findOrCreate({
+        where: {
+          deviceName: dName.id,
+          type: req.body.type,
+          serial: req.body.serial
+        }
+      }).spread((devices, created) => {
+        //list should contain one item
+        if(!created){
+          //do something if the device already exist
+          res.status(500).send("Device already exist.");
+        }
+        else{
+          res.json(devices[0]);
+        }
+      });
+
     });
 
   }
