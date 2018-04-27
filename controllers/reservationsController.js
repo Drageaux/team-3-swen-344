@@ -79,12 +79,34 @@ reservationsController.get('/', function (req, res) {
 
 //Returns the reservation with of the requested id
 reservationsController.get('/:id', function (req, res) {
-    let reservation = findReservationByID(req.params.id);
-    if (reservation) {
-        res.json(reservation);
+    if (Number.isInteger(parseInt(req.params.id)) && parseInt(req.params.id) >= 0){
+        models.ClassroomReservation.findOne({
+            attributes: ['startDate', 'endDate', 'eventName'],
+            where: {
+                id: req.params.id
+            },
+            include: [
+                {
+                    model: models.Classroom,
+                    as: 'Classroom',
+                    attributes: ['id'],
+                    required: true
+                },
+                {
+                    model: models.User,
+                    as: 'ReservedBy',
+                    attributes: ['id'],
+                    required: true
+                }
+            ]
+        }).then(function(reservation){
+            res.json(reservation);
+        }).catch((error) => {
+            console.log(error);
+        });
     }
     else {
-        res.status(500).send("Cannot find reservation.");
+        res.status(500).send("Invalid Input.");
     }
 });
 
