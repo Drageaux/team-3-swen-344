@@ -73,24 +73,30 @@ deviceController.get('/', function (req, res){
 //Returns the device with of the requested id
 deviceController.get('/:id', function(req, res){
   if(Number.isInteger(parseInt(req.params.id)) && parseInt(req.params.id) >= 0){
+    /*
     let devData = findDeviceByID(req.params.id);
     if(devData){
       //res.json(devData);
-
-      models.Device.findOne({
-        include: [models.deviceName, {required: true}],
-        attributes: ['name', 'type', 'serial'],
-        where: {
-          id: req.params.id
-        }
-      }).success(function(device){
-        res.json(device);
-      });
-
     }
     else{
       res.status(500).send("Cannot find device.");
     }
+    */
+
+    models.Device.findOne({
+      include: [models.deviceName, {required: true}],
+      attributes: ['name', 'type', 'serial'],
+      where: {
+        id: req.params.id
+      }
+    }).then(function(device){
+      if(!device){
+        res.status(500).send("Device not found.");
+      }
+      else {
+        res.json(device);
+      }
+    });
   }
   else {
     res.status(500).send("Invalid Input.");
@@ -100,7 +106,7 @@ deviceController.get('/:id', function(req, res){
 //Add new device
 deviceController.post('/', function (req, res) {
   if(req.body && req.body.name && req.body.type && req.body.serial){
-    res.json(addNewDevice(req.body.name));
+    //res.json(addNewDevice(req.body.name));
 
     let dNID = null;
     //Find or create the device name.
@@ -111,7 +117,6 @@ deviceController.post('/', function (req, res) {
       dNID = dNames[0].id;
     });
 
-    /*
     //Find or create the device.
     models.Device.findOrCreate({
       where: {
@@ -125,11 +130,12 @@ deviceController.post('/', function (req, res) {
       console.log(devices);
       if(!created){
         //do something if the device already exist
-
+        res.status(500).send("Device already exist.");
       }
-      res.json(devices[0]);
+      else{
+        res.json(devices[0]);
+      }
     });
-    */
 
   }
   else {
@@ -140,6 +146,7 @@ deviceController.post('/', function (req, res) {
 //Update device
 deviceController.put('/', function (req, res) {
   if(req.body && req.body.id && Number.isInteger(req.body.id) && req.body.id >= 0 && req.body.name && req.body.type && req.body.serial){
+    /*
     let updatedDevice = updateDevice(req.body.id, req.body.name);
     if(updatedDevice){
       res.json(data.devices);
@@ -147,6 +154,7 @@ deviceController.put('/', function (req, res) {
     else {
       res.status(500).send("Device not found.");
     }
+    */
 
     let dNID = null;
     //Find or create the device name.
@@ -185,6 +193,8 @@ deviceController.put('/', function (req, res) {
 //Deletes a device
 deviceController.delete('/:id', function(req, res){
   if(Number.isInteger(parseInt(req.params.id)) && parseInt(req.params.id) >= 0){
+
+    /*
     let devData = findDeviceByID(req.params.id);
     if(devData){
       deleteDeviceByID(req.params.id);
@@ -193,6 +203,22 @@ deviceController.delete('/:id', function(req, res){
     else {
       res.status(500).send("Device not found.");
     }
+    */
+
+    models.Device.findOne({
+      where: {
+        id: req.params.id
+      }
+    }).then(function(device){
+      if(!device){
+        res.status(500).send("Device not found.");
+      }
+      else {
+        device.destroy();
+      }
+    });
+
+
   }
   else {
     res.status(500).send("Invalid or missing information.")
