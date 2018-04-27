@@ -11,7 +11,7 @@ export class AuthService {
     domain: 'swen-344-fm.auth0.com',
     responseType: 'token id_token',
     audience: 'https://swen-344-fm.auth0.com/userinfo',
-    redirectUri: 'http://localhost:3000/callback',
+    redirectUri: 'http://localhost:4200',
     scope: 'openid'
   });
 
