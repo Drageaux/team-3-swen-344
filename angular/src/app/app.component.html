@@ -22,13 +22,42 @@
         <li class="nav-item"><a class="nav-link disabled" href="#">Settings</a></li>
       </ul>
 
-      <ul class="nav navbar-nav navbar-right">
-        <li class="nav-item"><a class="nav-link" disabled href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Profile</a></li>
+      <ul class="nav navbar-nav navbar-right" *ngIf="!auth.isAuthenticated()">
+        <li class="nav-item">
+          <button
+            class="btn btn-primary btn-margin"
+            routerLink="/">
+            Home
+          </button>
+        </li>
+        <li class="nav-item">
+          <button
+            class="btn btn-primary btn-margin"
+            (click)="auth.login()">
+              Log In
+          </button>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right" *ngIf="auth.isAuthenticated()">
+        <li class="nav-item">
+          <button
+            class="btn btn-primary btn-margin"
+            routerLink="/">
+            Home
+          </button>
+        </li>
         <li class="nav-item"><a class="nav-link" [routerLink]="['/messaging']" routerLinkActive="active">Messaging</a></li>
-        <li class="nav-item"><a class="nav-link" disabled href="#"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Log Out</a></li>
+        <li class="nav-item">
+          <button
+            class="btn btn-primary btn-margin"
+            (click)="auth.logout()">
+              Log Out
+          </button>
+        </li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </header>
 
 <router-outlet></router-outlet>
+>
