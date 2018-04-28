@@ -37,8 +37,8 @@ export class AuthService {
           if(profile && userId){
             localStorage.setItem('user_id', userId);
             this.http.get(this.USERS_API + '/' + userId).subscribe((result) => {
+              console.log(result['users']);
               if(result['status'] == true) {
-                console.log("Status was true!");
                 if(result['users'].length == 0) {
                   const httpOptions = {
                     headers: new HttpHeaders({
@@ -48,17 +48,21 @@ export class AuthService {
                   let body = {
                     role: 'student',
                     name: profile.name,
-                    email: profile.nickname + "g.rit.edu",
+                    email: profile.nickname + "@g.rit.edu",
                     authId: userId
                   };
                   this.http.post(this.USERS_API + '/', body, httpOptions).subscribe((result) => {
                     if(result) {
-                      console.log("Successfully Saved!")
+                      console.table(result);
+                      console.log("Successfully Saved!");
+                      localStorage.setItem("userId", result['user']['id'])
                     }
                   });
+                } else {
                 }
               } else {
                 console.log("Something bad happened with the GET user query");
+                localStorage.setItem("userId", result[0]['id'])
               }
             });
           }
