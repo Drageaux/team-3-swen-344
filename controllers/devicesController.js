@@ -71,7 +71,23 @@ deviceController.get('/', function (req, res){
       }
     ]
   }).then(function(devices){
-      res.json(devices);
+
+      var rentalPromises = devices.map(function(device) {
+        return models.DeviceRental.findOne({where: {deviceId: device.id}});
+      });
+
+      Promise.all(rentalPromises).then(function(rentals){
+        for(var i = 0; i < rentals.length; i++){
+          if(!rentals[i]){
+            devices[i].rentStatus = false;
+          }
+          else {
+            devices[i].rentStatus = true;
+          }
+        }
+        res.json(devices);
+      });
+
   }).catch((error) => {
       console.log(error);
   });
@@ -103,9 +119,21 @@ deviceController.get('/:id', function(req, res){
         }
       ]
     }).then(function(device){
-      res.json(device);
-    });
 
+      models.DeviceRental.findOne({where: {deviceId: device.id}})
+      .then(function(deviceRental){
+        if(!deviceRental){
+          device.rentStatus = false;
+        }
+        else{
+          device.rentStatus = true;
+        }
+        res.json(device);
+      });
+
+    }).catch((error) => {
+        console.log(error);
+    });
   }
   else {
     res.status(500).send("Invalid Input.");
@@ -121,9 +149,6 @@ deviceController.post('/', function (req, res) {
     models.DeviceName.findOrCreate({
       where: {name: req.body.name}
     }).spread((dName, created) => {
-      //console.log("****start****")
-      //console.log(dName.id);
-      //console.log("****end****");
 
       //////Find or Create the Device////////
       models.Device.findOrCreate({
