@@ -5,7 +5,7 @@ var deviceController = express.Router();
 var models = require('../models');
 const Sequelize = require('sequelize');
 
-
+/*
 let data = {
   devices: [
     {id: 0, name: "Microscope", rentable: true},
@@ -55,7 +55,7 @@ function deleteDeviceByID(id){
       break;
     }
   }
-}
+}*/
 
 //Returns all devices
 deviceController.get('/', function (req, res){
@@ -72,21 +72,21 @@ deviceController.get('/', function (req, res){
     ]
   }).then(function(devices){
 
-      var rentalPromises = devices.map(function(device) {
-        return models.DeviceRental.findOne({where: {deviceId: device.id}});
-      });
+    var rentalPromises = devices.map(function(device) {
+      return models.DeviceRental.findOne({where: {deviceId: device.id}});
+    });
 
-      Promise.all(rentalPromises).then(function(rentals){
-        for(var i = 0; i < rentals.length; i++){
-          if(rentals[i] != null){
-            devices[i].rentable = false;
-          }
-          else {
-            devices[i].rentable = true;
-          }
+    Promise.all(rentalPromises).then(function(rentals){
+      for(var i = 0; i < rentals.length; i++){
+        if(rentals[i] != null){
+          devices[i].rentable = false;
         }
-        res.json(devices);
-      });
+        else {
+          devices[i].rentable = true;
+        }
+      }
+      res.json(devices);
+    });
 
   }).catch((error) => {
       console.log(error);
@@ -119,17 +119,21 @@ deviceController.get('/:id', function(req, res){
         }
       ]
     }).then(function(device){
-
-      models.DeviceRental.findOne({where: {deviceId: device.id}})
-      .then(function(deviceRental){
-        if(deviceRental != null){
-          device.rentable = false;
-        }
-        else{
-          device.rentable = true;
-        }
-        res.json(device);
-      });
+      if(device != null){
+        models.DeviceRental.findOne({where: {deviceId: device.id}})
+        .then(function(deviceRental){
+          if(deviceRental != null){
+            device.rentable = false;
+          }
+          else{
+            device.rentable = true;
+          }
+          res.json(device);
+        });
+      }
+      else {
+        res.status(500).send("Cannot find device.");
+      }
 
     }).catch((error) => {
         console.log(error);
@@ -164,12 +168,11 @@ deviceController.post('/', function (req, res) {
           res.status(500).send("Device already exist.");
         }
         else{
-          res.json(device);
+          res.status(200).json(device);
         }
       });
 
     });
-
   }
   else {
     res.status(500).send("Missing information.");
@@ -208,7 +211,7 @@ deviceController.put('/', function (req, res) {
             type: req.body.type,
             serial: req.body.serial
           });
-          res.json(device);
+          res.status(200).json(device);
         }
       });
 
@@ -245,10 +248,12 @@ deviceController.delete('/:id', function(req, res){
         res.status(500).send("Device not found.");
       }
       else {
-        device.destroy();
-        res.status(200).send("Device deleted.")
+        device.destroy().then(function(){
+          res.status(200).send("Device deleted.");
+        });
       }
     });
+
   }
   else {
     res.status(500).send("Invalid or missing information.")

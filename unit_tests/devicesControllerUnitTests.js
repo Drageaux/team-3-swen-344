@@ -50,7 +50,7 @@ describe('Testing POST devices API', function () {
     it('responds to POST /api/devices/', function testSlash(done) {
         request(server)
             .post('/api/devices/')
-            .send({"name": "Foo"})
+            .send({"name": "Foo", "type": "Bar", "serial": "123456789"})
             .expect(200)
             .expect('Content-Type', /json/)
             .end(function(err, res) {
