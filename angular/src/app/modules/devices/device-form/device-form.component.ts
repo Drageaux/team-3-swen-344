@@ -40,7 +40,10 @@ export class DeviceFormComponent {
   editDevice(form: NgForm){
     if(form.valid){
       this.editableDevice.name = form.value.devName;
+      this.editableDevice.type = form.value.type;
+      this.editableDevice.serial = form.value.serial;
       this.edit.emit(this.editableDevice);
+      //console.log(this.editableDevice);
     }
   }
 

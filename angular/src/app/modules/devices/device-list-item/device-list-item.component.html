@@ -6,10 +6,10 @@
   <div class="col-2 col-sm-4"></div>
 
   <div class="col-5 col-sm-4 no-gutters text-center align-middle row justify-content-end" id="rent-status"
-       [ngClass]="{'text-success': device.rentStatus==true,
-                   'text-danger': device.rentStatus==false}">
+       [ngClass]="{'text-success': device.rentable==true,
+                   'text-danger': device.rentable==false}">
     <div>
-      {{device.rentStatus ? 'AVAILABLE' : 'UNAVAILABLE'}}
+      {{device.rentable ? 'AVAILABLE' : 'UNAVAILABLE'}}
     </div>
     <i class="material-icons align-middle" style="margin-left: 0.3rem">lens</i>
   </div>
@@ -39,12 +39,12 @@
     <div class="col-6 text-right" style="padding-right: 0;">
       <!-- Action Button -->
       <div class="align-middle">
-        <button *ngIf="device.rentStatus==true" type="button"
+        <button *ngIf="device.rentable==true" type="button"
                 class="btn btn-success btn-sm">
           <i class="material-icons align-middle">assignment</i>
           <span class="align-middle">Rent</span>
         </button>
-        <button *ngIf="device.rentStatus==false" type="button"
+        <button *ngIf="device.rentable==false" type="button"
                 class="btn btn-primary btn-sm"
                 style="padding-right: 5px;">
           <span class="align-middle">View Rent</span>

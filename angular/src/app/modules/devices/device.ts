@@ -3,7 +3,7 @@ export class Device {
   name: string;
   type: string;
   serial: string;
-  rentStatus: boolean;
+  rentable: boolean;
 
   constructor(values: Object={}){
     Object.assign(this, values);

@@ -44,7 +44,9 @@ export class DevicesService {
   public editDevice(editedDevice: Device): Observable<Device[]> {
     let body = {
       id: editedDevice.id,
-      name: editedDevice.name
+      name: editedDevice.name,
+      type: editedDevice.type,
+      serial: editedDevice.serial
     };
 
     const httpOptions = {

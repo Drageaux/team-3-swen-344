@@ -8,9 +8,9 @@ const Sequelize = require('sequelize');
 
 let data = {
   devices: [
-    {id: 0, name: "Microscope", rentStatus: true},
-    {id: 1, name: "Laptop", rentStatus: true},
-    {id: 2, name: "Tape Measure", rentStatus: false}
+    {id: 0, name: "Microscope", rentable: true},
+    {id: 1, name: "Laptop", rentable: true},
+    {id: 2, name: "Tape Measure", rentable: false}
   ]
 }
 
@@ -29,7 +29,7 @@ function addNewDevice(newName){
   newDevice = {
     id: currID,
     name: newName,
-    rentStatus: true
+    rentable: true
   }
   data.devices.push(newDevice);
   currID++;
@@ -78,11 +78,11 @@ deviceController.get('/', function (req, res){
 
       Promise.all(rentalPromises).then(function(rentals){
         for(var i = 0; i < rentals.length; i++){
-          if(!rentals[i]){
-            devices[i].rentStatus = false;
+          if(rentals[i] != null){
+            devices[i].rentable = false;
           }
           else {
-            devices[i].rentStatus = true;
+            devices[i].rentable = true;
           }
         }
         res.json(devices);
@@ -122,11 +122,11 @@ deviceController.get('/:id', function(req, res){
 
       models.DeviceRental.findOne({where: {deviceId: device.id}})
       .then(function(deviceRental){
-        if(!deviceRental){
-          device.rentStatus = false;
+        if(deviceRental != null){
+          device.rentable = false;
         }
         else{
-          device.rentStatus = true;
+          device.rentable = true;
         }
         res.json(device);
       });
@@ -189,32 +189,29 @@ deviceController.put('/', function (req, res) {
     }
     */
 
-    let dNID = null;
     //Find or create the device name.
     models.DeviceName.findOrCreate({
       where: {name: req.body.name}
-    }).spread((dNames, created) => {
-      console.log(dNames);
-      dNID = dNames[0].id;
-    });
+    }).spread((dName, created) => {
+      models.Device.findOne({
+        where: {
+          id: req.body.id
+        }
+      }).then(function(device){
+        if(device == null){
+          res.status(500).send("Device not found.");
+        }
+        else {
 
-    models.Device.findOne({
-      include: [models.deviceName, {required: true}],
-      attributes: ['name', 'type', 'serial'],
-      where: {
-        id: req.params.id
-      }
-    }).then(function(device){
-      if(!device){
-        res.status(500).send("Device not found.");
-      }
-      else {
-        device.update({
-          deviceName: dNID,
-          type: req.body.type,
-          serial: req.body.serial
-        });
-      }
+          device.update({
+            deviceName: dName.id,
+            type: req.body.type,
+            serial: req.body.serial
+          });
+          res.json(device);
+        }
+      });
+
     });
 
   }
@@ -244,11 +241,12 @@ deviceController.delete('/:id', function(req, res){
         id: req.params.id
       }
     }).then(function(device){
-      if(!device){
+      if(device == null){
         res.status(500).send("Device not found.");
       }
       else {
         device.destroy();
+        res.status(200).send("Device deleted.")
       }
     });
   }

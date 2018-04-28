@@ -35,6 +35,7 @@ export class DevicesComponent implements OnInit {
   }
 
   onEditDevice(device){
+    console.log(device);
     this.devicesService.editDevice(device).subscribe(
       devices => {
         location.reload();
@@ -46,10 +47,10 @@ export class DevicesComponent implements OnInit {
   onDeleteDevice(device) {
     this.devicesService.deleteDevice(device).subscribe(
       devices => {
-        location.reload();
         //this.devices = devices;
       }
     );
+    location.reload();
     //this.devices = this.devices.filter(d => d.id !== device.id);
 
   }

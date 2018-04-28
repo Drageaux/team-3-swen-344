@@ -3,7 +3,7 @@ module.exports = function (sequelize, DataTypes) {
     var Device = sequelize.define('Device', {
         type: DataTypes.STRING,
         serial: DataTypes.STRING,
-        rentStatus: DataTypes.VIRTUAL
+        rentable: DataTypes.VIRTUAL
     }, {});
     Device.associate = function (models) {
         // associations can be defined here
