@@ -84,7 +84,7 @@ describe('Testing PUT devices API', function () {
     it('responds to PUT /api/devices/', function testSlash(done) {
         request(server)
             .put('/api/devices/')
-            .send({"id":1,"name": "Foo"})
+            .send({"id":1,"name": "Bar", "type": "Foo", "serial": "987654321"})
             .expect(200)
             .expect('Content-Type', /json/)
             .end(function(err, res) {
@@ -145,7 +145,7 @@ describe('Testing DELETE devices API', function () {
     });
     it('responds to DELETE /api/devices/', function testSlash(done) {
         request(server)
-            .delete('/api/devices/0')
+            .delete('/api/devices/1')
             .expect(200)
             .expect('Content-Type', /json/)
             .end(function(err, res) {
