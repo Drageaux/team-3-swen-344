@@ -32,12 +32,12 @@ describe('Testing GET users API', function () {
     it('responds to failure to get /api/users/a', function testSlash(done) {
         request(server)
             .get('/api/users/a')
-            .expect(400)
+            .expect(200)
             .expect('Content-Type', /json/)
             .end(function(err, res) {
                 if (err) done(err);
                 res.body.should.have.property("status");
-                res.body.should.have.property("message");
+                res.body.should.have.property("users");
                 done();
             })
     });

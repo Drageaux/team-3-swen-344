@@ -13,7 +13,7 @@ userController.get('/', function (req, res){
 });
 
 userController.get('/:id', function (req, res){
-    if(!isNaN(parseInt(req.params.id)) && req.params.id >= 0) {
+    if(req.params.id) {
         models.User.findAll({
             where: {
                 authId: req.params.id
