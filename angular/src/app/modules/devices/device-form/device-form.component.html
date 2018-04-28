@@ -1,8 +1,15 @@
 
 <form #f="ngForm" (ngSubmit)="creating ? createDevice(f) : editDevice(f)" novalidate>
   <div class="form-group">
-    <label for="deviceName">Device Name</label>
+    <label for="deviceName">Device Name
     <input [(ngModel)]="creating ? newDevice.name : editableDevice.name" id="devName" name="devName" type="text" class="validate"/>
+    </label>
+    <label for="deviceName">Device Type
+    <input [(ngModel)]="creating ? newDevice.type : editableDevice.type" id="type" name="type" type="text" class="validate"/>
+    </label>
+    <label for="deviceName">Device Serial Code
+    <input [(ngModel)]="creating ? newDevice.serial : editableDevice.serial" id="serial" name="serial" type="text" class="validate"/>
+    </label>
   </div>
   <button type="submit" class="btn btn-success">Submit</button>
 </form>
