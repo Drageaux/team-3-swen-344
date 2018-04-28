@@ -11,7 +11,7 @@
       <option value="" selected="selected">No Users Found</option>
     </select>
     <select id="messageRec" name="messageRec" *ngIf="users?.length != 0" #messageRec="ngModel" ngModel>
-      <option *ngFor="let user of users" value="{{user.authId}}">{{user.name}} - {{user.email}}</option>
+      <option *ngFor="let user of users" value="{{user.id}}">{{user.name}} - {{user.email}}</option>
     </select><br/>
     <div *ngIf="missingId" class="alert alert-danger">A recipient ID is required</div>
   </div>

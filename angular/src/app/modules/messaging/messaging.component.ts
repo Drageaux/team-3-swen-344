@@ -12,7 +12,7 @@ declare var $;
 export class MessagingComponent implements OnInit {
 
   private messageOpen: Message = null;
-  private id = 15;
+  private id = 1;
   messages: Message[] = [];
   showTable = true;
 

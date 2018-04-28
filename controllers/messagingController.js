@@ -3,7 +3,12 @@ var models= require('../models');
 var messagingController = express.Router();
 //Returns all devices
 messagingController.get('/', function (req, res){
-  res.json(data.messages);
+    models.Message.findAll().then((messages) => {
+        res.json({
+            status: true,
+            messages: messages
+        })
+    })
 });
 
 //Returns the device with of the requested id
@@ -24,8 +29,6 @@ messagingController.get('/to/:id', function(req, res){
                 }
             }
             res.json(returnObj);
-        }).catch((error) => {
-            console.log(error);
         });
     }
     else{
@@ -36,7 +39,7 @@ messagingController.get('/to/:id', function(req, res){
 
 messagingController.get('/users/', function(req, res){
     models.User.findAll({
-        attributes: ['authId', 'name', 'email']
+        attributes: ['id','authId', 'name', 'email']
     }).then((users) => {
         let retAry = [];
         if(users) {
@@ -44,11 +47,11 @@ messagingController.get('/users/', function(req, res){
                 retAry.push({
                     "name": user.get('name'),
                     "email": user.get('email'),
-                    "authId": user.get("authId")
+                    "authId": user.get("authId"),
+                    "id": user.get("id")
                 })
             });
         }
-
         res.json({
             users: retAry
         });
@@ -57,10 +60,10 @@ messagingController.get('/users/', function(req, res){
 
 //Add new message
 messagingController.post('/', function (req, res) {
-  if(req.body && req.body.message && Number.isInteger(req.body.fromId) && req.body.fromId >= 0 && Number.isInteger(req.body.toId) && req.body.toId >= 0 && req.body.title){
+  if(req.body && req.body.message && Number.isInteger(parseInt(req.body.fromId)) && req.body.fromId >= 0 && Number.isInteger(parseInt(req.body.toId)) && req.body.toId >= 0 && req.body.title){
       models.Message.create({
-          fromId: req.body.fromId,
-          toId: req.body.toId,
+          fromId: parseInt(req.body.fromId),
+          toId: parseInt(req.body.toId),
           dateCreated: Date.now().toString(),
           title: req.body.title,
           message: req.body.message,
@@ -68,20 +71,8 @@ messagingController.post('/', function (req, res) {
       }).then((message) => {
           if(message) {
               res.json({
-                  message: {
-                      fromId: message.get('fromId'),
-                      toId: message.get('toId'),
-                      dateCreated: message.get('dateCreated'),
-                      title: message.get('title'),
-                      message: message.get('message'),
-                      deleted: message.get('delete')
-                  },
+                  message: message,
                   status: true
-              })
-          } else {
-              res.status(500).json({
-                  status: false,
-                  message: "Message not added"
               })
           }
       })
@@ -96,7 +87,7 @@ messagingController.post('/', function (req, res) {
 
 //Update message
 messagingController.put('/', function (req, res) {
-  if(req.body && Number.isInteger(req.body.id) && req.body.id >= 0 && req.body.title && req.body.message){
+  if(req.body && Number.isInteger(parseInt(req.body.id)) && req.body.id >= 0 && req.body.title && req.body.message){
       models.Message.find({
           where: {
               id: req.body.id
@@ -109,21 +100,9 @@ messagingController.put('/', function (req, res) {
               }).then((updatedMessage) => {
                   res.json({
                       status: true,
-                      message: {
-                          fromId: updatedMessage.get('fromId'),
-                          toId: updatedMessage.get('toId'),
-                          dateCreated: updatedMessage.get('dateCreated'),
-                          title: updatedMessage.get('title'),
-                          message: updatedMessage.get('message'),
-                          deleted: updatedMessage.get('delete')
-                      }
+                      message: updatedMessage
                   })
               })
-          } else {
-              res.status(500).json({
-                  status: false,
-                  message: "Message not found"
-              });
           }
       });
   }
@@ -136,11 +115,11 @@ messagingController.put('/', function (req, res) {
 });
 
 //Deletes a device
-messagingController.delete('/', function(req, res){
-    if(req.body && Number.isInteger(req.body.id) && req.body.id >= 0){
+messagingController.delete('/:id', function(req, res){
+    if(req.body && Number.isInteger(parseInt(req.params.id)) && req.params.id >= 0){
         models.Message.find({
             where: {
-                id: req.body.id
+                id: parseInt(req.params.id)
             }
         }).then((message) => {
             if(message) {
@@ -149,21 +128,9 @@ messagingController.delete('/', function(req, res){
                 }).then((updatedMessage) => {
                     res.json({
                         status: true,
-                        message: {
-                            fromId: updatedMessage.get('fromId'),
-                            toId: updatedMessage.get('toId'),
-                            dateCreated: updatedMessage.get('dateCreated'),
-                            title: updatedMessage.get('title'),
-                            message: updatedMessage.get('message'),
-                            deleted: updatedMessage.get('delete')
-                        }
+                        message: updatedMessage
                     })
                 })
-            } else {
-                res.status(500).json({
-                    status: false,
-                    message: "Message not found"
-                });
             }
         });
     }

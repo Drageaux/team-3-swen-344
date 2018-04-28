@@ -36,6 +36,7 @@ export class MessageFormComponent {
     });
 
     this.messageService.getAllUsers().subscribe((result) => {
+      console.log(result.users);
       this.users = result.users;
     });
   }
@@ -46,7 +47,7 @@ export class MessageFormComponent {
       this.newMessage.toId = parseInt(values.messageRec);
       this.newMessage.title = values.messageName;
       this.newMessage.message = values.messageBody;
-      this.newMessage.fromId = 15;
+      this.newMessage.fromId = 1;
       this.newMessage.dateCreated = Date().toLocaleString();
       this.newMessage.deleted = false;
       this.create.emit(this.newMessage);
