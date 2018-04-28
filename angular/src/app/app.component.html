@@ -19,7 +19,6 @@
         <li class="nav-item"><a class="nav-link" [routerLink]="['/reservations']" routerLinkActive="active">My Reservations</a></li>
         <li class="nav-item"><a class="nav-link" [routerLink]="['/classrooms']" routerLinkActive="active">Classrooms</a></li>
         <li class="nav-item"><a class="nav-link" [routerLink]="['/devices']" routerLinkActive="active">Devices</a></li>
-        <li class="nav-item"><a class="nav-link disabled" href="#">Settings</a></li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right" *ngIf="!auth.isAuthenticated()">
