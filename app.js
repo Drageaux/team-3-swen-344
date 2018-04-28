@@ -75,9 +75,5 @@ app.get('/authorized', function (req, res) {
   res.send('Secured Resource');
 });
 
-app.get('/callback',function(req,res){
-    console.log(req.query);
-    res.sendfile('angular/src/app/callback/callback.html');
-});
 
 app.listen(3000);

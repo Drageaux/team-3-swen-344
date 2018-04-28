@@ -13,7 +13,7 @@ export class AuthService {
     domain: 'swen-344-fm.auth0.com',
     responseType: 'token id_token',
     audience: 'https://swen-344-fm.auth0.com/userinfo',
-    redirectUri: 'http://localhost:4200',
+    redirectUri: location.origin,
     scope: 'openid profile'
   });
 
@@ -33,9 +33,10 @@ export class AuthService {
 
         //INSERT USER INTO DATABASE IF NOT THERE
         this.getProfile((error,profile) => {
-          const idToken = localStorage.getItem('id_token');
-          if(profile && idToken){
-            this.http.get(this.USERS_API + '/' + idToken).subscribe((result) => {
+          var userId = profile.sub;
+          if(profile && userId){
+            localStorage.setItem('user_id', userId);
+            this.http.get(this.USERS_API + '/' + userId).subscribe((result) => {
               if(result['status'] == true) {
                 console.log("Status was true!");
                 if(result['users'].length == 0) {
@@ -48,7 +49,7 @@ export class AuthService {
                     role: 'student',
                     name: profile.name,
                     email: profile.nickname + "g.rit.edu",
-                    authId: idToken
+                    authId: userId
                   };
                   this.http.post(this.USERS_API + '/', body, httpOptions).subscribe((result) => {
                     if(result) {
@@ -99,6 +100,7 @@ export class AuthService {
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
+    localStorage.removeItem('user_id');
     // Go back to the home route
     this.router.navigate(['/']);
   }
