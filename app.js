@@ -43,7 +43,7 @@ app.use('/api', router);
 var weatherMachine = require('./controllers/krutzsWeatherMachine');
 
 /** RUN APP */
-var server = app.listen(process.env.PORT || '3000', function () {
+var server = app.listen(process.env.PORT || '3005', function () {
     console.log('[SERVER] I\'m listening on PORT: ' + (process.env.PORT || '3000'));
 });
 
