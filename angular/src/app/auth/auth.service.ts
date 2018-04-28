@@ -37,7 +37,6 @@ export class AuthService {
           if(profile && userId){
             localStorage.setItem('user_id', userId);
             this.http.get(this.USERS_API + '/' + userId).subscribe((result) => {
-              console.log(result['users']);
               if(result['status'] == true) {
                 if(result['users'].length == 0) {
                   const httpOptions = {
@@ -53,7 +52,6 @@ export class AuthService {
                   };
                   this.http.post(this.USERS_API + '/', body, httpOptions).subscribe((result) => {
                     if(result) {
-                      console.table(result);
                       console.log("Successfully Saved!");
                       localStorage.setItem("userId", result['user']['id'])
                     }
