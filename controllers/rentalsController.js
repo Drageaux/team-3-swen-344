@@ -107,56 +107,63 @@ rentalsController.get('/', function (req, res) {
 
 //Returns the rental with of the requested id
 rentalsController.get('/:id', function (req, res) {
-  /*
-  let rental = findRentalByID(req.params.id);
-  if (rental) {
-    res.json(rental);
-  }
-  else {
-    res.status(500).send("Cannot find rental.");
-  }
-  */
-
-  models.DeviceRental.findOne({
-    attributes: [
-      'id',
-      [Sequelize.literal('renter.email'), 'renterEmail'],
-      'rentDate',
-      'dueDate',
-      'comment',
-      'returnDate',
-      'returnCondition'
-    ],
-    include: [
-      {
-        model: models.User,
-        as: 'renter',
-        required: true
-      },
-      {
-        model: models.Device,
-        required: true,
-        as: 'device',
-        include: [
-          {
-            model: models.DeviceName,
-            attributes:  [['name', Sequelize.literal('device')]],
-            required: true
-          }
-        ]
-      }
-    ]
-  }).then(function(rental){
-    if(rental != null){
+    /*
+    let rental = findRentalByID(req.params.id);
+    if (rental) {
       res.json(rental);
     }
-    else{
+    else {
       res.status(500).send("Cannot find rental.");
     }
-  }).catch((error) => {
-    console.log(error);
-  });
+    */
+  if(Number.isInteger(parseInt(req.params.id)) && parseInt(req.params.id) > 0){
 
+    models.DeviceRental.findOne({
+      attributes: [
+        'id',
+        [Sequelize.literal('renter.email'), 'renterEmail'],
+        'rentDate',
+        'dueDate',
+        'comment',
+        'returnDate',
+        'returnCondition'
+      ],
+      where: {
+        id: parseInt(req.params.id)
+      },
+      include: [
+        {
+          model: models.User,
+          as: 'renter',
+          required: true
+        },
+        {
+          model: models.Device,
+          required: true,
+          as: 'device',
+          include: [
+            {
+              model: models.DeviceName,
+              attributes:  [['name', Sequelize.literal('device')]],
+              required: true
+            }
+          ]
+        }
+      ]
+    }).then(function(rental){
+      if(!rental){
+        res.status(500).send("Cannot find rental.");
+      }
+      else{
+        res.json(rental);
+      }
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+  else {
+    res.status(500).send("Invalid Input.");
+  }
 });
 
 //create a new rental
