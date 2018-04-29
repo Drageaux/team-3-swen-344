@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Rental} from "./rental";
 import {RentalsService} from "./rentals.service";
+import { NgForm } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 declare var $;
 
@@ -28,7 +30,16 @@ export class RentalsComponent implements OnInit {
     );
   }
 
-  onCreateRental(newRental) {
+  onCreateRental(form: NgForm) {
+    let newRental = new Rental();
+    let today = new Date();
+
+    if(form.valid){
+      newRental.deviceId = form.value.deviceId;
+      newRental.renterId = form.value.renterId;
+      newRental.rentDate = today.toString();
+      newRental.dueDate = (today.getDate() + 10).toString();
+    }
     this.rentalsService.createRental(newRental).subscribe(
       rental => {
         location.reload();
@@ -37,7 +48,13 @@ export class RentalsComponent implements OnInit {
     );
   }
 
-  onReturnRental(returnedRental) {
+  onReturnRental(returnedRental : Rental, form: NgForm) {
+    let today = new Date();
+    if(form.valid){
+      returnedRental.comment = form.value.comment;
+      returnedRental.returnCondition = form.value.returnCondition;
+      returnedRental.returnDate = today.toString();
+    }
     this.rentalsService.returnRental(returnedRental).subscribe(
       rentals => {
         location.reload();
