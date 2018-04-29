@@ -116,7 +116,7 @@ messagingController.put('/', function (req, res) {
 
 //Deletes a device
 messagingController.delete('/:id', function(req, res){
-    if(req.body && Number.isInteger(parseInt(req.params.id)) && req.params.id >= 0){
+    if(Number.isInteger(parseInt(req.params.id)) && req.params.id >= 0){
         models.Message.find({
             where: {
                 id: parseInt(req.params.id)
