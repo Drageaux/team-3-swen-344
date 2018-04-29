@@ -46,7 +46,8 @@ export class ClassroomsComponent implements OnInit {
   }
 
   showReservationModal(id) {
-    $("#newReservationFormModal").dataset.id = id;
+    console.log(id);
+    document.getElementById("newReservationFormModal").dataset.id = id;
     $("#newReservationFormModal").modal('show');
   }
 

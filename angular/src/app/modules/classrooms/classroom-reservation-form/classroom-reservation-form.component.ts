@@ -13,8 +13,7 @@ declare var $;
 })
 export class ClassroomReservationFormComponent {
   @Input()
-  cId = $("#newReservationFormModal").dataset.id;
-  newReservation = new Reservation(0, this.cId,null,null,null,null,null,null);//new Reservation(1,this.testClassroom,"Today","Tomorrow","Me","Reserved");
+  newReservation = new Reservation(0, 0,null,null,null,null,null,null);//new Reservation(1,this.testClassroom,"Today","Tomorrow","Me","Reserved");
 
   @Output()
   create: EventEmitter<Reservation> = new EventEmitter();
@@ -27,7 +26,7 @@ export class ClassroomReservationFormComponent {
   createReservation(form: NgForm) {
     if (form.valid) {
       //Classroom
-      this.newReservation.classroomId = this.cId;
+      this.newReservation.classroomId = parseInt(document.getElementById("newReservationFormModal").dataset.id);
       this.newReservation.startDate = form.value.resStartDate;
       //endDate
       this.newReservation.endDate = form.value.resEndDate;
