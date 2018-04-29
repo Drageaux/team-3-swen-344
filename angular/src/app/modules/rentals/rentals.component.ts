@@ -46,8 +46,8 @@ export class RentalsComponent implements OnInit {
     );
   }
 
-  onCancelRental(rental) {
-    this.rentalsService.cancelRental(rental).subscribe(
+  onDeleteRental(rental) {
+    this.rentalsService.deleteRental(rental).subscribe(
       rentals => {
         //this.rentals = rentals;
       }

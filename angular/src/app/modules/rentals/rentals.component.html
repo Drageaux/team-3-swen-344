@@ -14,8 +14,10 @@
     <div class="collapse" id="collapseClass{{r.id}}">
       <div class="card-body row" style="padding-left: 0.25rem;">
         <div class="col-6">
+          <strong>Device</strong>: {{r.deviceId}}<br/>
           <strong>Comment</strong>: {{r.comment || "(no comments)"}}<br/>
-          <strong>Time</strong>: {{r.rentDate + " - " + r.dueDate}}<br/>
+          <strong>Rent Date</strong>: {{r.rentDate}}<br/>
+          <strong>Return Date</strong>: {{r.dueDate}}<br/>
           <!--TODO: get renter User's information-->
           <strong>Reserved By</strong>: {{ r.renterId }}
         </div>
@@ -38,4 +40,3 @@
     </div>
   </div>
 </div>
-

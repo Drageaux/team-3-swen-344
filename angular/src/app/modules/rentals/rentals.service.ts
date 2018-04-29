@@ -23,7 +23,7 @@ export class RentalsService {
     );
   }
 
-  public getRental(id: Integer): Observable<Rental> {
+  public getRental(id: number): Observable<Rental> {
     return this.http.get(RESERVATION_API + '/' + id).pipe(
       catchError(this.handleError)
     );
@@ -74,6 +74,12 @@ export class RentalsService {
     };
 
     return this.http.put<Rental>(RESERVATION_API, body, httpOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  public deleteRental(rental: Rental): Observable<Rental[]>{
+    return this.http.delete<Rental>(RESERVATION_API + '/' + rental.id).pipe(
       catchError(this.handleError)
     );
   }
