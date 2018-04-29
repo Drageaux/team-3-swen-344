@@ -13,9 +13,6 @@ export class ClassroomReservationFormComponent{
   @Input()
   cId = 0;
 
-
-  testClassroom = new Classroom(this.cId,50,"EAS-2000","Small auditorium");
-
   newReservation = new Reservation(0,this.cId,null,null,null,null,null,null);//new Reservation(1,this.testClassroom,"Today","Tomorrow","Me","Reserved");
 
   @Input()
@@ -39,8 +36,6 @@ export class ClassroomReservationFormComponent{
       this.newReservation.startDate = form.value.resStartDate;
       //endDate
       this.newReservation.endDate = form.value.resEndDate;
-      //reservedby
-      this.newReservation.reservedBy = form.value.resReservedBy;
       this.newReservation.eventName = form.value.resEventName;
       //this.create.emit(this.newReservation);
       this.reservationsService.createReservation(this.newReservation)
@@ -56,8 +51,6 @@ export class ClassroomReservationFormComponent{
       this.editableReservation.startDate = form.value.resStartDate;
       //endDate
       this.editableReservation.endDate = form.value.resEndDate;
-      //reservedby
-      this.editableReservation.reservedBy = form.value.resReservedBy;
       this.editableReservation.eventName = form.value.eventName;
       //active
       //this.editableReservation.active = form.value.resActive;
