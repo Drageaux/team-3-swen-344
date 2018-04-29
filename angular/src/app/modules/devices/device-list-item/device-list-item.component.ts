@@ -22,6 +22,7 @@ export class DeviceListItemComponent {
   constructor() { }
 
   editDevice(device: Device){
+    //console.log(device);
     this.edit.emit(device);
   }
 

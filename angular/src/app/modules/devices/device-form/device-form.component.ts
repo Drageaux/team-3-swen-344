@@ -30,6 +30,8 @@ export class DeviceFormComponent {
   createDevice(form: NgForm) {
     if(form.valid){
       this.newDevice.name = form.value.devName;
+      this.newDevice.type = form.value.type;
+      this.newDevice.serial = form.value.serial;
       this.create.emit(this.newDevice);
       form.reset();
     }
@@ -38,7 +40,10 @@ export class DeviceFormComponent {
   editDevice(form: NgForm){
     if(form.valid){
       this.editableDevice.name = form.value.devName;
+      this.editableDevice.type = form.value.type;
+      this.editableDevice.serial = form.value.serial;
       this.edit.emit(this.editableDevice);
+      //console.log(this.editableDevice);
     }
   }
 

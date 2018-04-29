@@ -18,7 +18,7 @@ export class DevicesService {
   constructor(private http: HttpClient) {
   }
 
-  public getAllDevices(): Observable<any> {
+  public getAllDevices(): Observable<Device[]> {
     return this.http.get(DEVICE_API).pipe(
       catchError(this.handleError)
     );
@@ -27,6 +27,8 @@ export class DevicesService {
   public createDevice(newDevice: Device): Observable<Device[]> {
     let body = {
       name: newDevice.name,
+      type: newDevice.type,
+      serial: newDevice.serial
     };
 
     const httpOptions = {
@@ -42,7 +44,9 @@ export class DevicesService {
   public editDevice(editedDevice: Device): Observable<Device[]> {
     let body = {
       id: editedDevice.id,
-      name: editedDevice.name
+      name: editedDevice.name,
+      type: editedDevice.type,
+      serial: editedDevice.serial
     };
 
     const httpOptions = {
