@@ -110,7 +110,7 @@ deviceController.get('/:id', function(req, res){
     models.Device.findOne({
       attributes: ['id', [Sequelize.literal('DeviceName.name'), 'name'],'type', 'serial'],
       where: {
-        id: req.params.id
+        id: parseInt(req.params.id)
       },
       include: [
         {
