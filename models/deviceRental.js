@@ -9,7 +9,7 @@ module.exports = function (sequelize, DataTypes) {
     }, {});
     DeviceRental.associate = function (models) {
         models.DeviceRental.belongsTo(models.Device);
-        models.DeviceRental.belongsTo(models.User, {as: 'Renter'})
+        models.DeviceRental.belongsTo(models.User, {as: 'Renter'});
     };
     return DeviceRental;
 };

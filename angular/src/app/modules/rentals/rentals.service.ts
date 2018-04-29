@@ -62,6 +62,7 @@ export class RentalsService {
 
   public returnRental(returnedRental: Rental): Observable<Rental> {
     let body = {
+      id: returnedRental.id,
       returnCondition: returnedRental.returnCondition,
       comment: returnedRental.comment,
       returnDate: returnedRental.returnDate,

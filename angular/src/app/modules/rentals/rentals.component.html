@@ -18,10 +18,10 @@
           <form #f="ngForm" (ngSubmit)="onCreateRental(f)" novalidate>
             <div class="form-group">
               <label for="deviceId">Device ID</label>
-              <input id="deviceId" name="deviceId" #deviceId="ngModel" type="text" ngModel /> <br/>
+              <input id="deviceId" name="deviceId" #deviceId="ngModel" type="number" ngModel /> <br/>
 
               <label for="renterId">Renter ID</label>
-              <input id="renterId" name="renterId" #renterId="ngModel" type="text" ngModel /><br/>
+              <input id="renterId" name="renterId" #renterId="ngModel" type="number" ngModel /><br/>
 
               <!--
               <label for="rentDate">Rent Date</label>
@@ -48,7 +48,7 @@
     <div class="card-header row" (click)="showCollapse('collapseClass' + r.id)">
       <div class="col-5 col-sm-4 align-middle">
         <!--TODO: get Device's information-->
-        {{r.deviceId}}
+        {{r.renter}}
       </div>
     </div>
 
@@ -57,11 +57,11 @@
     <div class="collapse" id="collapseClass{{r.id}}">
       <div class="card-body row" style="padding-left: 0.25rem;">
         <div class="col-6">
-          <strong>Device</strong>: {{r.deviceId}}<br/>
+          <strong>Device ID</strong>: {{r.deviceId}}<br/>
           <strong>Rent Date</strong>: {{r.rentDate}}<br/>
           <strong>Due Date</strong>: {{r.dueDate}}<br/>
           <!--TODO: get renter User's information-->
-          <strong>Reserved By</strong>: {{ r.renterId }}<br/>
+          <strong>Rented By</strong>: {{ r.renter }}<br/>
           <div *ngIf="r.returnDate">
             <strong>Return Date</strong>: {{r.returnDate}}<br/>
             <strong>Return Condition</strong>: {{r.returnCondition}}<br/>
@@ -72,7 +72,7 @@
         <div class="col-6 text-right" style="padding-right: 0;">
           <!-- Action Button -->
           <div class="align-middle">
-            <button *ngIf="!r.returnDate" class="btn btn-primary" data-toggle="modal" data-target="#returnFormModal" type="button">
+            <button *ngIf="!r.returnDate" class="btn btn-primary" data-toggle="modal" [attr.data-target]="'#returnFormModal'+r.id" type="button">
               <i class="material-icons align-middle">assignment</i>
               <span class="align-middle">Return</span>
             </button>
@@ -81,7 +81,7 @@
       </div>
 
       <!-- Modal -->
-      <div class="modal fade" id="returnFormModal" role="dialog">
+      <div class="modal fade" id="returnFormModal{{r.id}}" role="dialog">
         <div class="modal-dialog">
           <!-- Modal content-->
           <div class="modal-content">

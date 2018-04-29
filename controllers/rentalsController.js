@@ -69,11 +69,14 @@ rentalsController.get('/', function (req, res) {
   models.DeviceRental.findAll({
     attributes: [
       'id',
+      'renterId',
+      'deviceId',
       [Sequelize.literal('Renter.email'), 'renter'],
       'rentDate',
       'dueDate',
       'comment',
-      'returnDate'
+      'returnDate',
+      'returnCondition'
     ],
     include: [
       {
@@ -120,7 +123,8 @@ rentalsController.get('/:id', function (req, res) {
       'rentDate',
       'dueDate',
       'comment',
-      'returnDate'
+      'returnDate',
+      'returnCondition'
     ],
     include: [
       {
@@ -155,19 +159,18 @@ rentalsController.get('/:id', function (req, res) {
 
 //create a new rental
 rentalsController.post('/', function (req, res) {
-  if(req.body && req.body.deviceId && Number.isInteger(req.body.deviceId) && req.body.deviceId >= 0 && req.body.renterId && Number.isInteger(req.body.renterId) && req.body.renterId >= 0 && req.body.rentDate && req.body.dueDate){
+  console.log(req.body);
+  if(req.body && req.body.deviceId && Number.isInteger(parseInt(req.body.deviceId)) && parseInt(req.body.deviceId) > 0 && req.body.renterId && Number.isInteger(parseInt(req.body.renterId)) && parseInt(req.body.renterId) > 0 && req.body.rentDate && req.body.dueDate){
     //res.json(createNewRentals(req.body.deviceId, req.body.renterId, req.body.rentDate, req.body.dueDate));
 
-    models.DeviceRental.findOrCreate({
-      where: {
-        deviceId: req.body.deviceId,
-        renterId: req.body.renterId,
-        rentDate: req.body.rentDate,
-        dueDate: req.body.dueDate
-      }
-    }).spread((rental, created) => {
-      if(!created){
-        res.status(500).send("Rental already exist.");
+    models.DeviceRental.create({
+      deviceId: parseInt(req.body.deviceId),
+      renterId: parseInt(req.body.renterId),
+      rentDate: req.body.rentDate,
+      dueDate: req.body.dueDate
+    }).then((rental) => {
+      if(rental == null){
+        res.status(500).send("Cannot create rental");
       }
       else {
         res.status(200).json(rental);
@@ -182,7 +185,7 @@ rentalsController.post('/', function (req, res) {
 
 //rental returns
 rentalsController.put('/', function(req, res){
-    if(req.body && req.body.id && Number.isInteger(req.body.id) && req.body.id >= 0 && req.body.returnCondition && req.body.comment && req.body.returnDate){
+    if(req.body && req.body.id && Number.isInteger(parseInt(req.body.id)) && parseInt(req.body.id) > 0 && req.body.returnCondition && req.body.comment && req.body.returnDate){
       /*
       let rental = findRentalByID(req.body.id);
       if(rental){
@@ -194,9 +197,9 @@ rentalsController.put('/', function(req, res){
       }
       */
 
-      models.DeviceRental.findOrCreate({
+      models.DeviceRental.findOne({
         where: {
-          id: req.body.id
+          id: parseInt(req.body.id)
         }
       }).then(function(rental){
         if(rental != null){
