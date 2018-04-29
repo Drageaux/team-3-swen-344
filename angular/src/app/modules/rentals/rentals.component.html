@@ -48,7 +48,7 @@
     <div class="card-header row" (click)="showCollapse('collapseClass' + r.id)">
       <div class="col-5 col-sm-4 align-middle">
         <!--TODO: get Device's information-->
-        {{r.renter}}
+        {{r.renterEmail}}
       </div>
     </div>
 
@@ -61,7 +61,7 @@
           <strong>Rent Date</strong>: {{r.rentDate}}<br/>
           <strong>Due Date</strong>: {{r.dueDate}}<br/>
           <!--TODO: get renter User's information-->
-          <strong>Rented By</strong>: {{ r.renter }}<br/>
+          <strong>Rented By</strong>: {{ r.renterEmail }}<br/>
           <div *ngIf="r.returnDate">
             <strong>Return Date</strong>: {{r.returnDate}}<br/>
             <strong>Return Condition</strong>: {{r.returnCondition}}<br/>

@@ -8,7 +8,7 @@ export class Rental {
     public rentDate: string; //date
     public dueDate: string; //date
     public returnDate: string; //date
-    public renter: string;
+    public renterEmail: string;
 
     constructor(values: Object={}){
       Object.assign(this, values);

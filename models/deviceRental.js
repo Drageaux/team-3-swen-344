@@ -8,8 +8,8 @@ module.exports = function (sequelize, DataTypes) {
         returnDate: DataTypes.DATE
     }, {});
     DeviceRental.associate = function (models) {
-        models.DeviceRental.belongsTo(models.Device);
-        models.DeviceRental.belongsTo(models.User, {as: 'Renter'});
+        models.DeviceRental.belongsTo(models.Device, {as: 'device'});
+        models.DeviceRental.belongsTo(models.User, {as: 'renter'});
     };
     return DeviceRental;
 };

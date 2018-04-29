@@ -71,7 +71,7 @@ rentalsController.get('/', function (req, res) {
       'id',
       'renterId',
       'deviceId',
-      [Sequelize.literal('Renter.email'), 'renter'],
+      [Sequelize.literal('renter.email'), 'renterEmail'],
       'rentDate',
       'dueDate',
       'comment',
@@ -81,11 +81,12 @@ rentalsController.get('/', function (req, res) {
     include: [
       {
         model: models.User,
-        as: 'Renter',
+        as: 'renter',
         required: true
       },
       {
         model: models.Device,
+        as: 'device',
         required: true,
         include: [
           {
@@ -119,7 +120,7 @@ rentalsController.get('/:id', function (req, res) {
   models.DeviceRental.findOne({
     attributes: [
       'id',
-      [Sequelize.literal('Renter.email'), 'renter'],
+      [Sequelize.literal('renter.email'), 'renterEmail'],
       'rentDate',
       'dueDate',
       'comment',
@@ -129,12 +130,13 @@ rentalsController.get('/:id', function (req, res) {
     include: [
       {
         model: models.User,
-        as: 'Renter',
+        as: 'renter',
         required: true
       },
       {
         model: models.Device,
         required: true,
+        as: 'device',
         include: [
           {
             model: models.DeviceName,
