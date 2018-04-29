@@ -36,12 +36,12 @@
                 <i class="material-icons align-middle">assignment</i>
                 <span class="align-middle">Delete</span>
               </button>
-              <button *ngIf="r.active==true" type="button"
+              <button *ngIf="r.active==1" type="button"
                       class="btn btn-warning btn-sm" (click)="onCancelReservation(r)">
                 <i class="material-icons align-middle">assignment</i>
                 <span class="align-middle">Cancel</span>
               </button>
-              <button *ngIf="r.active==false" type="button"
+              <button *ngIf="r.active==0" type="button"
                       class="btn btn-secondary btn-sm" disabled>
                 <i class="material-icons align-middle">assignment</i>
                 <span class="align-middle">Canceled</span>
