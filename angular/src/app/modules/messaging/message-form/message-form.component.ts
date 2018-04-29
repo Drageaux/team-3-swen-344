@@ -1,6 +1,8 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Message } from '../message';
+import { MessageService } from '../messaging.service'
+import {User} from "../user";
 
 @Component({
   selector: 'app-message-form',
@@ -18,20 +20,25 @@ export class MessageFormComponent {
   missingTitle = false;
   missingBody = false;
   missingId = false;
+  users: User[] = [];
 
-  constructor() {
+  constructor(private messageService: MessageService) {
   }
 
   ngOnInit() {
     this.newMessage = new Message({
-      fromId: 15,
-      toId: 15,
+      fromId: parseInt(localStorage.getItem("userId")),
+      toId: null,
       dateCreated: "",
       title: "",
       message: "",
       deleted: ""
     });
-    console.log(this.newMessage);
+
+    this.messageService.getAllUsers().subscribe((result) => {
+      console.log(result.users);
+      this.users = result.users;
+    });
   }
 
   createMessage(form: NgForm) {
@@ -40,7 +47,7 @@ export class MessageFormComponent {
       this.newMessage.toId = parseInt(values.messageRec);
       this.newMessage.title = values.messageName;
       this.newMessage.message = values.messageBody;
-      this.newMessage.fromId = 15;
+      this.newMessage.fromId = parseInt(localStorage.getItem("userId"));
       this.newMessage.dateCreated = Date().toLocaleString();
       this.newMessage.deleted = false;
       this.create.emit(this.newMessage);

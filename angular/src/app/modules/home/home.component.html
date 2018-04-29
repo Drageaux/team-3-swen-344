@@ -18,7 +18,8 @@
       </div>
     </div>
     <div class="col-lg-4 col-md-6">
-      <div class="card " style="background-color: #e6ecf0; padding-left: 1rem; padding-right: 1rem;">
+      <div class="card" style="background-color: #e6ecf0; padding-left: 1rem; padding-right: 1rem;
+max-height: 100vh; overflow-y: scroll">
         <!-- Embedded Tweets -->
         <ngxc-tweet *ngFor="let t of tweets" tweetId="{{t.id_str}}"></ngxc-tweet>
       </div>

@@ -12,7 +12,7 @@ declare var $;
 export class MessagingComponent implements OnInit {
 
   private messageOpen: Message = null;
-  private id = 15;
+  private id = parseInt(localStorage.getItem("userId"));
   messages: Message[] = [];
   showTable = true;
 
@@ -20,7 +20,8 @@ export class MessagingComponent implements OnInit {
   }
 
   ngOnInit() {
-    // prevent checkbox event from "bubbling" up to the entire row (since they're overlapping)
+    // prevent checkbox event from "bubbling" up to the entire row (since they're overlappig)
+
     $('#inbox input[type=checkbox]').click(function (event) {
       if (event.stopPropagation) {
         // standard
@@ -59,9 +60,9 @@ export class MessagingComponent implements OnInit {
       var id = parseInt(checkedBoxes[i].getAttribute("id"));
       this.messageService.deleteMessage(id).subscribe(
         messages => {
-          this.messageService.getAllMessages(15).subscribe(
+          this.messageService.getAllMessages(this.id).subscribe(
             messages => {
-              this.messages = [messages];
+              this.messages = messages.messages;
               this.showTable = (this.messages[0] && (Object.keys(this.messages[0]).length !== 0));
               this.messageOpen = null;
             }
