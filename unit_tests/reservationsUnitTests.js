@@ -31,8 +31,9 @@ describe('Testing GET reservations API', function() {
             .get(RESERVATIONS_API + '1000')
             .expect(500, done);
     });
-    after(function () {
+    after(function (done) {
         server.close();
+        done();
     });
 });
 describe('Testing POST reservations API', function() {
@@ -70,8 +71,9 @@ describe('Testing POST reservations API', function() {
                 done();
             })
     });
-    after(function () {
+    after(function (done) {
         server.close();
+        done();
     });
 });
 describe('Testing DELETE reservations API', function() {
@@ -94,7 +96,8 @@ describe('Testing DELETE reservations API', function() {
             .delete(RESERVATIONS_API + '1000')
             .expect(500, done);
     });
-    after(function () {
+    after(function (done) {
         server.close();
+        done();
     });
 });

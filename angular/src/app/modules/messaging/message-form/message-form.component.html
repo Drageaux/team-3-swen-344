@@ -1,0 +1,19 @@
+<form #f="ngForm" (ngSubmit)="createMessage(f)" novalidate>
+  <div class="form-group">
+    <label for="messageName">Message Title</label>
+    <input id="messageName" name="messageName" #messageName="ngModel" type="text" ngModel /> <br/>
+    <div *ngIf="missingTitle" class="alert alert-danger">A Title is Required</div>
+    <label for="messageBody">Message Body</label>
+    <input id="messageBody" name="messageBody" #messageBody="ngModel" type="text" ngModel /><br/>
+    <div *ngIf="missingBody" class="alert alert-danger">A Body is Required</div>
+    <label for="messageRec">Message Recipient ID</label>
+    <select id="messageRec" name="messageRec" *ngIf="users?.length == 0" disabled #messageRec="ngModel" ngModel>
+      <option value="" selected="selected">No Users Found</option>
+    </select>
+    <select id="messageRec" name="messageRec" *ngIf="users?.length != 0" #messageRec="ngModel" ngModel>
+      <option *ngFor="let user of users" value="{{user.id}}">{{user.name}} - {{user.email}}</option>
+    </select><br/>
+    <div *ngIf="missingId" class="alert alert-danger">A recipient ID is required</div>
+  </div>
+  <button type="submit" class="btn btn-success">Submit</button>
+</form>

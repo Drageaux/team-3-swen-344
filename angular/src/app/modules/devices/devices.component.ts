@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { DevicesService } from './devices.service';
 import { Device } from './device';
 
+declare var $;
+
 @Component({
   selector: 'app-devices',
   templateUrl: './devices.component.html',
@@ -25,16 +27,19 @@ export class DevicesComponent implements OnInit {
 
   onCreateDevice(newDevice){
     this.devicesService.createDevice(newDevice).subscribe(
-      nD => {
-        this.devices = this.devices.concat(nD);
+      devices => {
+        location.reload();
+        //this.devices = devices;
       }
     );
   }
 
   onEditDevice(device){
+    console.log(device);
     this.devicesService.editDevice(device).subscribe(
       devices => {
-        this.devices = devices;
+        location.reload();
+        //this.devices = devices;
       }
     );
   }
@@ -42,9 +47,10 @@ export class DevicesComponent implements OnInit {
   onDeleteDevice(device) {
     this.devicesService.deleteDevice(device).subscribe(
       devices => {
-        this.devices = devices;
+        //this.devices = devices;
       }
     );
+    location.reload();
     //this.devices = this.devices.filter(d => d.id !== device.id);
 
   }

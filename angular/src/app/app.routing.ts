@@ -6,6 +6,7 @@ import { DevicesComponent } from "./modules/devices/devices.component";
 import { ReservationsComponent} from "./modules/reservations/reservations.component";
 import { RentalsComponent } from "./modules/rentals/rentals.component";
 import { MessagingComponent } from "./modules/messaging/messaging.component";
+import { AuthGuard } from "./auth/auth.guard";
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -18,6 +19,8 @@ export const routes: Routes = [
   { path: '**', component: PageNotFoundComponent } // don't define any route after this line!
 ];
 
-export const appRoutingProviders: any[] = [];
+export const appRoutingProviders: any[] = [
+  AuthGuard
+];
 
 export const routing = RouterModule.forRoot(routes, { useHash: true });

@@ -3,7 +3,7 @@ import { Device } from '../device';
 @Component({
   selector: 'app-device-list',
   templateUrl: './device-list.component.html',
-  styleUrls: ['./device-list.component.css']
+  styleUrls: ['../devices.component.css']
 })
 export class DeviceListComponent {
 
@@ -11,14 +11,15 @@ export class DeviceListComponent {
   devices: Device[];
 
   @Output()
-  delete: EventEmitter<Device> = new EventEmitter();
+  edit: EventEmitter<Device> = new EventEmitter();
 
   @Output()
-  edit: EventEmitter<Device> = new EventEmitter();
+  delete: EventEmitter<Device> = new EventEmitter();
 
   constructor() { }
 
   editDevice(device: Device){
+    //console.log(device);
     this.edit.emit(device);
   }
 

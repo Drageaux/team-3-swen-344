@@ -1,10 +1,12 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Device } from '../device';
 
+declare var $;
+
 @Component({
   selector: 'app-device-list-item',
   templateUrl: './device-list-item.component.html',
-  styleUrls: ['./device-list-item.component.css']
+  styleUrls: ['../devices.component.css']
 })
 export class DeviceListItemComponent {
 
@@ -20,6 +22,7 @@ export class DeviceListItemComponent {
   constructor() { }
 
   editDevice(device: Device){
+    //console.log(device);
     this.edit.emit(device);
   }
 
@@ -27,4 +30,7 @@ export class DeviceListItemComponent {
     this.delete.emit(device);
   }
 
+  showCollapse(id: string): void {
+    $('#' + id).collapse("toggle");
+  }
 }

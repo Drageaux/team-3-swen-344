@@ -1,34 +1,101 @@
-<div>
-  {{device.name}} | Rentable: {{device.rentStatus}}
+<!-- Card Header -->
+<div class="card-header row" (click)="showCollapse('collapseClass' + device.id)">
+  <div class="col-5 col-sm-4 align-middle">
+    <strong>{{device.name}}</strong>
+  </div>
+  <div class="col-2 col-sm-4"></div>
 
-  <!-- Modal for edit device form -->
-  <!-- Trigger the modal with a button -->
-  <button type="button" class="btn btn-info btn-sm" data-toggle="modal" [attr.data-target]="'#' + device.name.split(' ').join('') + 'EditFormModal'" disabled>Edit Device</button>
+  <div class="col-5 col-sm-4 no-gutters text-center align-middle row justify-content-end" id="rent-status"
+       [ngClass]="{'text-success': device.rentable==true,
+                   'text-danger': device.rentable==false}">
+    <div>
+      {{device.rentable ? 'AVAILABLE' : 'UNAVAILABLE'}}
+    </div>
+    <i class="material-icons align-middle" style="margin-left: 0.3rem">lens</i>
+  </div>
+</div>
 
-  <!-- Modal -->
-  <div class="modal fade" id="{{ device.name.split(' ').join('') + 'EditFormModal'}}" role="dialog">
-    <div class="modal-dialog">
 
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Edit Device</h4>
-        </div>
-        <div class="modal-body">
-          <app-device-form
-           [creating]="false"
-           [editableDevice]="this.device"
-           (edit)="editDevice($event)">
-          </app-device-form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
+<!-- Card Body (has to wrap .collapse div to make the animation smooth) -->
+<div class="collapse" id="collapseClass{{device.id}}">
+  <div class="card-body row" style="padding-left: 0.25rem;">
+    <div class="col-6">
+      <table>
+        <tr>
+          <td><strong>Name: </strong></td>
+          <td>{{device.name}}</td>
+        <tr>
+        <tr>
+          <td><strong>Type: </strong></td>
+          <td>{{device.type}}</td>
+        </tr>
+
+        <tr>
+          <td><strong>Serial: </strong></td>
+          <td>{{device.serial}}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="col-6 text-right" style="padding-right: 0;">
+      <!-- Action Button -->
+      <div class="align-middle">
+        <button *ngIf="device.rentable==true" type="button"
+                class="btn btn-success btn-sm">
+          <i class="material-icons align-middle">assignment</i>
+          <span class="align-middle">Rent</span>
+        </button>
+        <button *ngIf="device.rentable==false" type="button"
+                class="btn btn-primary btn-sm"
+                style="padding-right: 5px;">
+          <span class="align-middle">View Rent</span>
+          <i class="material-icons align-middle" style="width: 15px; position: relative; left: -5px;">keyboard_arrow_right</i>
+        </button>
       </div>
-
     </div>
   </div>
 
-  <button class="btn btn-danger" (click)="deleteDevice(device)">Delete</button>
+
+  <div class="row" style="margin-left: 0.3rem; margin-bottom: 0.5rem">
+    <!--Edit Button -->
+    <!-- Modal for edit device form -->
+    <!-- Trigger the modal with a button -->
+    <button type="button" class="btn btn-info btn-sm"
+      data-toggle="modal"
+      [attr.data-target]="'#editFormModal'+device.id"
+      style="margin-right: 0.5rem;"
+      >
+      <span class="align-middle">Edit Device</span>
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="editFormModal{{device.id}}" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header row" style="margin: 0;">
+            <div class="col-12" style="text-align: center;">
+              <h4 class="modal-title">Edit Device</h4>
+            </div>
+          </div>
+          <div class="modal-body">
+            <app-device-form
+             [creating]="false"
+             [editableDevice]="this.device"
+             (edit)="editDevice($event)">
+            </app-device-form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Delete Button-->
+    <button class="btn btn-danger btn-sm" (click)="deleteDevice(device)"
+      style="margin-right: 0.5rem;">
+      <span class="align-middle">Delete</span>
+    </button>
+  </div>
 </div>

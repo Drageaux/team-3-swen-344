@@ -30,8 +30,9 @@ describe('Testing GET messaging API', function () {
             .get('/api/messaging/to/abcd')
             .expect(500, done);
     });
-    after(function () {
+    after(function (done) {
         server.close();
+        done();
     });
 });
 describe('Testing POST messaging API', function () {
@@ -42,19 +43,20 @@ describe('Testing POST messaging API', function () {
     it('responds to POST /api/messaging/', function testSlash(done) {
         request(server)
             .post('/api/messaging/')
-            .send({"message": "This is askdjhaskjda", "fromId": 10, "toId": 12, "title": "WHAT IS HAPPENING"})
+            .send({"message": "This is askdjhaskjda", "fromId": 1, "toId": 1, "title": "WHAT IS HAPPENING"})
             .expect(200)
             .expect('Content-Type', /json/)
             .end(function(err, res) {
                 if (err) done(err);
-                res.body.should.be.instanceOf(Array);
+                res.body.should.have.property("message");
+                res.body.should.have.property("status");
                 done();
             })
     });
     it('responds to POST /api/messaging/ with missing field', function testSlash(done) {
         request(server)
             .post('/api/messaging/')
-            .send({"fromId": 10, "toId": 12, "title": "WHAT IS HAPPENING"})
+            .send({"fromId": 1, "toId": 1, "title": "WHAT IS HAPPENING"})
             .expect(500)
             .end(function(err, res) {
                 done();
@@ -96,8 +98,9 @@ describe('Testing POST messaging API', function () {
                 done();
             })
     });
-    after(function () {
+    after(function (done) {
         server.close();
+        done();
     });
 });
 describe('Testing PUT messaging API', function () {
@@ -108,68 +111,47 @@ describe('Testing PUT messaging API', function () {
     it('responds to PUT /api/messaging/', function testSlash(done) {
         request(server)
             .put('/api/messaging/')
-            .send({"id":0,"message": "This is askdjhaskjda", "fromId": 1, "toId": 10, "title": "WHAT IS HAPPENING"})
+            .send({"id":26,"message": "This is askdjhaskjda", "title": "WHAT IS HAPPENING"})
             .expect(200)
             .expect('Content-Type', /json/)
             .end(function(err, res) {
                 if (err) done(err);
-                res.body[0].should.have.property('message').which.equals("This is askdjhaskjda");
-                res.body[0].should.have.property('fromId').which.equals(1);
-                res.body[0].should.have.property('toId').which.equals(10);
-                res.body[0].should.have.property('title').which.equals("WHAT IS HAPPENING");
+                res.body.should.have.property('status').which.equals(true);
                 done();
             })
     });
     it('responds to PUT /api/messaging/ with missing field', function testSlash(done) {
         request(server)
             .post('/api/messaging/')
-            .send({"id":0,"message": "This is askdjhaskjda", "toId": 10, "title": "WHAT IS HAPPENING"})
+            .send({"id":26,  "title": "WHAT IS HAPPENING"})
             .expect(500)
             .end(function(err, res) {
                 if (err) done(err);
                 done();
             })
     });
-    it('responds to PUT /api/messaging/ with toId not an integer', function testSlash(done) {
+    it('responds to PUT /api/messaging/ with id not an integer', function testSlash(done) {
         request(server)
             .post('/api/messaging/')
-            .send({"id":0,"message": "This is askdjhaskjda",  "fromId": 1, "toId": "abc", "title": "WHAT IS HAPPENING"})
+            .send({"id":26,"message": "This is askdjhaskjda",  "fromId": 1, "toId": "abc", "title": "WHAT IS HAPPENING"})
             .expect(500)
             .end(function(err, res) {
                 if (err) done(err);
-                done();
-            })
-    });
-    it('responds to PUT /api/messaging/ with fromId not an integer', function testSlash(done) {
-        request(server)
-            .post('/api/messaging/')
-            .send({"id":0,"message": "This is askdjhaskjda",  "fromId": "abc", "toId": 10, "title": "WHAT IS HAPPENING"})
-            .expect(500)
-            .end(function(err, res) {
-                if (err) done(err);
-                done();
-            })
-    });
-    it('responds to PUT /api/messaging/ with fromId is not positive', function testSlash(done) {
-        request(server)
-            .post('/api/messaging/')
-            .send({"id":0,"message": "This is askdjhaskjda",  "fromId": -1, "toId": 10, "title": "WHAT IS HAPPENING"})
-            .expect(500)
-            .end(function(err, res) {
                 done();
             })
     });
     it('responds to PUT /api/messaging/ with message not found', function testSlash(done) {
         request(server)
             .post('/api/messaging/')
-            .send({"id":100,"message": "This is askdjhaskjda",  "fromId": 1, "toId": 10, "title": "WHAT IS HAPPENING"})
+            .send({"id":1 ,"message": "This is askdjhaskjda", "title": "WHAT IS HAPPENING"})
             .expect(500)
             .end(function(err, res) {
                 done();
             })
     });
-    after(function () {
+    after(function (done) {
         server.close();
+        done();
     });
 });
 describe('Testing DELETE messaging API', function () {
@@ -179,21 +161,18 @@ describe('Testing DELETE messaging API', function () {
     });
     it('responds to DELETE /api/messaging/', function testSlash(done) {
         request(server)
-            .delete('/api/messaging/')
-            .send({"id":0})
+            .delete('/api/messaging/26')
             .expect(200)
             .expect('Content-Type', /json/)
             .end(function(err, res) {
                 if (err) done(err);
-                res.body[0].should.have.property('id').and.is.equal(0);
-                res.body[0].should.have.property('deleted').and.is.equal(true);
+                res.body.should.have.property('status').which.equals(true);
                 done();
             })
     });
     it('responds to DELETE /api/messaging/ with ID not an integer', function testSlash(done) {
         request(server)
-            .delete('/api/messaging/')
-            .send({"id":"abcd"})
+            .delete('/api/messaging/abcd')
             .expect(500)
             .end(function(err, res) {
                 done();
@@ -201,14 +180,14 @@ describe('Testing DELETE messaging API', function () {
     });
     it('responds to DELETE /api/messaging/ with ID not found', function testSlash(done) {
         request(server)
-            .delete('/api/messaging/')
-            .send({"id":100})
+            .delete('/api/messaging/-1')
             .expect(500)
             .end(function(err, res) {
                 done();
             })
     });
-    after(function () {
+    after(function (done) {
         server.close();
+        done();
     });
 });

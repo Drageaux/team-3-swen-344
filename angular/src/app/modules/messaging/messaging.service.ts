@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Http, Response } from '@angular/http';
-import { Device } from './device';
+import { Message } from './message';
 import { Observable } from 'rxjs/Observable';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { catchError, retry } from 'rxjs/operators';
@@ -10,25 +10,34 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
-const DEVICE_API = 'api/devices';
+const DEVICE_API = 'api/messaging';
 
 @Injectable()
-export class DevicesService {
+export class MessageService {
 
   constructor(private http: HttpClient) {
   }
 
-  public getAllDevices(): Observable<Device[]> {
-    return this.http.get(DEVICE_API).pipe(
+  public getAllUsers(): Observable<any> {
+    return this.http.get(DEVICE_API + '/users/').pipe(
       catchError(this.handleError)
     );
   }
 
-  public createDevice(newDevice: Device): Observable<Device[]> {
+  public getAllMessages(id): Observable<any> {
+    return this.http.get(DEVICE_API + '/to/' + id).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  public createMessage(newMessage: Message): Observable<Message[]> {
     let body = {
-      name: newDevice.name,
-      type: newDevice.type,
-      serial: newDevice.serial
+      fromId: newMessage.fromId,
+      toId: newMessage.toId,
+      dateCreated: Date.now(),
+      title: newMessage.title,
+      message: newMessage.message,
+      deleted: false
     };
 
     const httpOptions = {
@@ -36,36 +45,14 @@ export class DevicesService {
         'Content-Type': 'application/json'
       })
     };
-    return this.http.post<Device>(DEVICE_API, body, httpOptions).pipe(
+    return this.http.post<Message>(DEVICE_API, body, httpOptions).pipe(
       catchError(this.handleError)
     );
   }
 
-  public editDevice(editedDevice: Device): Observable<Device[]> {
-    let body = {
-      id: editedDevice.id,
-      name: editedDevice.name,
-      type: editedDevice.type,
-      serial: editedDevice.serial
-    };
-
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
-    return this.http.put<Device>(DEVICE_API, body, httpOptions).pipe(
-      catchError(this.handleError)
-    );
-  }
-
-  public deleteDevice(device: Device): Observable<Device[]> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
-    return this.http.delete(DEVICE_API + '/' + device.id, httpOptions).pipe(
+  public deleteMessage(id): Observable<Message[]> {
+    console.log(DEVICE_API + '/' + id);
+    return this.http.delete(DEVICE_API + '/' + id).pipe(
       catchError(this.handleError)
     );
   }

@@ -21,7 +21,8 @@ describe('Testing GET twitter API', function () {
             .get('/api/twitter?count=-1')
             .expect(500, done);
     });
-    after(function () {
+    after(function (done) {
         server.close();
+        done();
     });
 });

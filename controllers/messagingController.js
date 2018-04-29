@@ -1,119 +1,144 @@
 var express = require('express');
+var models= require('../models');
 var messagingController = express.Router();
-
-let data = {
-  messages: [
-    {id: 0, fromId: 22, toId: 15, dateCreated: "2018-03-01T03:24:00", title: "Lovely", message: "This message is lovely", deleted: false},
-      {id: 1, fromId: 30, toId: 17, dateCreated: "2018-03-01T03:24:00", title: "Hate", message: "This message is full of hate", deleted: false},
-      {id: 2, fromId: 12, toId: 12, dateCreated: "2018-03-01T03:24:00", title: "Betty White", message: "Don't mess with her", deleted: false},
-      {id: 3, fromId: 14, toId: 22, dateCreated: "2018-03-01T03:24:00", title: "Jesus", message: "Bendelacreme", deleted: false}
-  ]
-};
-
-function findMessagesByToId(id){
-    let messaging = data.messages.filter(function(message) {
-        return (message.toId == id && message.deleted == false);
-    });
-
-  return {
-      messages: messaging
-  }
-}
-
-
-function createMessage(message, fromId, toId, title){
-  data.messages.push({
-      fromId: fromId,
-      toId: toId,
-      dateCreated: Date.now().toString(),
-      title: title,
-      message: message,
-      deleted: false,
-      id: data.messages.length
-  });
-}
-
-function updateMessage(id, message, fromId, toId, title){
-    for(var i = 0; i < data.messages.length; i += 1) {
-        if (data.messages[i]['id'] == id) {
-            data.messages[i]['message'] = message;
-            data.messages[i]['fromId'] = fromId;
-            data.messages[i]['toId'] = toId;
-            data.messages[i]['title'] = title;
-            return true;
-        }
-    }
-    return false;
-}
-
-function deleteMessageByID(id){
-    for(var i = 0; i < data.messages.length; i += 1) {
-        if (data.messages[i]['id'] == id) {
-            data.messages[i]['deleted'] = true;
-            return true;
-        }
-    }
-    return false;
-}
-
 //Returns all devices
 messagingController.get('/', function (req, res){
-  res.json(data.messages);
+    models.Message.findAll().then((messages) => {
+        res.json({
+            status: true,
+            messages: messages
+        })
+    })
 });
 
 //Returns the device with of the requested id
 messagingController.get('/to/:id', function(req, res){
     if(Number.isInteger(parseInt(req.params.id)) && parseInt(req.params.id) >= 0){
-        let messagingData = findMessagesByToId(req.params.id);
-        if(messagingData.messages.length > 0){
-            res.json(messagingData);
-        } else {
-            res.status(500).send("Cannot find message.");
-        }
+        models.Message.findAll({
+            where: {
+                ToId: req.params.id,
+                deleted: false
+            }
+        }).then((result) => {
+            var returnObj = {
+                messages: []
+            };
+            if(Object.keys(result).length !== 0){
+                returnObj = {
+                    messages: result
+                }
+            }
+            res.json(returnObj);
+        });
     }
     else{
         res.status(500).send("Improper Input Values.");
     }
 });
 
+
+messagingController.get('/users/', function(req, res){
+    models.User.findAll({
+        attributes: ['id','authId', 'name', 'email']
+    }).then((users) => {
+        let retAry = [];
+        if(users) {
+            users.forEach((user) => {
+                retAry.push({
+                    "name": user.get('name'),
+                    "email": user.get('email'),
+                    "authId": user.get("authId"),
+                    "id": user.get("id")
+                })
+            });
+        }
+        res.json({
+            users: retAry
+        });
+    })
+});
+
 //Add new message
 messagingController.post('/', function (req, res) {
-  if(req.body && req.body.message && Number.isInteger(req.body.fromId) && req.body.fromId >= 0 && Number.isInteger(req.body.toId) && req.body.toId >= 0 && req.body.title){
-    createMessage(req.body.message, req.body.fromId, req.body.toId, req.body.title);
-    res.json(data.messages);
+  if(req.body && req.body.message && Number.isInteger(parseInt(req.body.fromId)) && req.body.fromId >= 0 && Number.isInteger(parseInt(req.body.toId)) && req.body.toId >= 0 && req.body.title){
+      models.Message.create({
+          fromId: parseInt(req.body.fromId),
+          toId: parseInt(req.body.toId),
+          dateCreated: Date.now().toString(),
+          title: req.body.title,
+          message: req.body.message,
+          deleted: false
+      }).then((message) => {
+          if(message) {
+              res.json({
+                  message: message,
+                  status: true
+              })
+          }
+      })
   }
   else {
-    res.status(500).send("Missing information.");
+    res.status(500).json({
+        status: false,
+        message: "Missing input information"
+    });
   }
 });
 
 //Update message
 messagingController.put('/', function (req, res) {
-  if(req.body && Number.isInteger(req.body.id) && req.body.id >= 0 && req.body.message && Number.isInteger(req.body.fromId) && req.body.toId >= 0 && req.body.fromId >= 0 && Number.isInteger(req.body.toId) && req.body.title){
-    var result = updateMessage(req.body.id, req.body.message, req.body.fromId, req.body.toId, req.body.title);
-    if(result){
-        res.json(data.messages);
-    } else {
-        res.status(500).send("Message not found.");
-    }
+  if(req.body && Number.isInteger(parseInt(req.body.id)) && req.body.id >= 0 && req.body.title && req.body.message){
+      models.Message.find({
+          where: {
+              id: req.body.id
+          }
+      }).then((message) => {
+          if(message) {
+              message.update({
+                  message: req.body.message,
+                  title: req.body.title,
+              }).then((updatedMessage) => {
+                  res.json({
+                      status: true,
+                      message: updatedMessage
+                  })
+              })
+          }
+      });
   }
   else {
-    res.status(500).send("Missing information.");
+      res.status(500).json({
+          status: false,
+          message: "Missing input information"
+      });
   }
 });
 
 //Deletes a device
-messagingController.delete('/', function(req, res){
-  if(req.body && Number.isInteger(req.body.id) && req.body.id >= 0){
-    var result = deleteMessageByID(req.body.id);
-      if(result){
-          res.json(data.messages);
-      } else {
-          res.status(500).send("Message not found.");
-      }
-  }
-  else{
-    res.status(500).send("Missing information.");
-  }
+messagingController.delete('/:id', function(req, res){
+    if(Number.isInteger(parseInt(req.params.id)) && req.params.id >= 0){
+        models.Message.find({
+            where: {
+                id: parseInt(req.params.id)
+            }
+        }).then((message) => {
+            if(message) {
+                message.update({
+                    deleted: true
+                }).then((updatedMessage) => {
+                    res.json({
+                        status: true,
+                        message: updatedMessage
+                    })
+                })
+            }
+        });
+    }
+    else {
+        res.status(500).json({
+            status: false,
+            message: "Missing input information"
+        });
+    }
 });
 module.exports = messagingController;
