@@ -73,7 +73,7 @@ deviceController.get('/', function (req, res){
   }).then(function(devices){
 
     var rentalPromises = devices.map(function(device) {
-      return models.DeviceRental.findOne({where: {deviceId: device.id}});
+      return models.DeviceRental.findOne({where: {deviceId: device.id, returnDate: null}});
     });
 
     Promise.all(rentalPromises).then(function(rentals){
