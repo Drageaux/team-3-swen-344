@@ -53,14 +53,16 @@ export class AuthService {
                   this.http.post(this.USERS_API + '/', body, httpOptions).subscribe((result) => {
                     if(result) {
                       console.log("Successfully Saved!");
+                      console.log("ID " + result['user']['id'])
                       localStorage.setItem("userId", result['user']['id'])
                     }
                   });
                 } else {
+                  console.log(result);
+                  localStorage.setItem("userId", result['users'][0]['id']);
                 }
               } else {
                 console.log("Something bad happened with the GET user query");
-                localStorage.setItem("userId", result[0]['id'])
               }
             });
           }

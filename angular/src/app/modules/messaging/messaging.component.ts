@@ -12,7 +12,7 @@ declare var $;
 export class MessagingComponent implements OnInit {
 
   private messageOpen: Message = null;
-  private id = 1;
+  private id = parseInt(localStorage.getItem("userId"));
   messages: Message[] = [];
   showTable = true;
 

@@ -27,7 +27,7 @@ export class MessageFormComponent {
 
   ngOnInit() {
     this.newMessage = new Message({
-      fromId: sessionStorage.getItem("id") ? sessionStorage.getItem("id") : 0,
+      fromId: parseInt(localStorage.getItem("userId")),
       toId: null,
       dateCreated: "",
       title: "",
@@ -47,7 +47,7 @@ export class MessageFormComponent {
       this.newMessage.toId = parseInt(values.messageRec);
       this.newMessage.title = values.messageName;
       this.newMessage.message = values.messageBody;
-      this.newMessage.fromId = 1;
+      this.newMessage.fromId = parseInt(localStorage.getItem("userId"));
       this.newMessage.dateCreated = Date().toLocaleString();
       this.newMessage.deleted = false;
       this.create.emit(this.newMessage);
