@@ -52,11 +52,17 @@ reservationsController.get('/:id', function (req, res) {
                     required: true
                 }
             ]
-        }).then(function(reservation){
-            res.json(reservation);
-        }).catch((error) => {
-            console.log(error);
-        });
+        }).then(function(reservation) {
+            if (reservation) {
+                res.json(reservation);
+            }
+            else {
+                res.status(500).json({
+                    status: false,
+                    message: "Invalid Classroom"
+                });
+            }
+        })
     }
     else {
         res.status(500).send("Invalid Input.");
@@ -65,9 +71,7 @@ reservationsController.get('/:id', function (req, res) {
 
 //create a new reservation
 reservationsController.post('/', function (req, res) {
-    console.log(req.body);
     if (req.body) {
-        console.log(req.body);
         models.Classroom.findOne({
             where: {
                 id: req.body.classroomId
@@ -117,6 +121,13 @@ reservationsController.put('/:id', function(req, res){
                 reservation.update( {
                     active: 0
                 });
+                res.status(200).json(reservation);
+            }
+            else {
+                res.status(500).json({
+                    status: false,
+                    message: "No reservation found"
+                });
             }
         });
     }
@@ -138,6 +149,12 @@ reservationsController.delete('/:id', function(req, res){
             if(reservation) {
                 reservation.destroy().then(function() {
                     res.status(200).send("reservation deleted.");
+                });
+            }
+            else {
+                res.status(500).json({
+                    status: false,
+                    message: "No reservation found"
                 });
             }
         });

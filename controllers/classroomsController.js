@@ -88,6 +88,9 @@ classroomsController.delete('/:id', function (req, res) {
                     res.status(200).send("classroom deleted.");
                 });
             }
+            else {
+                res.status(500).send("Invalid Classroom Id.");
+            }
         });
     }
     else {
