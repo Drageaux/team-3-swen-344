@@ -4,6 +4,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {appRoutingProviders, routing} from './app.routing';
 
+import { AuthService } from './auth/auth.service';
+
 import {AppComponent} from './app.component';
 import {PageNotFoundComponent} from './not-found.component';
 
@@ -33,7 +35,7 @@ import {MessagingModule} from './modules/messaging/messaging.module';
     DevicesModule,
     MessagingModule
   ],
-  providers: [appRoutingProviders],
+  providers: [appRoutingProviders, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

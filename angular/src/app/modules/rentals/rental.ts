@@ -1,5 +1,4 @@
 export class Rental {
-
     public id: number;
     public deviceId: number;
     public renterId: number;

@@ -6,8 +6,8 @@ module.exports = function (sequelize, DataTypes) {
         deleted: DataTypes.BOOLEAN
     }, {});
     Message.associate = function (models) {
-        models.Message.belongsTo(models.User, {as: 'From'});
-        models.Message.belongsTo(models.User, {as: 'To'});
+        models.Message.belongsTo(models.User, {as: 'from'});
+        models.Message.belongsTo(models.User, {as: 'to'});
     };
     return Message;
 };
