@@ -1,0 +1,12 @@
+<form #f="ngForm" (ngSubmit)="createClassroom(f)" novalidate>
+  <div class="form-group">
+    <label for="location">Location</label>
+    <input [(ngModel)]="newClassroom.location" id="location" name="location" type="text" class="validate"/><br/>
+    <label for="description">Description</label>
+    <input [(ngModel)]="newClassroom.description" id="description" name="description" type="text" class="validate"/><br/>
+    <label for="capacity">Capacity</label>
+    <input [(ngModel)]="newClassroom.capacity" id="capacity" name="capacity" type="number" class="validate"/><br/>
+  </div>
+  <button type="submit" class="btn btn-success">Submit</button>
+
+</form>

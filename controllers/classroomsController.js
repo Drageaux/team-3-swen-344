@@ -1,94 +1,74 @@
 var express = require('express');
 var classroomsController = express.Router();
 
-let data = {
-    classrooms: [
-        { id: 0, capacity: 200, location: "GOL-1400", description: "A large auditorium" },
-        { id: 1, capacity: 30, location: "GAN-1337", description: "An art studio" },
-        { id: 2, capacity: 20, location: "GOS-2550", description: "A chemistry lab" }
-    ]
-}
-
-function findClassroomByID(id) {
-    for (var i = 0; i < data.classrooms.length; i++) {
-        if (data.classrooms[i].id == id) {
-            return data.classrooms[i];
-        }
-    }
-    return null;
-}
-
-function addNewClassroom(newDescription) {
-    newClassroom = {
-        id: data.classrooms.length,
-        description: newDescription
-    }
-    data.classrooms.push(newClassroom);
-    return newClassroom;
-}
-
-function updateClassroom(id, newDescription) {
-    var dev = findClassroomByID(id);
-    if (dev) {
-        dev.description = newDescription;
-        return dev;
-    }
-    else {
-        return null;
-    }
-
-}
-
-function deleteClassroomByID(id) {
-    for (var i = 0; i < data.classrooms.length; i++) {
-        if (data.classrooms[i].id == id) {
-            data.classrooms = data.classrooms.filter(item => item !== data.classrooms[i]);
-            break;
-        }
-    }
-}
-
 //Returns all classrooms
 classroomsController.get('/', function (req, res) {
-    res.json(data.classrooms);
+    if (req.body) {
+        models.Classroom.findAll({
+            attributes: ['id', 'location', 'capacity', 'description'],
+            include: [
+                {
+                    model: models.ClassroomReservation,
+                    as: 'reservation',
+                    attributes: ['classroomId', 'active'],
+                    required: false,
+                    where: {
+                        active: 1
+                    }
+                }
+            ]
+        }).then(function (classrooms) {
+            res.json(classrooms);
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+    else {
+        res.status(500).send("Bad request");
+    }
 });
 
 //Returns the classroom with of the requested id
 classroomsController.get('/:id', function (req, res) {
     if (Number.isInteger(parseInt(req.params.id)) && parseInt(req.params.id) >= 0) {
-        let devData = findClassroomByID(req.params.id);
-        if (devData) {
-            res.json(devData);
-        }
-        else {
-            res.status(500).send("Cannot find classroom.");
-        }
+        models.Classroom.findOne({
+            attributes: ['id', 'location', 'capacity', 'description'],
+            where: {
+                id: req.params.id
+            },
+            include: [
+                {
+                    model: models.ClassroomReservation,
+                    as: 'reservation',
+                    attributes: ['classroomId', 'active'],
+                    required: false
+                }
+            ]
+        }).then(function (classrooms) {
+            res.json(classrooms);
+        }).catch((error) => {
+            console.log(error);
+        })
     }
     else {
-        res.status(500).send("Invalid Input.");
+        res.status(500).send("Invalid Classroom Id.");
     }
 });
 
 //Add new classroom
 classroomsController.post('/', function (req, res) {
-    if (req.body && req.body.description) {
-        res.json(addNewClassroom(req.body.description));
-    }
-    else {
-        res.status(500).send("Missing information.");
-    }
-});
-
-//Update classroom
-classroomsController.put('/', function (req, res) {
-    if (req.body && req.body.id && Number.isInteger(req.body.id) && req.body.id >= 0 && req.body.description) {
-        let updatedClassroom = updateClassroom(req.body.id, req.body.description);
-        if (updatedClassroom) {
-            res.json(data.classrooms);
-        }
-        else {
-            res.status(500).send("Classroom not found.");
-        }
+    if (req.body && req.body.description && req.body.location) {
+        models.Classroom.create({
+            location: req.body.location,
+            capacity: req.body.capacity,
+            description: req.body.description
+        }).then((classroom) => {
+            if (classroom) {
+                res.json({
+                    classroom: classroom
+                })
+            }
+        })
     }
     else {
         res.status(500).send("Invalid or missing information.");
@@ -97,18 +77,24 @@ classroomsController.put('/', function (req, res) {
 
 //Deletes a classroom
 classroomsController.delete('/:id', function (req, res) {
-    if (Number.isInteger(parseInt(req.params.id)) && parseInt(req.params.id) >= 0) {
-        let devData = findClassroomByID(req.params.id);
-        if (devData) {
-            deleteClassroomByID(req.params.id);
-            res.json(data.classrooms);
-        }
-        else {
-            res.status(500).send("Classroom not found.");
-        }
+    if(Number.isInteger(parseInt(req.params.id)) && req.params.id >= 0){
+        models.Classroom.find({
+            where: {
+                id: parseInt(req.params.id)
+            }
+        }).then((classroom) => {
+            if(classroom) {
+                classroom.destroy().then(function() {
+                    res.status(200).send("classroom deleted.");
+                });
+            }
+        });
     }
     else {
-        res.status(500).send("Invalid or missing information.")
+        res.status(500).json({
+            status: false,
+            message: "Missing input information"
+        });
     }
 });
 
