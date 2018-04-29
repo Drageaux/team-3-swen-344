@@ -18,6 +18,12 @@ export class MessageService {
   constructor(private http: HttpClient) {
   }
 
+  public getAllUsers(): Observable<any> {
+    return this.http.get(DEVICE_API + '/users/').pipe(
+      catchError(this.handleError)
+    );
+  }
+
   public getAllMessages(id): Observable<any> {
     return this.http.get(DEVICE_API + '/to/' + id).pipe(
       catchError(this.handleError)

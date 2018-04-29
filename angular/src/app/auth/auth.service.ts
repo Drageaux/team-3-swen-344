@@ -57,10 +57,10 @@ export class AuthService {
                     }
                   });
                 } else {
+                  localStorage.setItem("userId", result['users'][0]['id']);
                 }
               } else {
                 console.log("Something bad happened with the GET user query");
-                localStorage.setItem("userId", result[0]['id'])
               }
             });
           }
