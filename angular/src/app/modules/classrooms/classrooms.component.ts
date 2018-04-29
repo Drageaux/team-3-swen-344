@@ -45,6 +45,11 @@ export class ClassroomsComponent implements OnInit {
     this.reservationsService.createReservation(reservation);
   }
 
+  showReservationModal(id) {
+    $("#newReservationFormModal").dataset.id = id;
+    $("#newReservationFormModal").modal('show');
+  }
+
   showCollapse(id: string): void {
     $('#' + id).collapse('toggle');
   }

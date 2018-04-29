@@ -4,6 +4,8 @@ import { Reservation } from '../../reservations/reservation';
 import { Classroom } from '../classroom';
 import { ReservationsService } from '../../reservations/reservations.service';
 
+declare var $;
+
 @Component({
   selector: 'app-classroom-reservation-form',
   templateUrl: './classroom-reservation-form.component.html',
@@ -11,7 +13,7 @@ import { ReservationsService } from '../../reservations/reservations.service';
 })
 export class ClassroomReservationFormComponent {
   @Input()
-  cId = 0;
+  cId = $("#newReservationFormModal").dataset.id;
   newReservation = new Reservation(0, this.cId,null,null,null,null,null,null);//new Reservation(1,this.testClassroom,"Today","Tomorrow","Me","Reserved");
 
   @Output()
