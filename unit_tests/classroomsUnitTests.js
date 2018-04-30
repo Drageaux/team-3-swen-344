@@ -56,34 +56,3 @@ describe('Testing GET classrooms API', function () {
         done();
     });
 });
-
-describe('Testing DELETE classrooms API', function () {
-    var server;
-    before(function () {
-        server = require('../app');
-    });
-    it('responds to DELETE /api/classrooms/', function testSlash(done) {
-        request(server)
-            .delete(CLASSROOMS_API + '14')
-            .expect(200, done);
-    });
-    it('responds to DELETE /api/classrooms/ with negative id', function testSlash(done) {
-        request(server)
-            .delete(CLASSROOMS_API +'-1')
-            .expect(500, done);
-    });
-    it('responds to DELETE /api/classrooms/ with non-integer id', function testSlash(done) {
-        request(server)
-            .delete(CLASSROOMS_API + 'abcd')
-            .expect(500, done);
-    });
-    it('responds to DELETE /api/classrooms/ with classroom that does not exist', function testSlash(done) {
-        request(server)
-            .delete(CLASSROOMS_API + '100')
-            .expect(500, done);
-    });
-    after(function (done) {
-        server.close();
-        done();
-    });
-});

@@ -75,30 +75,32 @@ classroomsController.post('/', function (req, res) {
     }
 });
 
+//Cannot delete a classroom that is linked to a reservation. Better to just disable it
+//commenting this out for now
 //Deletes a classroom
-classroomsController.delete('/:id', function (req, res) {
-    if(Number.isInteger(parseInt(req.params.id)) && req.params.id >= 0){
-        models.Classroom.find({
-            where: {
-                id: parseInt(req.params.id)
-            }
-        }).then((classroom) => {
-            if(classroom) {
-                classroom.destroy().then(function() {
-                    res.status(200).send("classroom deleted.");
-                });
-            }
-            else {
-                res.status(500).send("Invalid Classroom Id.");
-            }
-        });
-    }
-    else {
-        res.status(500).json({
-            status: false,
-            message: "Missing input information"
-        });
-    }
-});
+// classroomsController.delete('/:id', function (req, res) {
+//     if(Number.isInteger(parseInt(req.params.id)) && req.params.id >= 0){
+//         models.Classroom.find({
+//             where: {
+//                 id: parseInt(req.params.id)
+//             }
+//         }).then((classroom) => {
+//             if(classroom) {
+//                 classroom.destroy().then(function() {
+//                     res.status(200).send("classroom deleted.");
+//                 });
+//             }
+//             else {
+//                 res.status(500).send("Invalid Classroom Id.");
+//             }
+//         });
+//     }
+//     else {
+//         res.status(500).json({
+//             status: false,
+//             message: "Missing input information"
+//         });
+//     }
+// });
 
 module.exports = classroomsController;
