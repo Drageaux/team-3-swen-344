@@ -6,7 +6,7 @@ export class Reservation {
     public classroomId: number,
     public startDate: string,
     public endDate: string,
-    public reservedBy: string,
+    public reservedBy: number,
     public active: number,
     public eventName: string,
     public participants: number
