@@ -40,6 +40,10 @@ module.exports = {
             updatedAt: {
                 allowNull: false,
                 type: Sequelize.DATE
+            },
+            active: {
+                allowNull: false,
+                type: Sequelize.TINYINT
             }
         });
     },

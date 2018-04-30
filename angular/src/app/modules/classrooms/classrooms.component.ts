@@ -3,46 +3,65 @@ import { Component, OnInit } from '@angular/core';
 import { Classroom } from './classroom';
 import { ReservationsService } from '../reservations/reservations.service';
 import { Reservation } from '../reservations/reservation';
+import {ClassroomsService} from './classrooms.service';
 
 declare var $;
 
 @Component({
   selector: 'app-classrooms',
   templateUrl: './classrooms.component.html',
-  styleUrls: ['./classrooms.component.css']
+  styleUrls: ['./classrooms.component.css'],
+  providers:[ClassroomsService]
 })
 export class ClassroomsComponent implements OnInit {
 
   private classroomList: Classroom[] = [];
-  
-  private reserves: Reservation[] = [];
 
-  constructor(private reservationsService: ReservationsService) {
-    // create mock data
-    let class0 = new Classroom(0,200,"GOL-1400","A large auditorium.");//0, "Class-0", "OPEN", 0, 30, "GOL-1400");
-    let class1 = new Classroom(1,30,"GAN-1337","An art studio.");//1, "Class-1", "UNAVAILABLE", 12, 30, "GAN-1337");
-    let class2 = new Classroom(2,40,"GOS-2550", "Chemisty lab.");//2, "Class-2", "RESERVED", 10, 20, "GOS-2550");
-
-    this.classroomList = [class0, class1, class2];
+  constructor(private reservationsService: ReservationsService,
+              private classroomsService: ClassroomsService) {
   }
 
   ngOnInit() {
-  }
-
-  onCreateReservation(reservation){
-    this.reservationsService.createReservation(reservation);
-  }
-
-  testApi(){
-    this.reservationsService.getAllReservations().subscribe(
-      reservations => {
-        this.reserves = reservations;
+    this.classroomsService.getAllClassrooms().subscribe(
+      classrooms => {
+        this.classroomList = classrooms;
       }
     );
   }
 
+  onCreateClassroom(classroom) {
+    this.classroomsService.createClassroom(classroom);
+  }
+
+  onDeleteClassroom(classroom) {
+    this.classroomsService.deleteClassroom(classroom).subscribe(
+      classrooms => {
+        this.classroomList = classrooms;
+      }
+    );
+  }
+
+  onCreateReservation(reservation) {
+    this.reservationsService.createReservation(reservation);
+  }
+
+  showReservationModal(id) {
+    console.log(id);
+    document.getElementById("newReservationFormModal").dataset.id = id;
+    $("#newReservationFormModal").modal('show');
+  }
+
   showCollapse(id: string): void {
     $('#' + id).collapse('toggle');
+  }
+
+  getActive(classroom): boolean {
+    if (classroom.reservation[0] !== undefined) {
+      if (classroom.reservation[0].hasOwnProperty('active')) {
+        return true;
+      }
+    }
+    return false;
   }
 
 }

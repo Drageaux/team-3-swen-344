@@ -7,6 +7,7 @@ module.exports = function (sequelize, DataTypes) {
     }, {});
     Classroom.associate = function (models) {
         // associations can be defined here
+        models.Classroom.hasMany(models.ClassroomReservation, {as: 'reservation'});
     };
     return Classroom;
 };

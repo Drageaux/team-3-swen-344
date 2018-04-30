@@ -1,6 +1,41 @@
 var request = require('supertest');
 var should = require('should');
+require('dotenv').load();
 const RESERVATIONS_API = '/api/reservations/';
+describe('Testing POST reservations API', function() {
+    var server;
+    before(function () {
+        server = require('../app');
+    });
+    it('responds to POST /api/reservations', function testSlash(done) {
+        request(server)
+            .post(RESERVATIONS_API)
+            .send({"classroomId":"1", "startDate":"1/1/1", "endDate":"1/1/1", "reservedbyId":"1", "eventName":"unitTestName"})
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) done(err);
+                res.body.should.be.instanceOf(Object);
+                done();
+            })
+    });
+    it('responds with 500 to POST /api/reservations with invalid classroomId', function testSlash(done) {
+        request(server)
+            .post(RESERVATIONS_API)
+            .send({"classroomId":-1, "startDate":"1/1/1", "endDate":"1/1/1", "reservedbyId":"1", "eventName":"unitTestName"})
+            .expect(500, done);
+    });
+    it('responds with 500 for POST /api/reservations with empty data', function testSlash(done) {
+        request(server)
+            .post(RESERVATIONS_API)
+            .send({})
+            .expect(500, done);
+    });
+    after(function (done) {
+        server.close();
+        done();
+    });
+});
 describe('Testing GET reservations API', function() {
     var server;
     before(function() {
@@ -36,40 +71,20 @@ describe('Testing GET reservations API', function() {
         done();
     });
 });
-describe('Testing POST reservations API', function() {
+describe('Testing PUT reservations API', function() {
     var server;
     before(function () {
         server = require('../app');
     });
-    it('responds to POST /api/reservations', function testSlash(done) {
+    it('responds to PUT /api/reservations/', function testSlash(done) {
         request(server)
-            .post(RESERVATIONS_API)
-            .send({"classroomId":0, "startDate":"1/1/1", "endDate":"1/1/1", "reservedBy":"test", "eventName":"testName"})
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                    if (err) done(err);
-                    res.body.should.be.instanceOf(Object);
-                    done();
-                })
+            .put(RESERVATIONS_API + '1')
+            .expect(200, done)
     });
-    it('responds with 500 for POST /api/reservations with wrong data', function testSlash(done) {
+    it('responds with 500 to DELETE /api/reservations/ with wrong id', function testSlash(done) {
         request(server)
-            .post(RESERVATIONS_API)
-            .send({"blah":"0"})
-            .expect(500)
-            .end(function(err, res) {
-                done();
-            })
-    });
-    it('responds with 500 for POST /api/reservations with empty data', function testSlash(done) {
-        request(server)
-            .post(RESERVATIONS_API)
-            .send({})
-            .expect(500)
-            .end(function(err, res) {
-                done();
-            })
+            .delete(RESERVATIONS_API + '1000')
+            .expect(500, done);
     });
     after(function (done) {
         server.close();
@@ -81,15 +96,10 @@ describe('Testing DELETE reservations API', function() {
     before(function () {
         server = require('../app');
     });
-    it('responds to DELETE /api/reservations/', function testSlash(done) {
+    it('responds to DELETE /api/reservations/1', function testSlash(done) {
         request(server)
-            .delete(RESERVATIONS_API + '0')
-            .expect('Content-Type', /json/)
-            .end(function(err, res) {
-                if (err) done(err);
-                res.body[0].should.have.property('active').and.is.equal(false);
-                done();
-            })
+            .delete(RESERVATIONS_API + '1')
+            .expect(200, done);
     });
     it('responds with 500 to DELETE /api/reservations/ with wrong id', function testSlash(done) {
         request(server)

@@ -4,25 +4,16 @@ import { Reservation } from '../../reservations/reservation';
 import { Classroom } from '../classroom';
 import { ReservationsService } from '../../reservations/reservations.service';
 
+declare var $;
+
 @Component({
   selector: 'app-classroom-reservation-form',
   templateUrl: './classroom-reservation-form.component.html',
   styleUrls: ['./classroom-reservation-form.component.css']
 })
-export class ClassroomReservationFormComponent{
+export class ClassroomReservationFormComponent {
   @Input()
-  cId = 0;
-
-
-  testClassroom = new Classroom(this.cId,50,"EAS-2000","Small auditorium");
-
-  newReservation = new Reservation(0,this.cId,null,null,null,null,null,null);//new Reservation(1,this.testClassroom,"Today","Tomorrow","Me","Reserved");
-
-  @Input()
-  creating: boolean;
-
-  @Input()
-  editableReservation: Reservation = new Reservation(0,this.cId,null,null,null,null,null,null);//new device by default
+  newReservation = new Reservation(0, 0,null,null,null,null,null,null);//new Reservation(1,this.testClassroom,"Today","Tomorrow","Me","Reserved");
 
   @Output()
   create: EventEmitter<Reservation> = new EventEmitter();
@@ -33,46 +24,19 @@ export class ClassroomReservationFormComponent{
   constructor(private reservationsService: ReservationsService) { }
 
   createReservation(form: NgForm) {
-    if(form.valid){
+    if (form.valid) {
       //Classroom
-      this.newReservation.classroomId = this.cId;
+      this.newReservation.classroomId = parseInt(document.getElementById("newReservationFormModal").dataset.id);
       this.newReservation.startDate = form.value.resStartDate;
       //endDate
       this.newReservation.endDate = form.value.resEndDate;
-      //reservedby
-      this.newReservation.reservedBy = form.value.resReservedBy;
       this.newReservation.eventName = form.value.resEventName;
+      this.newReservation.reservedBy = parseInt(localStorage.getItem("userId"));
       //this.create.emit(this.newReservation);
       this.reservationsService.createReservation(this.newReservation)
         .subscribe(data => console.log(data));
       form.reset();
     }
   }
-
-  editReservation(form: NgForm){
-    if(form.valid){
-      //this.editableReservation.id = form.value.resId;
-      this.editableReservation.classroomId = this.cId;
-      this.editableReservation.startDate = form.value.resStartDate;
-      //endDate
-      this.editableReservation.endDate = form.value.resEndDate;
-      //reservedby
-      this.editableReservation.reservedBy = form.value.resReservedBy;
-      this.editableReservation.eventName = form.value.eventName;
-      //active
-      //this.editableReservation.active = form.value.resActive;
-      this.edit.emit(this.editableReservation);
-    }
-  }
-
-  /*private reserves: Reservation[] = [];
-
-  testApi(){
-    this.reservationsService.getAllReservations().subscribe(
-      reservations => {
-        this.reserves = reservations;
-      }
-    );
-  }*/
 
 }

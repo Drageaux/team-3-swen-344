@@ -1,88 +1,169 @@
 var express = require('express');
 var reservationsController = express.Router();
 
-let classroomsData = {
-    classrooms: [
-        { id: 0, capacity: 200, location: "GOL-1400", description: "A large auditorium"},
-        { id: 1, capacity: 30, location: "GAN-1337", description: "An art studio" },
-        { id: 2, capacity: 20, location: "GOS-2550", description: "A chemistry lab" }
-    ]
-}
-let data = {
-    reservations: [
-        { id: 0, classroomId: classroomsData.classrooms[0].id, startDate: new Date().toLocaleDateString(), endDate: new Date().toLocaleDateString(), reservedBy: "test@email.com", active: true, eventName: "CSCI-141", participants: 72},
-        { id: 1, classroomId: classroomsData.classrooms[2].id, startDate: new Date().toLocaleDateString(), endDate: new Date().toLocaleDateString(), reservedBy: "test12345@email.com", active: true, eventName: "FNRT-200", participants: 21}
-    ]
-};
-
-function findReservationByID(id) {
-    for (var i = 0; i < data.reservations.length; i++) {
-        if (data.reservations[i].id == id) {
-            return data.reservations[i];
-        }
-    }
-    return null;
-}
-
-function createNewReservations(classroomId, startDate, endDate, reservedBy, eventName) {
-    newReservation = {
-        id: data.reservations.length,
-        classroomId: classroomId,
-        startDate: startDate,
-        endDate: endDate,
-        reservedBy: reservedBy,
-        active: true,
-        eventName: eventName,
-        participants: 1,
-    }
-    data.reservations.push(newReservation);
-    return newReservation;
-}
-
-function cancelReservation(id) {
-    for (var i = 0; i < data.reservations.length; i++) {
-        if (data.reservations[i].id == id) {
-            data.reservations[i].active = false;
-            break;
-        }
-    }
-}
+//models for talking to DB
+models = require("../models");
 
 //returns all reservations
 reservationsController.get('/', function (req, res) {
-    res.json(data.reservations);
+
+    models.ClassroomReservation.findAll({
+        attributes: ['id', 'startDate', 'endDate', 'eventName', 'active'],
+        include: [
+            {
+                model: models.Classroom,
+                as: 'classroom',
+                attributes: ['id', 'location'],
+                required: true
+            },
+            {
+                model: models.User,
+                as: 'reservedby',
+                attributes: ['id', 'name', 'email'],
+                required: true
+            }
+        ]
+    }).then(function(reservations){
+        res.json(reservations);
+    }).catch((error) => {
+        console.log(error);
+    });
 });
 
 //Returns the reservation with of the requested id
 reservationsController.get('/:id', function (req, res) {
-    let reservation = findReservationByID(req.params.id);
-    if (reservation) {
-        res.json(reservation);
+    if (Number.isInteger(parseInt(req.params.id)) && parseInt(req.params.id) >= 0){
+        models.ClassroomReservation.findOne({
+            attributes: ['startDate', 'endDate', 'eventName', 'active'],
+            where: {
+                id: req.params.id
+            },
+            include: [
+                {
+                    model: models.Classroom,
+                    as: 'classroom',
+                    attributes: ['id', 'location'],
+                    required: true
+                },
+                {
+                    model: models.User,
+                    as: 'reservedby',
+                    attributes: ['id'],
+                    required: true
+                }
+            ]
+        }).then(function(reservation) {
+            if (reservation) {
+                res.json(reservation);
+            }
+            else {
+                res.status(500).json({
+                    status: false,
+                    message: "Invalid Classroom"
+                });
+            }
+        })
     }
     else {
-        res.status(500).send("Cannot find reservation.");
+        res.status(500).send("Invalid Input.");
     }
 });
 
 //create a new reservation
 reservationsController.post('/', function (req, res) {
-    if(req.body){
-        res.json(createNewReservations(req.body.classroomId, req.body.startDate, req.body.endDate, req.body.reservedBy, req.body.eventName));
+    if (req.body) {
+        models.Classroom.findOne({
+            where: {
+                id: req.body.classroomId
+            }
+        }).then(function(classroom) {
+            if (classroom != null) {
+                models.ClassroomReservation.create({
+                    startDate: req.body.startDate,
+                    endDate: req.body.endDate,
+                    eventName: req.body.eventName,
+                    active: 1,
+                    classroomId: classroom.id,
+                    reservedbyId: parseInt(req.body.reservedbyId)
+                }).then((reservation) => {
+                    if (reservation) {
+                        res.json({
+                            reservation: reservation
+                        })
+                    }
+                })
+            }
+            else {
+                res.status(500).json({
+                    status: false,
+                    message: "Invalid Classroom"
+                })
+            }
+        })
     }
     else {
-        res.status(500).send("Bad Request");
+        res.status(500).json({
+            status: false,
+            message: "Missing input information"
+        });
+        console.log("missing info");
     }
 });
 
-//Cancels a reservation
-reservationsController.delete('/:id', function(req, res){
-    let reservation = findReservationByID(req.params.id);
-    if(reservation){
-        cancelReservation(req.params.id);
-        res.json(data.reservations);
+reservationsController.put('/:id', function(req, res){
+    if(Number.isInteger(parseInt(req.params.id)) && req.params.id >= 0){
+        models.ClassroomReservation.find({
+            where: {
+                id: parseInt(req.params.id)
+            }
+        }).then((reservation) => {
+            if(reservation) {
+                reservation.update( {
+                    active: 0
+                });
+                res.status(200).json(reservation);
+            }
+            else {
+                res.status(500).json({
+                    status: false,
+                    message: "No reservation found"
+                });
+            }
+        });
     }
     else {
-        res.status(500).send("Bad Request");
+        res.status(500).json({
+            status: false,
+            message: "Missing input information"
+        });
+    }
+});
+
+reservationsController.delete('/:id', function(req, res){
+    if(Number.isInteger(parseInt(req.params.id)) && req.params.id >= 0){
+        models.ClassroomReservation.find({
+            where: {
+                id: parseInt(req.params.id)
+            }
+        }).then((reservation) => {
+            if(reservation) {
+                reservation.destroy().then(function() {
+                    res.status(200).send("reservation deleted.");
+                });
+            }
+            else {
+                res.status(500).json({
+                    status: false,
+                    message: "No reservation found"
+                });
+            }
+        });
+    }
+    else {
+        res.status(500).json({
+            status: false,
+            message: "Missing input information"
+        });
     }
 });
 

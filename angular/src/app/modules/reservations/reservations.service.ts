@@ -31,6 +31,17 @@ export class ReservationsService {
         'Content-Type': 'application/json'
       })
     };
+    return this.http.put(RESERVATION_API + '/' + reservation.id, httpOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  public deleteReservation(reservation: Reservation): Observable<Reservation[]> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
     return this.http.delete(RESERVATION_API + '/' + reservation.id, httpOptions).pipe(
       catchError(this.handleError)
     );
@@ -38,11 +49,10 @@ export class ReservationsService {
 
   public createReservation(newReservation: Reservation): Observable<Reservation> {
     let body = {
-      //id: newReservation.id,
       classroomId: newReservation.classroomId,
       startDate: newReservation.startDate,
       endDate: newReservation.endDate,
-      reservedBy: newReservation.reservedBy,
+      reservedbyId: newReservation.reservedBy,
       eventName: newReservation.eventName
     };
 

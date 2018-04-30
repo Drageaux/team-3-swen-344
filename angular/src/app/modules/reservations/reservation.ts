@@ -7,7 +7,7 @@ export class Reservation {
     public startDate: string,
     public endDate: string,
     public reservedBy: string,
-    public active: boolean,
+    public active: number,
     public eventName: string,
     public participants: number
   ) { }
