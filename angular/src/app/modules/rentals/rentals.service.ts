@@ -23,6 +23,13 @@ export class RentalsService {
     );
   }
 
+  public getRental(id: number): Observable<Rental> {
+    return this.http.get(RESERVATION_API + '/' + id).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  /*
   public cancelRental(rental: Rental): Observable<Rental[]> {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -33,17 +40,14 @@ export class RentalsService {
       catchError(this.handleError)
     );
   }
+  */
 
   public createRental(newRental: Rental): Observable<Rental> {
     let body = {
-      id: newRental.id,
       deviceId: newRental.deviceId,
       renterId: newRental.renterId,
-      returnCondition: newRental.returnCondition,
-      comment: newRental.comment,
       rentDate: newRental.rentDate,
-      dueDate: newRental.dueDate,
-      returnDate: newRental.returnDate
+      dueDate: newRental.dueDate
     };
 
     const httpOptions = {
@@ -52,6 +56,31 @@ export class RentalsService {
       })
     };
     return this.http.post<Rental>(RESERVATION_API, body, httpOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  public returnRental(returnedRental: Rental): Observable<Rental> {
+    let body = {
+      id: returnedRental.id,
+      returnCondition: returnedRental.returnCondition,
+      comment: returnedRental.comment,
+      returnDate: returnedRental.returnDate,
+    };
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this.http.put<Rental>(RESERVATION_API, body, httpOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  public deleteRental(rental: Rental): Observable<Rental[]>{
+    return this.http.delete<Rental>(RESERVATION_API + '/' + rental.id).pipe(
       catchError(this.handleError)
     );
   }

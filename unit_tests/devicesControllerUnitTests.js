@@ -4,6 +4,43 @@ var should = require('should');
 ///////////////////////////////
 //Device Controller Unit Test//
 ///////////////////////////////
+let resource;
+
+//POST
+describe('Testing POST devices API', function () {
+    var server;
+    before(function () {
+        server = require('../app');
+    });
+    it('responds to POST /api/devices/', function testSlash(done) {
+        request(server)
+            .post('/api/devices/')
+            .send({"name": "Foo", "type": "Bar", "serial": "123456789"})
+            .expect(200)
+            .expect('Content-Type', /json/)
+            .end(function(err, res) {
+                if (err) done(err);
+                res.body.should.be.instanceOf(Object);
+                resource = res.body;
+                done();
+            })
+    });
+    it('responds to POST /api/devices/ with missing field', function testSlash(done) {
+        request(server)
+            .post('/api/devices/')
+            .send({})
+            .expect(500)
+            .end(function(err, res) {
+                if (err) done(err);
+                done();
+            })
+    });
+    after(function (done) {
+        server.close();
+        done();
+    });
+});
+
 ///GET
 describe('Testing GET devices API', function () {
     var server;
@@ -15,9 +52,9 @@ describe('Testing GET devices API', function () {
             .get('/api/devices/')
             .expect(200, done);
     });
-    it('responds to GET with id /api/devices/1', function testSlash(done) {
+    it('responds to GET with id /api/devices/:id', function testSlash(done) {
         request(server)
-            .get('/api/devices/1')
+            .get('/api/devices/' + resource.id)
             .expect(200, done);
     });
     it('Sends back 500 with improper id /api/devices/-1', function testSlash(done) {
@@ -41,40 +78,6 @@ describe('Testing GET devices API', function () {
     });
 });
 
-//POST
-describe('Testing POST devices API', function () {
-    var server;
-    before(function () {
-        server = require('../app');
-    });
-    it('responds to POST /api/devices/', function testSlash(done) {
-        request(server)
-            .post('/api/devices/')
-            .send({"name": "Foo", "type": "Bar", "serial": "123456789"})
-            .expect(200)
-            .expect('Content-Type', /json/)
-            .end(function(err, res) {
-                if (err) done(err);
-                res.body.should.be.instanceOf(Object);
-                done();
-            })
-    });
-    it('responds to POST /api/devices/ with missing field', function testSlash(done) {
-        request(server)
-            .post('/api/devices/')
-            .send({})
-            .expect(500)
-            .end(function(err, res) {
-                if (err) done(err);
-                done();
-            })
-    });
-    after(function (done) {
-        server.close();
-        done();
-    });
-});
-
 //PUT
 describe('Testing PUT devices API', function () {
     var server;
@@ -84,12 +87,13 @@ describe('Testing PUT devices API', function () {
     it('responds to PUT /api/devices/', function testSlash(done) {
         request(server)
             .put('/api/devices/')
-            .send({"id":1,"name": "Bar", "type": "Foo", "serial": "987654321"})
+            .send({"id":resource.id,"name": "Bar", "type": "Foo", "serial": "987654321"})
             .expect(200)
             .expect('Content-Type', /json/)
             .end(function(err, res) {
                 if (err) done(err);
-                res.body[1].should.have.property('name').which.equals("Foo");
+                res.body.should.have.property('type').which.equals("Foo");
+                resource = res.body;
                 done();
             })
     });
@@ -145,14 +149,14 @@ describe('Testing DELETE devices API', function () {
     });
     it('responds to DELETE /api/devices/', function testSlash(done) {
         request(server)
-            .delete('/api/devices/1')
-            .expect(200)
-            .expect('Content-Type', /json/)
+            .delete('/api/devices/' + resource.id)
+            .expect(200, done);
+            /*.expect('Content-Type', /json/)
             .end(function(err, res) {
                 if (err) done(err);
-                res.body[0].should.have.property('id').and.is.equal(1);
+                res.body.should.have.property('id').and.is.equal(1);
                 done();
-            })
+            })*/
     });
     it('responds to DELETE /api/devices/ with negative id', function testSlash(done) {
         request(server)

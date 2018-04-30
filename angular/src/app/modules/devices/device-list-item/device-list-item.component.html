@@ -40,13 +40,15 @@
       <!-- Action Button -->
       <div class="align-middle">
         <button *ngIf="device.rentable==true" type="button"
-                class="btn btn-success btn-sm">
+                class="btn btn-success btn-sm"
+                onclick="window.location.href='/#/rentals'">>
           <i class="material-icons align-middle">assignment</i>
           <span class="align-middle">Rent</span>
         </button>
         <button *ngIf="device.rentable==false" type="button"
                 class="btn btn-primary btn-sm"
-                style="padding-right: 5px;">
+                style="padding-right: 5px;"
+                onclick="window.location.href='/#/rentals'">
           <span class="align-middle">View Rent</span>
           <i class="material-icons align-middle" style="width: 15px; position: relative; left: -5px;">keyboard_arrow_right</i>
         </button>
