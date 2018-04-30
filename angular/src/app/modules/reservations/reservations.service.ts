@@ -52,7 +52,7 @@ export class ReservationsService {
       classroomId: newReservation.classroomId,
       startDate: newReservation.startDate,
       endDate: newReservation.endDate,
-      reservedbyId: 1, //need to change to current users id
+      reservedbyId: newReservation.reservedBy,
       eventName: newReservation.eventName
     };
 

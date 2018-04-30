@@ -19,7 +19,7 @@ reservationsController.get('/', function (req, res) {
             {
                 model: models.User,
                 as: 'reservedby',
-                attributes: ['id'],
+                attributes: ['id', 'name', 'email'],
                 required: true
             }
         ]

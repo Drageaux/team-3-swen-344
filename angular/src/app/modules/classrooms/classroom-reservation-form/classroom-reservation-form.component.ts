@@ -31,6 +31,7 @@ export class ClassroomReservationFormComponent {
       //endDate
       this.newReservation.endDate = form.value.resEndDate;
       this.newReservation.eventName = form.value.resEventName;
+      this.newReservation.reservedBy = parseInt(localStorage.getItem("userId"));
       //this.create.emit(this.newReservation);
       this.reservationsService.createReservation(this.newReservation)
         .subscribe(data => console.log(data));
